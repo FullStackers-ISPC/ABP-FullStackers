@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.izquierda, .derecha {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.izquierda {
+  background: #1f2667;
+  color: white;
+}
+
+.derecha {
+  background: #2d2f5a;
+
+  h2{
+    color: white;
+  }
+}
+
+.login-box {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-box input {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+}
+
+.login-box button {
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #7b61ff, #5a4bff);
+  color: white;
+  cursor: pointer;
+}
+
+.ilustracion {
+    justify-items: center;
+  
+    h1{
+    font-size: 4rem;
+  }
+
+  h2{
+    font-size: 2rem;
+  }
+
+  img {
+    width: 500px;
+    border-radius: 2vh;
+    margin-top: 20px;
+  }
+}
+
+.opciones a{
+
+    color: rgb(225, 221, 221);
+    text-decoration: none;
+    transition: 0.3s;
+
+}
+
+.opciones a:hover{
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.registrar{
+    color: rgb(225, 221, 221);
+
+    a{
+        color: #3eb025;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+}
+
+.registrar a:hover{
+    color: #43cc24;
+    text-decoration: underline;
+}
+
+
+button {
+    background-color: #6366f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s;
+}
+
+button:hover {
+    background-color: #4f46e5; 
+    transform: scale(1.02);
+}
+
+button:active {
+    transform: scale(0.98);
+}
