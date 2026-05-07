@@ -16,3 +16,11 @@ Este proyecto es una aplicación web diseñada para la gestión eficiente de sto
 ## 📁 Estructura
 - `index.html`: Pantalla de inicio de sesión.
 - `styles.css`: Hoja de estilos compartida.
+
+## 👥 Integrantes del Equipo
+* **Kevin Agustin Requelme**
+* **Fausto Santino Fili**
+* **Ignacio Moreira**
+* **Rodrigo Mateo Chávez Chuffa**
+* **Daniel Esteban González Lara**
+* **Melisa Yohana Guzman**
