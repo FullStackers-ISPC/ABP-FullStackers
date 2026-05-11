@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyStock - Panel de Administración</title>
+    <link rel="stylesheet" href="css/dashboard-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        <aside class="menu-lateral">
+            <h1>EasyStock</h1>
+            
+            <nav class="navegacion-lateral">
+                <ul>
+                    <li>
+                        <a class="activo" href="dashboard-admin.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Panel</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-border-all"></i>
+                            <span>Categorías</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-box"></i>
+                            <span>Productos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            <span>Movimientos</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            
+            <div class="panel-cuenta">
+                 <div class="info-usuario">
+                    <strong>Administrador</strong>
+                    <p>admin@easystock.com</p>
+                </div>
+                <button type="button">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="contenido-principal">
+            <header class="header">
+                <i class="fa-solid fa-bars"></i>
+
+                <div class="header-info-admin">
+                    <span>Administrador</span>
+                    <p>Panel de Administración</p>
+                </div>
+            </header>
+
+            <section class="contenedor-metricas">
+                <header class="header-metricas">
+                    <h2>Resumen general del Inventario</h2>
+                    <p>Visualización rápida de métricas del Inventario.</p>
+                </header>
+                
+                <div class="tarjetas">
+                    <article class="tarjeta">
+                        <h3>Productos en Stock</h3>
+                        <i class="fa-solid fa-box"></i>
+                        <p>22</p>
+                    </article>
+
+                    <article class="tarjeta">
+                        <h3>Bajo Stock</h3>
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <p>8</p>
+                    </article>
+
+                    <article class="tarjeta">
+                        <h3>Movimientos del Día</h3>
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        <p>32</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="contenedor-tabla-stock">
+                <header class="header-tabla-stock">
+                    <h2>Productos con Stock Bajo</h2>
+                    <p>Estos productos requieren reposición inmediata.</p>
+                </header>
+                <div class="tabla-wrapper">
+                    <table class="tabla-stock">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>En Stock</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4</td>
+                                <td>XFX Radeon RX 9070 XT 16GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td class="columna-stock">3</td>
+                                <td><strong class="alerta">Alerta</strong></td>
+                                <td><button class="btn-editar">✎</button>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>AMD Ryzen 9 9950X</td>
+                                <td>Procesadores</td>
+                                <td class="columna-stock">1</td>
+                                <td><strong class="critico">Crítico</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>AMD Ryzen 5 5500</td>
+                                <td>Procesadores</td>
+                                <td class="columna-stock">1</td>
+                                <td><strong class="critico">Crítico</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td>AMD Radeon 6600XT 8GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td class="columna-stock">5</td>
+                                <td><strong class="alerta">Alerta</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>NVIDIA RTX 5050 8GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td class="columna-stock">2</td>
+                                <td><strong class="critico">Crítico</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td>AMD Ryzen 5 5600</td>
+                                <td>Procesadores</td>
+                                <td class="columna-stock">7</td>
+                                <td><strong class="alerta">Alerta</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Corsair Vengeance DDR5 32GB 6000MHz</td>
+                                <td>Memorias RAM</td>
+                                <td class="columna-stock">4</td>
+                                <td><strong class="alerta">Alerta</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>20</td>
+                                <td>Samsung 990 PRO 2TB NVMe</td>
+                                <td>Almacenamiento</td>
+                                <td class="columna-stock">1</td>
+                                <td><strong class="critico">Crítico</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>13</td>
+                                <td>Seagate Barracuda 4TB</td>
+                                <td>Almacenamiento</td>
+                                <td class="columna-stock">6</td>
+                                <td><strong class="alerta">Alerta</strong></td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="contenedor-footer">
+                <p>&copy; 2026 EasyStock - Gestión de Inventario</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
