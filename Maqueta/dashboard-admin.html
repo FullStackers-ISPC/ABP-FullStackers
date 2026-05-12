@@ -10,7 +10,9 @@
 <body>
     <div class="contenedor">
         <aside class="menu-lateral">
-            <h1>EasyStock</h1>
+            <h1>
+                <img src="img/logo.png" alt="EasyStock" class="logo">
+            </h1>
             
             <nav class="navegacion-lateral">
                 <ul>
@@ -47,13 +49,17 @@
                     <strong>Administrador</strong>
                     <p>admin@easystock.com</p>
                 </div>
-                <button type="button">Cerrar Sesión</button>
+                <a href="index.html"><button type="button">Cerrar Sesión</button></a> 
+                <!-- Se añadio la etiqueta "a" para que haya flujo en la maqueta, deberia ir solamente la etiqueta "button" -->
             </div>
         </aside>
 
         <main class="contenido-principal">
             <header class="header">
-                <i class="fa-solid fa-bars"></i>
+                <div class="header-menu">
+                    <i class="fa-solid fa-bars"></i>
+                    <p>Dashboard / <span>Panel</span></p>
+                </div>
 
                 <div class="header-info-admin">
                     <span>Administrador</span>

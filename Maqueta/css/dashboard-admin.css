@@ -1,23 +1,19 @@
 /* VARIABLES */
 :root {
-    --fondo: #f4f6f9;
-    --superficie: #ffffff;
+    --rojo: rgb(231, 45, 7);
+    --rojo-hover: rgb(184, 0, 28);
+  
+    --blanco: #ffffff;
+    
+    --fondo: rgb(246, 246, 246);
 
-    --texto: #111827;
-    --texto-secundario: #6b7280;
+    --gris: rgb(33, 33, 33);
+    --gris-hover: rgba(133, 133, 133, 0.396);
+    --gris-claro: rgb(107, 114, 128);
+    --gris-borde: rgb(158, 158, 158);
 
-    --borde: #e5e7eb;
-
-    --primario: #336699;
-    --primario-hover: #2b5a85;
-
-    --error: #DB324D;
-    --error-hover: #A62639;
-
-    --advertencia: #F59E0B;
-    --advertencia-hover: #D97706;
-
-    --exito: #5F7367;
+    --advertencia: #fcbb11;
+    --error: #f40025;
 }
 
 /* RESET */
@@ -35,9 +31,9 @@
 /* GLOBALES DE DASHBOARD-ADMIN*/
 body {
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
     background-color: var(--fondo);
-    color: var(--texto);
+    color: var(--gris);
+    font-family: "Montserrat", sans-serif;
 }
 
 button {
@@ -59,6 +55,10 @@ ul {
     min-height: 100vh;
 }
 
+i {
+    color: var(--rojo)
+}
+
 /* MENU LATERAL */
 
 .menu-lateral {
@@ -71,19 +71,24 @@ ul {
 
     padding: 20px;
 
-    background-color: var(--texto);
-    color: var(--superficie);
+    background-color: var(--gris);
+    color: var(--blanco);
 
     border-right: 2px solid rgba(255,255,255,0.08);
 }
 
 .menu-lateral h1 {
-    margin-bottom: 5px;
-    text-align: center;
+    margin: 0 auto;
 }
 
+.logo {
+    max-width: 100px;
+    transform: translateY(-20px);
+}
+
+
 .menu-lateral p {
-    color: var(--texto-secundario);
+    color: var(--gris-claro);
     text-align: center;
 }
 
@@ -105,7 +110,7 @@ ul {
 
 .navegacion-lateral a:hover,
 .navegacion-lateral a.activo {
-    background-color: var(--texto-secundario);
+    background-color: var(--gris-hover);
 }
 
 .navegacion-lateral span {
@@ -128,14 +133,14 @@ ul {
 
     padding: 16px;
 
-    background-color: var(--error-hover);
-    color: var(--superficie);
+    background-color: var(--rojo);
+    color: var(--blanco);
     font-weight: bold;
     width: 100%;
 }
 
 .panel-cuenta button:hover {
-    background-color: var(--error);
+    background-color: var(--rojo-hover);
 }
 
 /* MAIN */
@@ -149,9 +154,7 @@ ul {
 /* HEADER */
 
 .header {
-    background-color: var(--superficie);
-    color: var(--texto);
-    border-bottom: 1px solid var(--borde);
+    border-bottom: 1px solid var(--gris-borde);
     box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     padding: 22px;
 
@@ -165,27 +168,15 @@ ul {
     font-size: 24px;
 }
 
-.header .navegacion-creacion ul{
+.header-menu {
     display: flex;
-    gap: 24px;
+    align-items: center;
+    gap: 16px;
 }
 
-.header .navegacion-creacion i{
-    font-size: 16px;
-    color: var(--superficie);
-}
-
-.header .navegacion-creacion a {
-    padding: 12px;
-    border-radius: 10px;
-    background-color: var(--primario);
-    border: 2px solid var(--superficie);
-    color: var(--borde);
-}
-
-.header .navegacion-creacion a:hover {
-    background-color: var(--primario-hover);
-    color: var(--borde);
+.header-menu p span {
+    font-weight: 700;
+    color: var(--rojo);
 }
 
 .header-info-admin {
@@ -214,8 +205,9 @@ ul {
     margin-bottom: 8px;
 }
 
-.header-metricas p {
-    color: var(--texto-secundario);
+.header-metricas p,
+.header-tabla-stock p  {
+    color: var(--gris-claro);
 }
 
 .tarjetas {
@@ -226,18 +218,18 @@ ul {
 
 .tarjeta {
     flex: 1;
-    background-color: var(--superficie);
     padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
     text-align: center;
+    border: 1px solid var(--gris-borde);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--blanco);
 }
 
 .tarjeta h3 {
     margin-bottom: 16px;
     margin-right: 8px;
     font-size: 20px;
-    color: var(--texto-secundario);
     display: inline;
 }
 
@@ -247,18 +239,15 @@ ul {
     font-weight: bold;
 }
 
-.tarjeta i {
-    color: var(--texto-secundario);
-}
-
 /* TABLA */
 
 .contenedor-tabla-stock {
-    background-color: var(--superficie);
     padding: 30px;
     margin: 20px;
-    border-radius: 12px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background-color: var(--blanco);
 
     display: flex;
     flex-direction: column;
@@ -274,11 +263,6 @@ ul {
     margin-bottom: 8px;
 }
 
-.header-tabla-stock p {
-    color: var(--texto-secundario);
-}
-
-
 .tabla-wrapper {
     overflow-y: auto;
     max-height: 400px;
@@ -293,7 +277,7 @@ ul {
 .tabla-stock td {
     padding: 16px;
     text-align: left;
-    border-bottom: 1px solid var(--borde);
+    border-bottom: 1px solid var(--gris-borde);
 }
 
 .tabla-stock th {
@@ -317,8 +301,8 @@ ul {
 
 .alerta, .critico {
     padding: 5px 15px;
-    border-radius: 10px;
-    color: var(--superficie);
+    border-radius: 8px;
+    color: var(--gris);
 }
 
 .alerta {
@@ -335,12 +319,12 @@ ul {
     border: none;
     border-radius: 6px;
     padding: 4px 8px;
-    background-color: var(--primario);
-    color: var(--superficie);
+    background-color: var(--gris);
+    color: var(--blanco);
 }
 
 .btn-editar:hover {
-    background-color: var(--primario-hover);
+    background-color: var(--gris-hover);
 }
 
 /* FOOTER */
@@ -349,6 +333,6 @@ ul {
     margin-top: auto;
     padding: 20px;
     text-align: center;
-    color: var(--texto-secundario);
+    color: var(--gris-claro);
     font-size: 12px;
 }
