@@ -1,0 +1,350 @@
+/*  reste y base  */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(246, 246, 246);
+    color: rgb(33, 33, 33);
+}
+
+/*  barra lateral  */
+.sidebar {
+    width: 185px;
+    min-height: 100vh;
+    background-color: rgb(33, 33, 33);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid rgb(60, 60, 60);
+}
+
+.logo-img {
+    width: 100%;
+    max-width: 80px;
+    display: block;
+    margin: 0 auto;
+}
+
+/*  navegacion barra lateral  */
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav ul li {
+    margin-bottom: 4px;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px 16px;
+    color: rgb(200, 200, 200);
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+    margin: 0 8px;
+}
+
+.nav-link:hover {
+    background-color: rgb(55, 55, 55);
+    color: rgb(246, 246, 246);
+}
+
+.nav-link.active {
+    background-color: rgb(55, 55, 55);
+    color: rgb(246, 246, 246);
+}
+
+.nav-icon {
+    color: rgb(231, 45, 7);
+    width: 16px;
+    text-align: center;
+    margin-right: 6px;
+}
+
+/*  footer barra lateral  */
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid rgb(60, 60, 60);
+}
+
+.user-name {
+    color: rgb(246, 246, 246);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.user-email {
+    color: rgb(141, 139, 142);
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 9px;
+    background-color: rgb(231, 45, 7);
+    color: rgb(246, 246, 246);
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-logout:hover {
+    background-color: rgb(190, 35, 5);
+}
+
+/*  contenido principal  */
+.main-wrapper {
+    margin-left: 185px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*  barra superior  */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    background-color: rgb(246, 246, 246);
+    border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: rgb(141, 139, 142);
+}
+
+.breadcrumb span {
+    color: rgb(231, 45, 7);
+    font-weight: bold;
+}
+
+.topbar-user {
+    text-align: right;
+}
+
+.topbar-role {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(33, 33, 33);
+}
+
+.topbar-panel {
+    font-size: 12px;
+    color: rgb(141, 139, 142);
+}
+
+/*  inicio contenido principal  */
+.main-content {
+    flex: 1;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+/*  titulos de seccion  */
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(33, 33, 33);
+    margin-bottom: 4px;
+}
+
+.section-subtitle {
+    font-size: 13px;
+    color: rgb(141, 139, 142);
+    margin-bottom: 16px;
+}
+
+/*  tarjetas resumidas  */
+.cards-row {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    flex: 1;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card-label {
+    font-size: 14px;
+    color: rgb(33, 33, 33);
+    margin-bottom: 12px;
+}
+
+.card-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: rgb(33, 33, 33);
+}
+
+.card-icon {
+    color: rgb(231, 45, 7);
+}
+
+/*  griulla de productos  */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.product-card {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.product-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.product-code {
+    font-size: 12px;
+    color: rgb(141, 139, 142);
+}
+
+.product-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(33, 33, 33);
+    margin-bottom: 6px;
+}
+
+.product-category {
+    font-size: 12px;
+    color: rgb(141, 139, 142);
+    margin-bottom: 10px;
+}
+
+.product-stock {
+    font-size: 13px;
+    color: rgb(33, 33, 33);
+}
+
+/*  badges de estado  */
+.badge {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: rgb(246, 246, 246);
+}
+
+.badge-ok {
+    background-color: rgb(34, 139, 34);
+}
+
+.badge-alerta {
+    background-color: rgb(210, 140, 0);
+}
+
+.badge-critico {
+    background-color: rgb(231, 45, 7);
+}
+
+/*  tabla de movimientos  */
+.table-wrapper {
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.movements-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.movements-table thead {
+    background-color: rgb(246, 246, 246);
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.movements-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: bold;
+    color: rgb(33, 33, 33);
+    font-size: 13px;
+}
+
+.movements-table tbody tr {
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.movements-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.movements-table td {
+    padding: 12px 16px;
+    color: rgb(33, 33, 33);
+}
+
+/*  badges tipos de movimiento  */
+.tipo-badge {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 4px;
+    color: rgb(246, 246, 246);
+}
+
+.tipo-entrada {
+    background-color: rgb(34, 139, 34);
+}
+
+.tipo-salida {
+    background-color: rgb(231, 45, 7);
+}
+
+.tipo-ajuste {
+    background-color: rgb(210, 140, 0);
+}
+
+/*  footer  */
+.main-footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    color: rgb(141, 139, 142);
+    border-top: 1px solid rgb(220, 220, 220);
+}
