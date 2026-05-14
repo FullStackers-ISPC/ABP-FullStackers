@@ -12,8 +12,8 @@
     --gris-claro: rgb(107, 114, 128);
     --gris-borde: rgb(158, 158, 158);
 
-    --advertencia: #fcbb11;
-    --error: #f40025;
+    --advertencia: rgb(210, 140, 0);
+    --error: rgb(231, 45, 7);
 }
 
 /* RESET */
