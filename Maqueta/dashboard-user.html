@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyStock - Panel de Usuario</title>
+    <link rel="stylesheet" href="css/dashboard-user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- iconos con font-awesome -->
+</head>
+<body>
+
+    <!-- barra lateral -->
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <img src="img/Logo-CT.png" alt="EasyStock" class="logo-img">
+        </header>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="#panel" class="nav-link active">
+                        <i class="fa-solid fa-house nav-icon"></i> Panel
+                    </a>
+                </li>
+                <li>
+                    <a href="#categorias" class="nav-link">
+                        <i class="fa-solid fa-table-cells nav-icon"></i> Categorías
+                    </a>
+                </li>
+                <li>
+                    <a href="#productos" class="nav-link">
+                        <i class="fa-solid fa-box nav-icon"></i> Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="#movimientos" class="nav-link">
+                        <i class="fa-solid fa-right-left nav-icon"></i> Movimientos
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <footer class="sidebar-footer">
+            <p class="user-name">Usuario</p>
+            <p class="user-email">usuario@easystock.com</p>
+            <button class="btn-logout" type="button">Cerrar Sesión</button>
+        </footer>
+    </aside>
+
+    <!-- contenido principal -->
+    <div class="main-wrapper">
+
+        <!-- barra superior -->
+        <header class="topbar">
+            <p class="breadcrumb"><i class="fa-solid fa-bars"></i> Dashboard / <span>Panel</span></p>
+            <div class="topbar-user">
+                <p class="topbar-role">Usuario</p>
+                <p class="topbar-panel">Panel de Usuario</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- panel -->
+            <section id="panel">
+                <h2 class="section-title">Resumen de Actividad</h2>
+                <p class="section-subtitle">Tu actividad reciente en el inventario.</p>
+
+                <div class="cards-row">
+                    <article class="card">
+                        <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
+                        <p class="card-value">22</p>
+                    </article>
+                    <article class="card">
+                        <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
+                        <p class="card-value">5</p>
+                    </article>
+                    <article class="card">
+                        <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
+                        <p class="card-value">8</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- parte categorías -->
+            <section id="categorias">
+                <h2 class="section-title">Categorías</h2>
+                <p class="section-subtitle">Categorías de productos disponibles en el inventario.</p>
+
+                <div class="table-wrapper">
+                    <table class="movements-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Categoría</th>
+                                <th>Cantidad de Productos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Procesadores</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Almacenamiento</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Memorias RAM</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Placas Madre</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- patre productos -->
+            <section id="productos">
+                <h2 class="section-title">Productos</h2>
+                <p class="section-subtitle">Catálogo de productos disponibles en el inventario.</p>
+
+                <div class="products-grid">
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#1</span>
+                            <span class="badge badge-ok">Disponible</span>
+                        </div>
+                        <h3 class="product-name">NVIDIA RTX 4090 24GB</h3>
+                        <p class="product-category">Tarjetas Gráficas</p>
+                        <p class="product-stock">Stock: <strong>15</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#2</span>
+                            <span class="badge badge-ok">Disponible</span>
+                        </div>
+                        <h3 class="product-name">Intel Core i9-14900K</h3>
+                        <p class="product-category">Procesadores</p>
+                        <p class="product-stock">Stock: <strong>10</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#3</span>
+                            <span class="badge badge-ok">Disponible</span>
+                        </div>
+                        <h3 class="product-name">Samsung 990 Pro 2TB</h3>
+                        <p class="product-category">Almacenamiento</p>
+                        <p class="product-stock">Stock: <strong>20</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#4</span>
+                            <span class="badge badge-alerta">Alerta</span>
+                        </div>
+                        <h3 class="product-name">XFX Radeon RX 9070 XT 16GB</h3>
+                        <p class="product-category">Tarjetas Gráficas</p>
+                        <p class="product-stock">Stock: <strong>3</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#5</span>
+                            <span class="badge badge-ok">Disponible</span>
+                        </div>
+                        <h3 class="product-name">Corsair Vengeance 32GB DDR5</h3>
+                        <p class="product-category">Memorias RAM</p>
+                        <p class="product-stock">Stock: <strong>18</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#6</span>
+                            <span class="badge badge-critico">Crítico</span>
+                        </div>
+                        <h3 class="product-name">AMD Ryzen 9 9950X</h3>
+                        <p class="product-category">Procesadores</p>
+                        <p class="product-stock">Stock: <strong>1</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#7</span>
+                            <span class="badge badge-critico">Crítico</span>
+                        </div>
+                        <h3 class="product-name">AMD Ryzen 5 5500</h3>
+                        <p class="product-category">Procesadores</p>
+                        <p class="product-stock">Stock: <strong>1</strong></p>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-top">
+                            <span class="product-code">#8</span>
+                            <span class="badge badge-ok">Disponible</span>
+                        </div>
+                        <h3 class="product-name">ASUS ROG Strix B650-E</h3>
+                        <p class="product-category">Placas Madre</p>
+                        <p class="product-stock">Stock: <strong>12</strong></p>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- parte movimientos -->
+            <section id="movimientos">
+                <h2 class="section-title">Historial de Movimientos</h2>
+                <p class="section-subtitle">Registro de entradas, salidas y ajustes de stock.</p>
+
+                <div class="table-wrapper">
+                    <table class="movements-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>11/05/2026</td>
+                                <td>NVIDIA RTX 4090 24GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+5</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>11/05/2026</td>
+                                <td>Intel Core i9-14900K</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-2</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>10/05/2026</td>
+                                <td>Samsung 990 Pro 2TB</td>
+                                <td>Almacenamiento</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+10</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>10/05/2026</td>
+                                <td>AMD Ryzen 5 5500</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-ajuste">Ajuste</span></td>
+                                <td>-3</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>09/05/2026</td>
+                                <td>Corsair Vengeance 32GB DDR5</td>
+                                <td>Memorias RAM</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-4</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>09/05/2026</td>
+                                <td>ASUS ROG Strix B650-E</td>
+                                <td>Placas Madre</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+6</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>08/05/2026</td>
+                                <td>XFX Radeon RX 9070 XT 16GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-1</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>08/05/2026</td>
+                                <td>AMD Ryzen 9 9950X</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-ajuste">Ajuste</span></td>
+                                <td>+2</td>
+                                <td>usuario</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="main-footer">
+            <p>© 2026 EasyStock - Gestión de Inventario</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
