@@ -13,20 +13,54 @@
 
 <body>
 
-    <header>
-        <div class="logo-container">
-            <a href="#inicio">
-                <img src="img/Logo-ST.png" alt="Logo de EasyStock" class="header-logo">EasyStock
-            </a>
-        </div>
+        <header class="header">
+        <div class="navbar-container">
+            <nav class="navbar">
 
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="quienes-somos.html">Quiénes Somos</a></li>
-                <li><a href="login.html">Iniciar Sesion</a></li>
-            </ul>
-        </nav>
+                <!-- LOGO -->
+                <div class="logo-container">
+                    <a
+                        href="index.html"
+                        class="logo-link"
+                        aria-label="Ir a Inicio"
+                    >
+                        <img
+                            src="./img/Logo-ST.png"
+                            alt="EasyStock logo"
+                            class="logo-image"
+                        >
+                        <span class="logo-text">
+                            EasyStock
+                        </span>
+                    </a>
+                </div>
+
+                <!-- NAV LINKS -->
+                <ul class="nav-links">
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="quienes-somos.html"
+                            class="active"
+                        >
+                            Quiénes Somos
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="login.html"
+                            class="nav-button"
+                        >
+                            Iniciar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -164,17 +198,79 @@
 
     </main>
 
-    <footer>
-
-        <p>
-            Proyecto academico desarrollado para Full Stack I - ISPC
-        </p>
-
-        <p>
-            ABP FullStackers © 2026
-        </p>
-
-    </footer>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- BRAND -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img
+                        src="./img/Logo-ST.png"
+                        alt="EasyStock Logo"
+                    >
+                    <span>
+                        EasyStock
+                    </span>
+                </div>
+                <p>
+                    Sistema web de gestión de inventario
+                    desarrollado como proyecto académico
+                    Full Stack orientado a soluciones
+                    empresariales.
+                </p>
+            </div>
+            <!-- LINKS -->
+            <div class="footer-column">
+                <h3>
+                    Navegación
+                </h3>
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quienes-somos.html">
+                            Quiénes Somos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html">
+                            Iniciar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- INFO -->
+            <div class="footer-column">
+                <h3>
+                    Información
+                </h3>
+                <ul>
+                    <li>
+                        ISPC
+                    </li>
+                    <li>
+                        Full Stack I
+                    </li>
+                    <li>
+                        Grupo FullStackers
+                    </li>
+                    <li>
+                        Córdoba - Argentina
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- BOTTOM -->
+        <div class="footer-bottom">
+            <p>
+                © 2026 EasyStock - Grupo FullStackers
+            </p>
+        </div>
+    </div>
+</footer>
 
 </body>
 
