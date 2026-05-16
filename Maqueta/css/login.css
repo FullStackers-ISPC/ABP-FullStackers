@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+:root{
+    /* Colores principales */
+--color-primario:rgb(33,33,33);
+--color-secundario:rgb(231,45,7);
+--color-terciario: rgb(246,246,246);
+
+    /* Colores para tipografia */
+--color-fuentes-principales: rgb(141,139,142);
+--color-fuentes-secundarias: rgb(158,158,158);
+
+ /*Topografia*/
+
+--fuente-principal: 'Roboto', sans-serif;
+--fuente-secundaria: 'Open Sans', sans-serif;
+--fuente-terciaria: 'Lato', sans-serif; 
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 4rem;
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding-top: 4rem;
+    overflow: hidden
+}
+
+.img-logo img {
+    width: 11rem;
+    height: auto;
+    box-shadow: 10px 14px 18px rgba(0, 0, 0, 0.322);
+    background-color: var(--color-primario);
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.contenedor-principal{
+    text-align: center;
+    width: 100%;
+    max-width: 25rem;
+    border-radius: 10px;
+
+    background-color: var(--color-secundario);
+
+}
+
+.contenedor-superior{
+    border-radius: 5px 5px 0px 0px;
+}
+
+
+.contenedor-inferior{
+    border-radius: 0px 0px 5px 5px;
+    background-color: var(--color-primario);
+    padding-bottom: 1rem;
+    a{
+    color: white;
+    }
+}
+
+.opciones{
+    padding: .7rem 0rem .7rem 0rem;
+}
+.opciones a {
+    padding-top: 1rem;
+    color: var(--color-fuentes-secundarias); 
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+
+.opciones a:hover {
+    color: var(--color-secundario); ; 
+    text-decoration: underline; 
+}
+
+
+h1{
+    color:white;
+    font-size: 3.2rem;
+    padding-top: 1rem;
+    font-family: var(--fuente-principal);
+    letter-spacing: 0.05rem;
+}
+
+h2{
+    color: white;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    font-family: var(--fuente-principal);
+    letter-spacing: 0.05rem;
+}
+
+.registrar a {
+    padding-top: 1rem;
+    color: var(--color-fuentes-secundarias); 
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.registrar a:hover {
+    color: var(--color-secundario); 
+    text-decoration: underline; 
+}
+
+.login {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 7rem;
+    height: 2rem;
+    border-radius: 5px;
+    margin-bottom: .5rem;
+    color: white;
+    background-color: var(--color-primario);
+    border: 1px solid white;
+    text-decoration: none;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.login:hover {
+    background-color: var(--color-secundario);
+    color: white;
+    cursor: pointer;
+}
+
+p{
+    color: white;
+}
