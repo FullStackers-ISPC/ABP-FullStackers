@@ -98,6 +98,7 @@ body {
 }
 
 .btn-logout {
+    display: block;
     width: 100%;
     padding: 9px;
     background-color: rgb(231, 45, 7);
@@ -107,6 +108,9 @@ body {
     font-size: 13px;
     cursor: pointer;
     font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .btn-logout:hover {
