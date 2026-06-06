@@ -1,0 +1,287 @@
+/* =========================
+VARIABLES
+========================= */
+:root {
+    --primary-red: rgb(231, 45, 7);
+    --dark-gray: rgb(33, 33, 33);
+    --white-color: rgb(246, 246, 246);
+    --light-gray: #555;
+    --border-color: #ddd;
+    --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+BODY
+========================= */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--white-color);
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+/* =========================
+IMAGES
+========================= */
+img {
+    width: 100%;
+    display: block;
+}
+
+/* =========================
+LINKS
+========================= */
+
+a {
+    text-decoration: none;
+}
+
+/* =========================
+CONTAINER
+========================= */
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+/* =========================
+SECTION TITLES
+========================= */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+}
+
+/* =========================
+HEADER
+========================= */
+.header {
+    background-color: var(--dark-gray);
+    border-bottom: 3px solid var(--primary-red);
+}
+
+/* =========================
+NAVBAR CONTAINER
+========================= */
+.navbar-container {
+    width: 100%;
+    padding: 0 60px;
+}
+
+/* =========================
+NAVBAR
+========================= */
+.navbar {
+    min-height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =========================
+LOGO
+========================= */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 58px;
+    width: auto;
+}
+
+.logo-text {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.logo-link:hover .logo-text {
+    color: var(--primary-red);
+}
+
+/* =========================
+NAV LINKS
+========================= */
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-links a {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-red);
+}
+.nav-links .active {
+    color: var(--primary-red);
+}
+
+/* =========================
+BUTTONS
+========================= */
+.nav-button {
+    padding: 10px 18px;
+    border-radius: 6px;
+    background-color: var(--primary-red);
+    color: white;
+    transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: white;
+    color: var(--primary-red);
+    transform: translateY(-1px);
+}
+
+/* =========================
+CARDS
+========================= */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+/* =========================
+FOOTER
+========================= */
+.footer {
+    background-color: var(--dark-gray);
+    color: white;
+    padding-top: 70px;
+    margin-top: 80px;
+}
+
+/* =========================
+FOOTER CONTENT
+========================= */
+.footer-content {
+    display: grid;
+    grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    padding-bottom: 50px;
+}
+
+/* =========================
+FOOTER COLUMN
+========================= */
+.footer-column h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.footer-column p {
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+    color: #ccc;
+}
+
+.footer-column ul li a {
+    color: #ccc;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: var(--primary-red);
+}
+
+/* =========================
+FOOTER LOGO
+========================= */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+}
+
+.footer-logo img {
+    width: 50px;
+    height: auto;
+}
+
+.footer-logo span {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+/* =========================
+FOOTER BOTTOM
+========================= */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 25px 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+@media(max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        padding: 25px 0;
+    }
+}
+
+@media(max-width: 600px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}
