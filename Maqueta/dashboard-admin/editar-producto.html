@@ -65,25 +65,25 @@
             
             <section class="contenedor-formulario">
                 <header class="header-formulario">
-                    <h2>Crear nuevo producto</h2>
-                    <p>Completa todos los campos para registrar un producto en el inventario.</p>
+                    <h2>Edita tu producto</h2>
+                    <p>Modifica los campos que necesites para editar un producto en el inventario.</p>
                 </header>
 
                 <form class="formulario-producto">
                     <div class="grupo-campo">
                         <label for="nombre">Nombre del producto</label>
-                        <input type="text" id="nombre" placeholder="Ej: AMD Ryzen 7 9800X3D">
+                        <input type="text" id="nombre" value="AMD Ryzen 7 9800X3D">
                     </div>
 
                     <div class="fila">
                         <div class="grupo-campo">
                             <label for="codigo">Código</label>
-                            <input type="number" id="codigo" placeholder="Ej: 25">
+                            <input type="number" id="codigo" value="1" disabled>
                         </div>
 
                         <div class="grupo-campo">
-                            <label for="stock">Stock inicial</label>
-                            <input type="number" id="stock" placeholder="Ej: 10">
+                            <label for="stock">Stock</label>
+                            <input type="number" id="stock" value="15">
                         </div>
                     </div>
 
@@ -91,12 +91,12 @@
                     <div class="fila">
                         <div class="grupo-campo">
                             <label for="stock-alerta">Stock Alerta</label>
-                            <input type="number" id="stock-alerta" placeholder="Ej: 8">
+                            <input type="number" id="stock-alerta" value="8">
                         </div>
 
                         <div class="grupo-campo">
                             <label for="stock-critico">Stock Crítico</label>
-                            <input type="number" id="stock-critico" placeholder="Ej: 4">
+                            <input type="number" id="stock-critico" value="4">
                         </div>
                     </div>
 
@@ -113,7 +113,7 @@
 
                         <div class="grupo-campo">
                             <label for="precio">Precio</label>
-                            <input type="number" id="precio" placeholder="$0">
+                            <input type="text" id="precio" value="$850.000,00">
                         </div>
                     </div>
 
@@ -124,7 +124,7 @@
 
                     <div class="acciones-formulario">
                         <button type="submit" class="boton">
-                            Guardar Producto
+                            Guardar Cambios
                         </button>
                     </div>
                 </form>
