@@ -11,17 +11,19 @@
 }
 
 #inicio .contenido-inicio {
-    width: 60%;
+    padding: 25px 4%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
-#inicio h2 {
+#inicio h1 {
     font-size: 35px;
     color: var(--primary-red);
     margin-bottom: 20px;
     line-height: 1.1;
+    text-align: center;
+    font-weight: bold;
 }
 
 #inicio p {
@@ -39,14 +41,15 @@
 }
 
 .imagen-inicio {
-    width: 40%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding: 0;
 }
 
 .imagen-inicio img {
     width: 150%;
+    max-width: none;
 }
 
 /* Secciones generales */
@@ -79,7 +82,7 @@ section h2 {
     position: relative;
     width: 100%;
     max-width: 1200px;
-    height: 500px;
+    min-height: 500px;
     border-radius: 25px;
     overflow: hidden;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
@@ -124,14 +127,13 @@ section h2 {
     line-height: 1.2;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
     max-width: 800px;
+    font-weight: bold;
 }
 
 #caracteristicas li {
     color: rgb(255, 255, 255);
-    font-size: 18px;
-    margin-bottom: 15px;
-    padding-left: 30px;
-    position: relative;
+    font-size: 16px;
+    margin-bottom: 8px;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -151,12 +153,11 @@ section h2 {
 #beneficios article {
     background-color: rgb(250, 250, 250);
     padding: 40px 40px 40px 80px;
-    margin-bottom: 30px;
     border-radius: 5px;
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.06);
     transition: 0.3s;
     position: relative;
-    border-left: none;
+    height: 100%;
 }
 
 #beneficios article::before {
@@ -173,7 +174,7 @@ section h2 {
     background-color: rgb(255, 255, 255);
     transform: translateX(10px);
     box-shadow: 0px 8px 25px var(--primary-red);
-    }
+}
 
 #beneficios h3 {
     color: var(--primary-red);
@@ -194,11 +195,7 @@ section h2 {
 }
 
 .contenedor-categorias {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
+    margin: 0;
 }
 
 .categoria-card {
@@ -260,4 +257,177 @@ section h2 {
     color: rgb(240, 240, 240);
     font-size: 16px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* RESPONSIVE - Tablet (≤768px) */
+@media (max-width: 768px) {
+
+    section {
+        padding: 60px 5%;
+    }
+
+    section h2 {
+        font-size: 30px;
+    }
+
+    #inicio {
+        flex-direction: column;
+        padding: 30px 5%;
+        text-align: center;
+    }
+
+    #inicio .contenido-inicio {
+        width: 100%;
+        padding: 0;
+        align-items: center;
+    }
+
+    #inicio h1 {
+        font-size: 26px;
+    }
+
+    #inicio p {
+        font-size: 16px;
+    }
+
+    .imagen-inicio {
+        width: 100%;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .imagen-inicio img {
+        width: 100%;
+    }
+
+    #caracteristicas {
+        padding: 60px 5%;
+    }
+
+    .caracteristicas-categoria {
+        padding: 30px;
+    }
+
+    #caracteristicas h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    #beneficios h2 {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    #beneficios article {
+        padding: 30px 30px 30px 60px;
+    }
+
+    .categoria-card {
+        width: 100%;
+        max-width: 340px;
+        height: 350px;
+    }
+}
+
+/* RESPONSIVE - Móvil (≤375px) */
+@media (max-width: 375px) {
+
+    section {
+        padding: 40px 4%;
+    }
+
+    section h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
+
+    #inicio {
+        padding: 24px 4%;
+    }
+
+    #inicio h1 {
+        font-size: 22px;
+        line-height: 1.2;
+    }
+
+    #inicio p {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .nav-button {
+        font-size: 16px;
+        padding: 8px 14px;
+    }
+
+    .imagen-inicio img {
+        width: 100%;
+    }
+
+    #caracteristicas {
+        padding: 40px 4%;
+    }
+
+    .caracteristicas-card {
+        border-radius: 12px;
+    }
+
+    .caracteristicas-categoria {
+        padding: 20px;
+    }
+
+    #caracteristicas h2 {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+
+    #caracteristicas li {
+        margin-bottom: 16px;
+        font-size: 15px;
+    }
+
+    #beneficios {
+        padding: 40px 4%;
+    }
+
+    #beneficios h2 {
+        font-size: 22px;
+        margin-bottom: 24px;
+    }
+
+    #beneficios article {
+        padding: 24px 20px 24px 50px;
+    }
+
+    #beneficios article::before {
+        left: 18px;
+        width: 4px;
+    }
+
+    #beneficios h3 {
+        font-size: 18px;
+    }
+
+    #beneficios p {
+        font-size: 14px;
+    }
+
+    #categorias {
+        padding: 40px 4%;
+    }
+
+    .categoria-card {
+        width: 100%;
+        max-width: 320px;
+        height: 300px;
+    }
+
+    #categorias h3 {
+        font-size: 22px;
+    }
+
+    #categorias p {
+        font-size: 14px;
+    }
 }
