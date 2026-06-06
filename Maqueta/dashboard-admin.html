@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyStock - Panel de Administración</title>
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/dashboard-admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -29,7 +30,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="dashboard-admin/productos.html">
                             <i class="fa-solid fa-box"></i>
                             <span>Productos</span>
                         </a>
@@ -49,7 +50,9 @@
                     <strong>Administrador</strong>
                     <p>admin@easystock.com</p>
                 </div>
-                <a href="index.html"><button type="button">Cerrar Sesión</button></a> 
+
+                
+                <a href="./index.html"><i class="fa-solid fa-right-from-bracket logo-cerrar-sesion"></i><button class="boton" type="button">Cerrar Sesión</button></a> 
                 <!-- Se añadio la etiqueta "a" para que haya flujo en la maqueta, deberia ir solamente la etiqueta "button" -->
             </div>
         </aside>
@@ -96,96 +99,117 @@
 
             <section class="contenedor-tabla-stock">
                 <header class="header-tabla-stock">
-                    <h2>Productos con Stock Bajo</h2>
-                    <p>Estos productos requieren reposición inmediata.</p>
+                    <div>
+                        <h2>Productos con Stock Bajo</h2>
+                        <p>Estos productos requieren reposición inmediata.</p>
+                    </div>
+                    <a href="dashboard-admin/productos.html"><button class="boton" type="button">Gestionar Productos</button></a> 
                 </header>
                 <div class="tabla-wrapper">
                     <table class="tabla-stock">
                         <thead>
                             <tr>
-                                <th>Código</th>
-                                <th>Producto</th>
-                                <th>Categoría</th>
-                                <th>En Stock</th>
-                                <th>Estado</th>
-                                <th></th>
+                                <th class="col-codigo">Código</th>
+                                <th class="col-producto">Producto</th>
+                                <th class="col-categoria">Categoría</th>
+                                <th class="col-stock">Stock</th>
+                                <th class="col-estado">Estado</th>
+                                <th class="acciones">Acciones</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr>
-                                <td>4</td>
-                                <td>XFX Radeon RX 9070 XT 16GB</td>
-                                <td>Tarjetas Gráficas</td>
-                                <td class="columna-stock">3</td>
-                                <td><strong class="alerta">Alerta</strong></td>
-                                <td><button class="btn-editar">✎</button>
+                                <td class="col-codigo">4</td>
+                                <td class="col-producto">XFX Radeon RX 9070 XT 16GB</td>
+                                <td class="col-categoria">Tarjetas Gráficas</td>
+                                <td class="col-stock">3</td>
+                                <td class="col-estado"><strong class="alerta">Alerta</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td>12</td>
-                                <td>AMD Ryzen 9 9950X</td>
-                                <td>Procesadores</td>
-                                <td class="columna-stock">1</td>
-                                <td><strong class="critico">Crítico</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
+                                <td class="col-codigo">7</td>
+                                <td class="col-producto">AMD Ryzen 5 5500</td>
+                                <td class="col-categoria">Procesadores</td>
+                                <td class="col-stock">1</td>
+                                <td class="col-estado"><strong class="critico">Crítico</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
                             </tr>
                             <tr>
-                                <td>7</td>
-                                <td>AMD Ryzen 5 5500</td>
-                                <td>Procesadores</td>
-                                <td class="columna-stock">1</td>
-                                <td><strong class="critico">Crítico</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>16</td>
-                                <td>AMD Radeon 6600XT 8GB</td>
-                                <td>Tarjetas Gráficas</td>
-                                <td class="columna-stock">5</td>
-                                <td><strong class="alerta">Alerta</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>NVIDIA RTX 5050 8GB</td>
-                                <td>Tarjetas Gráficas</td>
-                                <td class="columna-stock">2</td>
-                                <td><strong class="critico">Crítico</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>22</td>
-                                <td>AMD Ryzen 5 5600</td>
-                                <td>Procesadores</td>
-                                <td class="columna-stock">7</td>
-                                <td><strong class="alerta">Alerta</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>11</td>
-                                <td>Corsair Vengeance DDR5 32GB 6000MHz</td>
-                                <td>Memorias RAM</td>
-                                <td class="columna-stock">4</td>
-                                <td><strong class="alerta">Alerta</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
+                                <td class="col-codigo">11</td>
+                                <td class="col-producto">Corsair Vengeance DDR5 32GB 6000MHz</td>
+                                <td class="col-categoria">Memorias RAM</td>
+                                <td class="col-stock">4</td>
+                                <td class="col-estado"><strong class="alerta">Alerta</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
                             </tr>
 
                             <tr>
-                                <td>20</td>
-                                <td>Samsung 990 PRO 2TB NVMe</td>
-                                <td>Almacenamiento</td>
-                                <td class="columna-stock">1</td>
-                                <td><strong class="critico">Crítico</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
+                                <td class="col-codigo">12</td>
+                                <td class="col-producto">AMD Ryzen 9 9950X</td>
+                                <td class="col-categoria">Procesadores</td>
+                                <td class="col-stock">1</td>
+                                <td class="col-estado"><strong class="critico">Crítico</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
                             </tr>
 
                             <tr>
-                                <td>13</td>
-                                <td>Seagate Barracuda 4TB</td>
-                                <td>Almacenamiento</td>
-                                <td class="columna-stock">6</td>
-                                <td><strong class="alerta">Alerta</strong></td>
-                                <td><button class="btn-editar">✎</button></td>
+                                <td class="col-codigo">13</td>
+                                <td class="col-producto">Seagate Barracuda 4TB</td>
+                                <td class="col-categoria">Almacenamiento</td>
+                                <td class="col-stock">6</td>
+                                <td class="col-estado"><strong class="alerta">Alerta</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
                             </tr>
+                            <tr>
+                                <td class="col-codigo">16</td>
+                                <td class="col-producto">AMD Radeon 6600XT 8GB</td>
+                                <td class="col-categoria">Tarjetas Gráficas</td>
+                                <td class="col-stock">5</td>
+                                <td class="col-estado"><strong class="alerta">Alerta</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-codigo">20</td>
+                                <td class="col-producto">Samsung 990 PRO 2TB NVMe</td>
+                                <td class="col-categoria">Almacenamiento</td>
+                                <td class="col-stock">1</td>
+                                <td class="col-estado"><strong class="critico">Crítico</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-codigo">22</td>
+                                <td class="col-producto">AMD Ryzen 5 5600</td>
+                                <td class="col-categoria">Procesadores</td>
+                                <td class="col-stock">7</td>
+                                <td class="col-estado"><strong class="alerta">Alerta</strong></td>
+                                <td class="acciones">
+                                    <button class="btn-editar">✎</button>
+                                    <button class="btn-eliminar">🗑</button>
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>

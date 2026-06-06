@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyStock - Panel de Administración</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard-admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="contenedor">
+        <aside class="menu-lateral">
+            <h1>
+                <img src="../img/Logo-CT.png" alt="EasyStock" class="logo">
+            </h1>
+            
+            <nav class="navegacion-lateral">
+                <ul>
+                    <li>
+                        <a href="../dashboard-admin.html">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Panel</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-border-all"></i>
+                            <span>Categorías</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="activo" href="productos.html">
+                            <i class="fa-solid fa-box"></i>
+                            <span>Productos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            <span>Movimientos</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            
+            <div class="panel-cuenta">
+                 <div class="info-usuario">
+                    <strong>Administrador</strong>
+                    <p>admin@easystock.com</p>
+                </div>
+                <a href="index.html"><i class="fa-solid fa-right-from-bracket logo-cerrar-sesion"></i><button class="boton" type="button">Cerrar Sesión</button></a>  
+                <!-- Se añadio la etiqueta "a" para que haya flujo en la maqueta, deberia ir solamente la etiqueta "button" -->
+            </div>
+        </aside>
+
+        <main class="contenido-principal">
+            <header class="header">
+                <div class="header-menu">
+                    <i class="fa-solid fa-bars"></i>
+                    <p>Dashboard / <span>Productos</span></p>
+                </div>
+            </header>
+            
+            <section class="contenedor-formulario">
+                <header class="header-formulario">
+                    <h2>Crear nuevo producto</h2>
+                    <p>Completa todos los campos para registrar un producto en el inventario.</p>
+                </header>
+
+                <form class="formulario-producto">
+                    <div class="grupo-campo">
+                        <label for="nombre">Nombre del producto</label>
+                        <input type="text" id="nombre" placeholder="Ej: AMD Ryzen 7 9800X3D">
+                    </div>
+
+                    <div class="fila">
+                        <div class="grupo-campo">
+                            <label for="codigo">Código</label>
+                            <input type="number" id="codigo" placeholder="Ej: 25">
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label for="stock">Stock inicial</label>
+                            <input type="number" id="stock" placeholder="Ej: 10">
+                        </div>
+                    </div>
+
+                    <div class="fila">
+                        <div class="grupo-campo">
+                            <label for="categoria">Categoría</label>
+                            <select id="categoria">
+                                <option>Procesadores</option>
+                                <option>Tarjetas Gráficas</option>
+                                <option>Memorias RAM</option>
+                                <option>Almacenamiento</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label for="precio">Precio</label>
+                            <input type="number" id="precio" placeholder="$0">
+                        </div>
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" rows="5" placeholder="Describe el producto..."></textarea>
+                    </div>
+
+                    <div class="acciones-formulario">
+                        <button type="reset" class="btn-secundario">
+                            Cancelar
+                        </button>
+
+                        <button type="submit" class="boton">
+                            Guardar Producto
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <footer class="contenedor-footer">
+                <p>&copy; 2026 EasyStock - Gestión de Inventario</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
