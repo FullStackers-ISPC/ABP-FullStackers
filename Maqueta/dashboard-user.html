@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel de usuario de EasyStock - Gestiona tu inventario de manera eficiente">
     <title>EasyStock - Panel de Usuario</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="css/global.css" as="style">
+    <link rel="preload" href="css/dashboard-user.css" as="style">
+    <link rel="preload" href="img/Logo-CT.png" as="image">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/dashboard-user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> <!-- iconos con font-awesome -->
 </head>
 <body>
 
+    <!-- checkbox para menú hamburguesa en mobile sin JS -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <!-- overlay para cerrar el menú tocando fuera -->
+    <label for="nav-toggle" class="menu-overlay"></label>
+
     <!-- barra lateral -->
     <aside class="sidebar">
+        <!-- botón cerrar dentro del sidebar en mobile -->
+        <label for="nav-toggle" class="sidebar-close">
+            <i class="fa-solid fa-xmark"></i>
+        </label>
         <header class="sidebar-header">
             <img src="img/Logo-CT.png" alt="EasyStock" class="logo-img">
         </header>
@@ -43,7 +60,7 @@
         <footer class="sidebar-footer">
             <p class="user-name">Usuario</p>
             <p class="user-email">usuario@easystock.com</p>
-            <a href="login.html" class="btn-logout">Cerrar Sesión</a>
+            <button class="btn-logout" type="button">Cerrar Sesión</button>
         </footer>
     </aside>
 
@@ -52,7 +69,12 @@
 
         <!-- barra superior -->
         <header class="topbar">
-            <p class="breadcrumb"><i class="fa-solid fa-bars"></i> Dashboard / <span>Panel</span></p>
+            <p class="breadcrumb">
+                <label for="nav-toggle" class="hamburger-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </label>
+                Dashboard / <span>Panel</span>
+            </p>
             <div class="topbar-user">
                 <p class="topbar-role">Usuario</p>
                 <p class="topbar-panel">Panel de Usuario</p>
@@ -60,6 +82,7 @@
         </header>
 
         <main class="main-content">
+            <h1 class="visually-hidden">EasyStock - Dashboard de Usuario</h1>
 
             <!-- panel -->
             <section id="panel">
@@ -68,14 +91,17 @@
 
                 <div class="cards-row">
                     <article class="card">
+                        <h3 class="visually-hidden">Productos Disponibles</h3>
                         <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
                         <p class="card-value">22</p>
                     </article>
                     <article class="card">
+                        <h3 class="visually-hidden">Mis Movimientos del Día</h3>
                         <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
                         <p class="card-value">5</p>
                     </article>
                     <article class="card">
+                        <h3 class="visually-hidden">Productos con Bajo Stock</h3>
                         <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
                         <p class="card-value">8</p>
                     </article>
@@ -131,6 +157,13 @@
             <section id="productos">
                 <h2 class="section-title">Productos</h2>
                 <p class="section-subtitle">Catálogo de productos disponibles en el inventario.</p>
+
+                <!-- Flujo alternativo A1: sin productos registrados -->
+                <div class="estado-vacio">
+                    <i class="fa-solid fa-box-open estado-vacio-icon"></i>
+                    <p class="estado-vacio-texto">No hay productos registrados en el sistema.</p>
+                    <p class="estado-vacio-sub">Comunicate con el administrador para cargar productos al inventario.</p>
+                </div>
 
                 <div class="products-grid">
 
@@ -219,8 +252,101 @@
 
             <!-- parte movimientos -->
             <section id="movimientos">
-                <h2 class="section-title">Historial de Movimientos</h2>
-                <p class="section-subtitle">Registro de entradas, salidas y ajustes de stock.</p>
+                <h2 class="section-title">Movimientos</h2>
+                <p class="section-subtitle">Registrá entradas, salidas y ajustes de stock, y consultá el historial.</p>
+
+                <!-- Formulario registrar movimiento -->
+                <div class="form-movimiento-card">
+                    <h3 class="form-movimiento-title">
+                        <i class="fa-solid fa-plus"></i> Registrar Movimiento
+                    </h3>
+                    <!-- Flujo A1: Stock insuficiente -->
+                    <div class="alerta alerta-error" role="alert">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <div>
+                            <strong>Stock insuficiente.</strong> No hay suficiente stock disponible para registrar la salida. Stock actual: <strong>1 unidad</strong>.
+                        </div>
+                    </div>
+
+                    <!-- Flujo A2: Datos inválidos -->
+                    <div class="alerta alerta-advertencia" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div>
+                            <strong>Datos inválidos.</strong> Corregí los campos marcados antes de continuar.
+                        </div>
+                    </div>
+
+                    <form action="#" method="post" novalidate>
+                        <div class="row g-3">
+
+                            <div class="col-12 col-sm-6">
+                                <label for="tipo-movimiento" class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
+                                <select id="tipo-movimiento" name="tipo" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar tipo...</option>
+                                    <option value="entrada">Entrada</option>
+                                    <option value="salida">Salida</option>
+                                    <option value="ajuste">Ajuste de Stock</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="categoria" class="form-label">Categoría <span class="campo-requerido">*</span></label>
+                                <select id="categoria" name="categoria" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar categoría...</option>
+                                    <option value="tarjetas-graficas">Tarjetas Gráficas</option>
+                                    <option value="procesadores">Procesadores</option>
+                                    <option value="almacenamiento">Almacenamiento</option>
+                                    <option value="memorias-ram">Memorias RAM</option>
+                                    <option value="placas-madre">Placas Madre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="producto" class="form-label">Producto <span class="campo-requerido">*</span></label>
+                                <select id="producto" name="producto" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar producto...</option>
+                                    <option value="1">NVIDIA RTX 4090 24GB</option>
+                                    <option value="2">Intel Core i9-14900K</option>
+                                    <option value="3">Samsung 990 Pro 2TB</option>
+                                    <option value="4">XFX Radeon RX 9070 XT 16GB</option>
+                                    <option value="5">Corsair Vengeance 32GB DDR5</option>
+                                    <option value="6">AMD Ryzen 9 9950X</option>
+                                    <option value="7">AMD Ryzen 5 5500</option>
+                                    <option value="8">ASUS ROG Strix B650-E</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="cantidad" class="form-label">Cantidad <span class="campo-requerido">*</span></label>
+                                <input type="number" id="cantidad" name="cantidad" class="form-control is-invalid" min="1" placeholder="Ej: 5" required>
+                                <div class="invalid-feedback">Ingresá una cantidad válida (mínimo 1).</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="observacion" class="form-label">Observación</label>
+                                <textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Motivo o detalle del movimiento (opcional)"></textarea>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn-confirmar">
+                                    <i class="fa-solid fa-check"></i> Registrar Movimiento
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Paso 8: Confirmación de operación exitosa -->
+                <div class="alerta alerta-exito" role="alert">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>Movimiento registrado.</strong> La entrada de <strong>5 unidades</strong> de <strong>NVIDIA RTX 4090 24GB</strong> fue registrada exitosamente.
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="font-size:16px; margin-bottom:8px;">Historial de Movimientos</h3>
+                <p class="section-subtitle">Registro de entradas, salidas y ajustes realizados.</p>
 
                 <div class="table-wrapper">
                     <table class="movements-table">
