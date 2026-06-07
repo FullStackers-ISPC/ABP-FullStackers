@@ -137,3 +137,34 @@ h2{
 p{
     color: white;
 }
+
+
+
+.btn-volver{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: -250px;
+    width: 7rem;
+    height: 2rem;
+    border-radius: 5px;
+    margin-bottom: .5rem;
+    color: white;
+    background-color: var(--color-primario);
+    border: 1px solid white;
+    text-decoration: none;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: rgb(55, 0, 255);
+    color: white;
+    cursor: pointer;
+}
+
+p{
+    color: white;
+}

@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-primario: rgb(33,33,33);
+    --color-secundario: rgb(231,45,7);
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #2f2f2f;
+}
+
+.contenedor-registro{
+    width: 100%;
+    max-width: 900px;
+}
+
+.formulario-registro{
+    position: relative;
+
+    background-color: var(--color-primario);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,.4);
+}
+
+.titulo{
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.form-label,
+.form-check-label{
+    color: white;
+}
+
+.form-control,
+.form-select{
+    min-height: 45px;
+}
+
+.btn-primary{
+    background-color: var(--color-secundario);
+    border-color: var(--color-secundario);
+}
+
+.btn-primary:hover{
+    background-color: #c62506;
+    border-color: #c62506;
+}
+
+.texto-ayuda{
+    color: #d0d0d0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.btn-volver{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn-volver:hover{
+    color: var(--color-secundario);
+}
+
+.volver-login{
+    color: white;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.volver-login:hover{
+    color: var(--color-secundario);
+}
+
+@media (max-width: 768px){
+
+    .formulario-registro{
+        padding: 20px;
+    }
+
+    .titulo{
+        font-size: 1.5rem;
+    }
+
+    .btn-volver{
+        position: static;
+        display: block;
+        margin-bottom: 15px;
+    }
+}
