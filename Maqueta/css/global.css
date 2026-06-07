@@ -320,6 +320,7 @@ SIDEBAR DASHBOARD (compartido)
 
 .sidebar-nav ul {
     list-style: none;
+    padding-left: 0;
 }
 
 .sidebar-nav ul li {
