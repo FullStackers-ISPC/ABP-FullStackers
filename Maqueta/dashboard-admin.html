@@ -101,7 +101,184 @@
                     </article>
                 </div>
             </section>
+<section id="movimientos">
+                <h2 class="section-title">Movimientos</h2>
+                <p class="section-subtitle">Registrá entradas, salidas y ajustes de stock, y consultá el historial.</p>
 
+                <!-- Formulario registrar movimiento -->
+                <div class="form-movimiento-card">
+                    <h3 class="form-movimiento-title">
+                        <i class="fa-solid fa-plus"></i> Registrar Movimiento
+                    </h3>
+                    <!-- Flujo A1: Stock insuficiente -->
+                    <div class="alerta alerta-error" role="alert">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <div>
+                            <strong>Stock insuficiente.</strong> No hay suficiente stock disponible para registrar la salida. Stock actual: <strong>1 unidad</strong>.
+                        </div>
+                    </div>
+
+                    <!-- Flujo A2: Datos inválidos -->
+                    <div class="alerta alerta-advertencia" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div>
+                            <strong>Datos inválidos.</strong> Corregí los campos marcados antes de continuar.
+                        </div>
+                    </div>
+
+                    <form action="#" method="post" novalidate>
+                        <div class="row g-3">
+
+                            <div class="col-12 col-sm-6">
+                                <label for="tipo-movimiento" class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
+                                <select id="tipo-movimiento" name="tipo" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar tipo...</option>
+                                    <option value="entrada">Entrada</option>
+                                    <option value="salida">Salida</option>
+                                    <option value="ajuste">Ajuste de Stock</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="categoria" class="form-label">Categoría <span class="campo-requerido">*</span></label>
+                                <select id="categoria" name="categoria" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar categoría...</option>
+                                    <option value="tarjetas-graficas">Tarjetas Gráficas</option>
+                                    <option value="procesadores">Procesadores</option>
+                                    <option value="almacenamiento">Almacenamiento</option>
+                                    <option value="memorias-ram">Memorias RAM</option>
+                                    <option value="placas-madre">Placas Madre</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="producto" class="form-label">Producto <span class="campo-requerido">*</span></label>
+                                <select id="producto" name="producto" class="form-select" required>
+                                    <option value="" disabled selected>Seleccionar producto...</option>
+                                    <option value="1">NVIDIA RTX 4090 24GB</option>
+                                    <option value="2">Intel Core i9-14900K</option>
+                                    <option value="3">Samsung 990 Pro 2TB</option>
+                                    <option value="4">XFX Radeon RX 9070 XT 16GB</option>
+                                    <option value="5">Corsair Vengeance 32GB DDR5</option>
+                                    <option value="6">AMD Ryzen 9 9950X</option>
+                                    <option value="7">AMD Ryzen 5 5500</option>
+                                    <option value="8">ASUS ROG Strix B650-E</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <label for="cantidad" class="form-label">Cantidad <span class="campo-requerido">*</span></label>
+                                <input type="number" id="cantidad" name="cantidad" class="form-control is-invalid" min="1" placeholder="Ej: 5" required>
+                                <div class="invalid-feedback">Ingresá una cantidad válida (mínimo 1).</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="observacion" class="form-label">Observación</label>
+                                <textarea id="observacion" name="observacion" class="form-control" rows="2" placeholder="Motivo o detalle del movimiento (opcional)"></textarea>
+                            </div>
+
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn-confirmar">
+                                    <i class="fa-solid fa-check"></i> Registrar Movimiento
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Paso 8: Confirmación de operación exitosa -->
+                <div class="alerta alerta-exito" role="alert">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>Movimiento registrado.</strong> La entrada de <strong>5 unidades</strong> de <strong>NVIDIA RTX 4090 24GB</strong> fue registrada exitosamente.
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="font-size:16px; margin-bottom:8px;">Historial de Movimientos</h3>
+                <p class="section-subtitle">Registro de entradas, salidas y ajustes realizados.</p>
+
+                <div class="table-wrapper">
+                    <table class="movements-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>11/05/2026</td>
+                                <td>NVIDIA RTX 4090 24GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+5</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>11/05/2026</td>
+                                <td>Intel Core i9-14900K</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-2</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>10/05/2026</td>
+                                <td>Samsung 990 Pro 2TB</td>
+                                <td>Almacenamiento</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+10</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>10/05/2026</td>
+                                <td>AMD Ryzen 5 5500</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-ajuste">Ajuste</span></td>
+                                <td>-3</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>09/05/2026</td>
+                                <td>Corsair Vengeance 32GB DDR5</td>
+                                <td>Memorias RAM</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-4</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>09/05/2026</td>
+                                <td>ASUS ROG Strix B650-E</td>
+                                <td>Placas Madre</td>
+                                <td><span class="tipo-badge tipo-entrada">Entrada</span></td>
+                                <td>+6</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>08/05/2026</td>
+                                <td>XFX Radeon RX 9070 XT 16GB</td>
+                                <td>Tarjetas Gráficas</td>
+                                <td><span class="tipo-badge tipo-salida">Salida</span></td>
+                                <td>-1</td>
+                                <td>usuario</td>
+                            </tr>
+                            <tr>
+                                <td>08/05/2026</td>
+                                <td>AMD Ryzen 9 9950X</td>
+                                <td>Procesadores</td>
+                                <td><span class="tipo-badge tipo-ajuste">Ajuste</span></td>
+                                <td>+2</td>
+                                <td>usuario</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
              <!-- ===== Sección: Tabla de Stock Bajo ===== -->
             <section id="stock-bajo">
                 <div class="section-header">
