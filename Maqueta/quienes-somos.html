@@ -7,7 +7,17 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
+    <meta
+        name="description"
+        content="Conocé al equipo FullStackers y la propuesta académica de EasyStock."
+    >
     <title>Quiénes Somos | EasyStock</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
     <!-- GLOBAL CSS -->
     <link
@@ -27,8 +37,6 @@
     <header class="header">
         <div class="navbar-container">
             <nav class="navbar">
-
-                <!-- LOGO -->
                 <div class="logo-container">
                     <a
                         href="index.html"
@@ -46,7 +54,6 @@
                     </a>
                 </div>
 
-                <!-- NAV LINKS -->
                 <ul class="nav-links">
                     <li>
                         <a href="index.html">
@@ -56,7 +63,6 @@
                     <li>
                         <a
                             href="quienes-somos.html"
-                            class="active"
                         >
                             Quiénes Somos
                         </a>
@@ -81,10 +87,10 @@
                 <span class="hero-tag">
                     GRUPO FULLSTACKERS
                 </span>
-                <h2>
+                <h1>
                     Desarrollo Full Stack orientado
                     a soluciones empresariales
-                </h2>
+                </h1>
                 <p>
                     Somos estudiantes del ISPC enfocados en el desarrollo
                     de aplicaciones web modernas, aplicando buenas prácticas
@@ -95,8 +101,16 @@
         </div>
     </section>
 
-    <!-- MAIN -->
     <main>
+        <!-- ALERT -->
+        <section class="intro-alert">
+            <div class="container">
+                <div class="alert alert-light border text-center">
+                    Proyecto académico desarrollado por el equipo FullStackers para la carrera de Desarrollo de Software del ISPC.
+                </div>
+            </div>
+        </section>
+
         <!-- ABOUT -->
         <section class="about-section">
             <div class="container">
@@ -122,6 +136,121 @@
             </div>
         </section>
 
+        <!-- MISSION -->
+        <section class="mission-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>
+                        Nuestra Misión
+                    </h2>
+                </div>
+                <div class="mission-card card">
+                    <p>
+                        Desarrollar una solución web moderna que permita optimizar
+                        la gestión de inventario mediante herramientas intuitivas,
+                        accesibles y adaptadas a las necesidades de pequeñas y
+                        medianas empresas tecnológicas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- OBJECTIVES -->
+        <section class="objectives-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>
+                        Objetivos del Sistema
+                    </h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="objective-card card">
+                            <h3>
+                                Control de Stock
+                            </h3>
+                            <p>
+                                Supervisar productos en tiempo real.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="objective-card card">
+                            <h3>
+                                Movimientos
+                            </h3>
+                            <p>
+                                Registrar entradas, salidas y ajustes.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="objective-card card">
+                            <h3>
+                                Trazabilidad
+                            </h3>
+                            <p>
+                                Mantener historial de operaciones.
+                            </p>
+                        </article>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <article class="objective-card card">
+                            <h3>
+                                Centralización
+                            </h3>
+                            <p>
+                                Gestionar toda la información en un único sistema.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TECHNOLOGIES -->
+        <section class="tech-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>
+                        Tecnologías Utilizadas
+                    </h2>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            HTML5
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            CSS3
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            Bootstrap
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            Git
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            GitHub
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="tech-card card">
+                            UML
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- TEAM -->
         <section class="team-section">
             <div class="container">
@@ -130,195 +259,168 @@
                         Integrantes del Equipo
                     </h2>
                 </div>
-                <div class="team-grid">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
+                            <div class="member-image">
+                                <img
+                                    src="./img/Rodri.jpeg"
+                                    alt="Rodrigo Mateo Chavez Cuffa"
+                                    loading="lazy"
+                                >
+                            </div>
+                            <div class="member-info">
+                                <h3>
+                                    Rodrigo Mateo Chavez Cuffa
+                                </h3>
+                                <span class="badge role-badge">
+                                    Backend Developer
+                                </span>
+                                <a href="mailto:rodrichc1@gmail.com">
+                                    rodrichc1@gmail.com
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
-                    <!-- RODRIGO -->
-                    <article class="member-card card">
-                        <div class="member-image">
-                            <img
-                                src="./img/Rodri.jpeg"
-                                alt="Rodrigo Mateo Chavez Cuffa"
-                                loading="lazy"
-                            >
-                        </div>
-                        <div class="member-info">
-                            <h3>
-                                Rodrigo Mateo Chavez Cuffa
-                            </h3>
-                            <span class="role">
-                                Backend Developer
-                            </span>
-                            <a href="mailto:rodrichc1@gmail.com">
-                                rodrichc1@gmail.com
-                            </a>
-                        </div>
-                    </article>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
+                            <div class="member-image">
+                                <img
+                                    src="./img/Fausto.jpeg"
+                                    alt="Fausto Santino Fili"
+                                    loading="lazy"
+                                >
+                            </div>
+                            <div class="member-info">
+                                <h3>
+                                    Fausto Santino Fili
+                                </h3>
+                                <span class="badge role-badge">
+                                    Frontend Developer
+                                </span>
+                                <a href="mailto:faustosantinofili@gmail.com">
+                                    faustosantinofili@gmail.com
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
-                    <!-- FAUSTO -->
-                    <article class="member-card card">
-                        <div class="member-image">
-                            <img
-                                src="./img/Fausto.jpeg"
-                                alt="Fausto Santino Fili"
-                                loading="lazy"
-                            >
-                        </div>
-                        <div class="member-info">
-                            <h3>
-                                Fausto Santino Fili
-                            </h3>
-                            <span class="role">
-                                Frontend Developer
-                            </span>
-                            <a href="mailto:faustosantinofili@gmail.com">
-                                faustosantinofili@gmail.com
-                            </a>
-                        </div>
-                    </article>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
+                            <div class="member-image">
+                                <img
+                                    src="./img/Ignacio.jpeg"
+                                    alt="Ignacio Javier Moreira"
+                                    loading="lazy"
+                                >
+                            </div>
+                            <div class="member-info">
+                                <h3>
+                                    Ignacio Javier Moreira
+                                </h3>
+                                <span class="badge role-badge">
+                                    Frontend Developer
+                                </span>
+                                <a href="mailto:ignaciomoreira2121@gmail.com">
+                                    ignaciomoreira2121@gmail.com
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
-                    <!-- IGNACIO -->
-                    <article class="member-card card">
-                        <div class="member-image">
-                            <img
-                                src="./img/Ignacio.jpeg"
-                                alt="Ignacio Javier Moreira"
-                                loading="lazy"
-                            >
-                        </div>
-                        <div class="member-info">
-                            <h3>
-                                Ignacio Javier Moreira
-                            </h3>
-                            <span class="role">
-                                Frontend Developer
-                            </span>
-                            <a href="mailto:ignaciomoreira2121@gmail.com">
-                                ignaciomoreira2121@gmail.com
-                            </a>
-                        </div>
-                    </article>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
+                            <div class="member-image">
+                                <img
+                                    src="./img/Daniel.jpg"
+                                    alt="Daniel Esteban Gonzalez Lara"
+                                    loading="lazy"
+                                >
+                            </div>
+                            <div class="member-info">
+                                <h3>
+                                    Daniel Esteban Gonzalez Lara
+                                </h3>
+                                <span class="badge role-badge">
+                                    Backend Developer
+                                </span>
+                                <a href="mailto:dani.esteban.gonzalez.lara@gmail.com">
+                                    dani.esteban.gonzalez.lara@gmail.com
+                                </a>
+                            </div>
+                        </article>
+                    </div>
 
-                    <!-- DANIEL -->
-                    <article class="member-card card">
-                        <div class="member-image">
-                            <img
-                                src="./img/Daniel.jpg"
-                                alt="Daniel Esteban Gonzalez Lara"
-                                loading="lazy"
-                            >
-                        </div>
-                        <div class="member-info">
-                            <h3>
-                                Daniel Esteban Gonzalez Lara
-                            </h3>
-                            <span class="role">
-                                Backend Developer
-                            </span>
-                            <a href="mailto:dani.esteban.gonzalez.lara@gmail.com">
-                                dani.esteban.gonzalez.lara@gmail.com
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- KEVIN -->
-                    <article class="member-card card">
-                        <div class="member-image">
-                            <img
-                                src="./img/kevin.jpg"
-                                alt="Kevin Requelme"
-                                loading="lazy"
-                            >
-                        </div>
-                        <div class="member-info">
-                            <h3>
-                                Kevin Requelme
-                            </h3>
-                            <span class="role">
-                                Database  Developer
-                            </span>
-                            <a href="mailto:kevinrequelme82@gmail.com">
-                                kevinrequelme82@gmail.com
-                            </a>
-                        </div>
-                    </article>
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
+                            <div class="member-image">
+                                <img
+                                    src="./img/kevin.jpg"
+                                    alt="Kevin Requelme"
+                                    loading="lazy"
+                                >
+                            </div>
+                            <div class="member-info">
+                                <h3>
+                                    Kevin Requelme
+                                </h3>
+                                <span class="badge role-badge">
+                                    Database Developer
+                                </span>
+                                <a href="mailto:kevinrequelme82@gmail.com">
+                                    kevinrequelme82@gmail.com
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <!-- BRAND -->
-            <div class="footer-column">
-                <div class="footer-logo">
-                    <img
-                        src="./img/Logo-ST.png"
-                        alt="EasyStock Logo"
-                    >
-                    <span>
-                        EasyStock
-                    </span>
+<!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- BRAND -->
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="./img/Logo-ST.png" alt="EasyStock Logo">
+                        <span>EasyStock</span>
+                    </div>
+                    <p>
+                        Sistema web de gestión de inventario
+                        desarrollado como proyecto académico
+                        Full Stack orientado a soluciones
+                        empresariales.
+                    </p>
                 </div>
-                <p>
-                    Sistema web de gestión de inventario
-                    desarrollado como proyecto académico
-                    Full Stack orientado a soluciones
-                    empresariales.
-                </p>
+                <!-- LINKS -->
+                <div class="footer-column">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="quienes-somos.html">Quiénes Somos</a></li>
+                        <li><a href="login.html">Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+                <!-- INFO -->
+                <div class="footer-column">
+                    <h3>Información</h3>
+                    <ul>
+                        <li>ISPC</li>
+                        <li>Full Stack I</li>
+                        <li>Grupo FullStackers</li>
+                        <li>Córdoba - Argentina</li>
+                    </ul>
+                </div>
             </div>
-            <!-- LINKS -->
-            <div class="footer-column">
-                <h3>
-                    Navegación
-                </h3>
-                <ul>
-                    <li>
-                        <a href="index.html">
-                            Inicio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="quienes-somos.html">
-                            Quiénes Somos
-                        </a>
-                    </li>
-                    <li>
-                        <a href="login.html">
-                            Iniciar Sesión
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- INFO -->
-            <div class="footer-column">
-                <h3>
-                    Información
-                </h3>
-                <ul>
-                    <li>
-                        ISPC
-                    </li>
-                    <li>
-                        Full Stack I
-                    </li>
-                    <li>
-                        Grupo FullStackers
-                    </li>
-                    <li>
-                        Córdoba - Argentina
-                    </li>
-                </ul>
+            <!-- BOTTOM -->
+            <div class="footer-bottom">
+                <p>© 2026 EasyStock - Grupo FullStackers</p>
             </div>
         </div>
-        <!-- BOTTOM -->
-        <div class="footer-bottom">
-            <p>
-                © 2026 EasyStock - Grupo FullStackers
-            </p>
-        </div>
-    </div>
-</footer>
+    </footer>
 </body>
 </html>

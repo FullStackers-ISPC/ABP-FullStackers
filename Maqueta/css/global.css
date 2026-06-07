@@ -39,14 +39,6 @@ img {
 }
 
 /* =========================
-LINKS
-========================= */
-
-a {
-    text-decoration: none;
-}
-
-/* =========================
 CONTAINER
 ========================= */
 .container {
@@ -74,7 +66,12 @@ HEADER
 .header {
     background-color: var(--dark-gray);
     border-bottom: 3px solid var(--primary-red);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+
 
 /* =========================
 NAVBAR CONTAINER
@@ -133,6 +130,9 @@ NAV LINKS
     align-items: center;
     list-style: none;
     gap: 35px;
+
+    margin: 0;
+    padding: 0;
 }
 
 .nav-links a {
@@ -183,6 +183,7 @@ CARDS
 FOOTER
 ========================= */
 .footer {
+    width: 100%;
     background-color: var(--dark-gray);
     color: white;
     padding-top: 70px;
@@ -199,6 +200,7 @@ FOOTER CONTENT
     gap: 50px;
     padding-bottom: 50px;
 }
+
 
 /* =========================
 FOOTER COLUMN
@@ -284,6 +286,21 @@ RESPONSIVE
         align-items: center;
         gap: 15px;
     }
+}
+
+/* =========================
+BOOTSTRAP FIXES
+========================= */
+
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none !important;
+}
+
+.badge.role-badge {
+    display: inline-block;
 }
 
 /* =========================

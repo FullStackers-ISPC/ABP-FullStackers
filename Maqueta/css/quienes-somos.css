@@ -24,10 +24,11 @@ HERO
     border-radius: 5px;
 }
 
-.hero-content h2 {
+.hero-content h1 {
     font-size: 3rem;
     line-height: 1.2;
     margin-bottom: 25px;
+    margin-top: 0;
 }
 
 .hero-content p {
@@ -62,19 +63,10 @@ TEAM SECTION
 }
 
 /* =========================
-GRID
-========================= */
-
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-/* =========================
 MEMBER CARD
 ========================= */
 .member-card {
+    height: 100%;
     overflow: hidden;
     transition:
     transform 0.25s ease,
@@ -111,10 +103,11 @@ INFO
 
 .member-info h3 {
     font-size: 1.3rem;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .member-info a {
+    display: block;
     color: var(--primary-red);
     font-size: 0.95rem;
     word-break: break-word;
@@ -123,14 +116,12 @@ INFO
 /* =========================
 ROLE
 ========================= */
-.role {
+.role-badge {
     display: inline-block;
     margin-bottom: 15px;
     padding: 8px 14px;
-    background-color:
-    rgba(231, 45, 7, 0.1);
+    background-color: rgba(231, 45, 7, 0.1);
     color: var(--primary-red);
-    border-radius: 5px;
     font-size: 0.9rem;
     font-weight: bold;
 }
@@ -138,9 +129,8 @@ ROLE
 /* =========================
 RESPONSIVE
 ========================= */
-
 @media(max-width: 900px) {
-    .hero-content h2 {
+    .hero-content h1 {
         font-size: 2.2rem;
     }
 }
@@ -149,7 +139,7 @@ RESPONSIVE
     .hero {
         padding: 70px 0;
     }
-    .hero-content h2 {
+    .hero-content h1 {
         font-size: 1.8rem;
     }
     .section-title h2 {
@@ -158,4 +148,59 @@ RESPONSIVE
     .about-card {
         padding: 30px;
     }
+}
+
+/* =========================
+MISSION
+========================= */
+.mission-section {
+    padding: 20px 0 40px;
+}
+
+.mission-card {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px;
+}
+
+.mission-card p {
+    color: var(--light-gray);
+    margin: 0;
+}
+
+/* =========================
+OBJECTIVES
+========================= */
+.objectives-section {
+    padding: 40px 0 80px;
+}
+
+.objective-card {
+    text-align: center;
+    padding: 30px;
+    height: 100%;
+}
+
+.objective-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.objective-card p {
+    color: var(--light-gray);
+    margin: 0;
+}
+
+/* =========================
+TECHNOLOGIES
+========================= */
+.tech-section {
+    padding: 20px 0 80px;
+}
+
+.tech-card {
+    text-align: center;
+    padding: 25px;
+    font-weight: bold;
+    height: 100%;
 }
