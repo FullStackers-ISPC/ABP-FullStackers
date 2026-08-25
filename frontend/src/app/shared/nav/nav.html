@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid px-5">
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img
+        src="/images/Logo-ST.png"
+        alt="Logo EasyStock"
+        width="50"
+        >
+      <span>EasyStock</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menú -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item">
+          <a class="nav-link" routerLink="/panel">
+            <i class="bi bi-house-door-fill me-2"></i>
+            Panel
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/categorias">
+            <i class="bi bi-grid-fill me-2"></i>
+            Categorías
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/productos">
+            <i class="bi bi-bag-fill me-2"></i>
+            Productos
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-arrow-left-right me-2"></i>
+            Movimientos
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" routerLink="/ventas">
+                Ventas
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="/compras">
+                Compras
+              </a>
+            </li>
+
+            <li>
+              <a class="dropdown-item" routerLink="/analisis">
+                Análisis por tiempo
+              </a>
+            </li>
+          </ul>
+
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,212 @@
+<footer class="border-top bg-light py-3 mt-auto">
+  <div class="container-fluid px-4">
+
+    <div
+      class="d-flex flex-column flex-md-row
+             justify-content-between align-items-center gap-3"
+    >
+
+      <!-- Información -->
+      <small class="text-muted">
+        © 2026 EasyStock · Gestión de inventario
+      </small>
+
+      <!-- Acciones -->
+      <div class="d-flex align-items-center gap-3">
+
+        <button
+          type="button"
+          class="btn btn-link btn-sm text-decoration-none p-0"
+          data-bs-toggle="modal"
+          data-bs-target="#problemaModal"
+        >
+          <i class="bi bi-exclamation-circle me-1"></i>
+          Reportar un problema
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
+          data-bs-toggle="modal"
+          data-bs-target="#arrepentimientoModal"
+        >
+          Botón de arrepentimiento
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- MODAL: REPORTAR PROBLEMA -->
+<div
+  class="modal fade"
+  id="problemaModal"
+  tabindex="-1"
+  aria-labelledby="problemaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="problemaModalLabel">
+          Reportar un problema
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <p class="text-muted">
+          ¿Encontraste un error o algo no funciona correctamente?
+          Contanos qué ocurrió.
+        </p>
+
+        <form>
+
+          <div class="mb-3">
+            <label for="tipoProblema" class="form-label">
+              Tipo de problema
+            </label>
+
+            <select id="tipoProblema" class="form-select">
+              <option selected disabled>Seleccionar...</option>
+              <option>Error en el sistema</option>
+              <option>Problema con mi cuenta</option>
+              <option>Problema con productos</option>
+              <option>Sugerencia</option>
+              <option>Otro</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="descripcionProblema" class="form-label">
+              Descripción
+            </label>
+
+            <textarea
+              id="descripcionProblema"
+              class="form-control"
+              rows="4"
+              placeholder="Describí brevemente el problema..."
+            ></textarea>
+          </div>
+
+        </form>
+
+        <div class="border-top pt-3">
+          <small class="text-muted d-block mb-2">
+            También podés comunicarte con nosotros:
+          </small>
+
+          <div class="d-flex gap-3">
+            <a href="mailto:soporte@easystock.com">
+              <i class="bi bi-envelope me-1"></i>
+              Email
+            </a>
+
+            <a href="#" class="text-success">
+              <i class="bi bi-whatsapp me-1"></i>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+        >
+          Enviar reporte
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL: ARREPENTIMIENTO -->
+<div
+  class="modal fade"
+  id="arrepentimientoModal"
+  tabindex="-1"
+  aria-labelledby="arrepentimientoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="arrepentimientoModalLabel">
+          Botón de arrepentimiento
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+
+        <p>
+          Desde aquí podés solicitar la cancelación de un servicio
+          o contratación realizada.
+        </p>
+
+        <p class="text-muted small mb-0">
+          Te pediremos algunos datos para identificar la operación
+          y procesar tu solicitud.
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Volver
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-danger"
+        >
+          Iniciar solicitud
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
