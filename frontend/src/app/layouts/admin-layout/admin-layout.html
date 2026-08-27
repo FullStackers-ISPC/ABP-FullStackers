@@ -1,0 +1,75 @@
+<input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+<label for="nav-toggle" class="menu-overlay"></label>
+
+<aside class="sidebar">
+    <label for="nav-toggle" class="sidebar-close">
+        <i class="fa-solid fa-xmark"></i>
+    </label>
+    
+    <header class="sidebar-header">
+        <img src="assets/img/Logo-CT.png" alt="EasyStock" class="logo-img">
+    </header>
+
+    <nav class="sidebar-nav">
+        <ul>
+            <li>
+                <a routerLink="./dashboard" routerLinkActive="active" class="nav-link">
+                    <i class="fa-solid fa-house nav-icon"></i> Panel
+                </a>
+            </li>
+            <li>
+                <a routerLink="./categorias" routerLinkActive="active" class="nav-link">
+                    <i class="fa-solid fa-table-cells nav-icon"></i> Categorías
+                </a>
+            </li>
+            <li>
+                <a routerLink="./productos" routerLinkActive="active" class="nav-link">
+                    <i class="fa-solid fa-box nav-icon"></i> Productos
+                </a>
+            </li>
+            <li>
+                <a routerLink="./movimientos" routerLinkActive="active" class="nav-link">
+                    <i class="fa-solid fa-right-left nav-icon"></i> Movimientos
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <footer class="sidebar-footer">
+        <p class="user-name">Administrador</p>
+        <p class="user-email">admin@easystock.com</p>
+        <button class="btn-logout">Cerrar Sesión</button>
+    </footer>
+</aside>
+
+<div class="main-wrapper">
+    <header class="topbar">
+        <p class="breadcrumb">
+            <label for="nav-toggle" class="hamburger-btn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+            
+            Dashboard
+            @for (ruta of rutas; track $index) {
+                @if ($last) {
+                    / <span> {{ ruta | titlecase }}</span>
+                } @else {
+                    / {{ ruta | titlecase }}
+                }
+            }
+        </p>
+    
+    <div class="topbar-user">
+        <p class="topbar-role">Administrador</p>
+        <p class="topbar-panel">Panel de Administración</p>
+    </div>
+</header>
+
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+    
+    <footer class="main-footer">
+        <p>© 2026 EasyStock - Gestión de Inventario</p>
+    </footer>
+</div>
