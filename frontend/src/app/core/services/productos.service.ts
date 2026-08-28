@@ -50,4 +50,10 @@ export class ProductosService {
   getProductoById(id: number): Producto | undefined {
     return this.mockProductos.find(prod => prod.id === id);
   }
+
+  getProductosConBajoStock(): Producto[] {
+    return this.mockProductos
+      .filter(prod => prod.stock <= prod.stockAlerta) 
+      .sort((a, b) => a.stock - b.stock); 
+  }
 }

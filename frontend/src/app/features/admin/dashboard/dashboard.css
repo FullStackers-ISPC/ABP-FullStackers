@@ -1,0 +1,87 @@
+
+
+/* ===== TITULOS DE SECCIÓN ===== */
+.section-title {
+    text-align: left;
+    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--dark-gray);
+}
+.section-subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+/* ===== CARDS ROW (Resumen) ===== */
+.cards-row { display: flex; gap: 20px; }
+.card {
+    flex: 1;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+.card-label { font-size: 14px; color: var(--dark-gray); margin-bottom: 12px; }
+.card-value { font-size: 36px; font-weight: bold; color: var(--dark-gray); }
+.card-icon { color: var(--primary-red); }
+
+/* ===== BADGES ===== */
+.badge { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; color: white; }
+.badge-alerta { background-color: #D28C00; }
+.badge-critico, .tipo-salida { background-color: var(--primary-red); }
+.tipo-badge { font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px; color: white; }
+.tipo-entrada { background-color: #228B22; }
+.tipo-ajuste { background-color: #D28C00; }
+
+/* ===== FORMULARIO MOVIMIENTO ===== */
+.form-movimiento-card {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+.form-movimiento-title {
+    font-size: 16px; font-weight: bold; color: var(--dark-gray);
+    margin-bottom: 20px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+.form-label { font-size: 13px; font-weight: bold; color: var(--dark-gray); margin-bottom: 6px; display: block; }
+.campo-requerido { color: var(--primary-red); }
+.form-select, .form-control {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border-color);
+    border-radius: 4px; font-size: 14px; background-color: white; outline: none;
+}
+.btn-confirmar {
+    padding: 10px 22px; background-color: var(--primary-red); color: white;
+    border: none; border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer;
+}
+
+/* ===== TABLA MOVIMIENTOS ===== */
+#movimientos { margin-top: 48px; }
+.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background-color: white; }
+.movements-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.movements-table th { padding: 12px 16px; text-align: left; font-weight: bold; background-color: var(--white-color); border-bottom: 1px solid var(--border-color); }
+.movements-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+
+/* ===== TABLA STOCK BAJO (Admin) ===== */
+.es-table-wrapper { border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; background-color: var(--pure-white); }
+.es-table-scroll { overflow-x: auto; overflow-y: auto; max-height: 450px; }
+.es-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.es-table th { padding: 14px 16px; text-align: left; font-weight: bold; position: sticky; top: 0; background-color: var(--white-color); }
+.es-table td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+
+/* Botones CRUD */
+.btn-editar, .btn-eliminar, .btn-primary-es {
+    border: none; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: white;
+}
+.btn-editar { background-color: var(--dark-gray); padding: 6px 10px; }
+.btn-eliminar { background-color: var(--primary-red); padding: 6px 10px; }
+.btn-primary-es { background-color: var(--primary-red); padding: 12px 24px; font-weight: bold; border-radius: 8px; text-decoration: none;}
+
+@media (max-width: 600px) {
+    .cards-row { flex-direction: column; }
+    .form-movimiento-card { padding: 16px; }
+}
