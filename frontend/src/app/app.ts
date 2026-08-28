@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { NavbarHorizontal } from './navbar-horizontal/navbar-horizontal';
 import { QuienesSomos } from './quienes-somos/quienes-somos';
 
 @Component({
     selector: 'app-root',
-    imports: [QuienesSomos],
+    imports: [NavbarHorizontal, QuienesSomos],
     templateUrl: './app.html',
     styleUrl: './app.css'
 })
