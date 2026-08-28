@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { Footer } from './footer/footer';
-import { NavbarHorizontal } from './navbar-horizontal/navbar-horizontal';
-import { QuienesSomos } from './quienes-somos/quienes-somos';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-root',
-    imports: [Footer, NavbarHorizontal, QuienesSomos],
+    imports: [RouterOutlet],
     templateUrl: './app.html',
     styleUrl: './app.css'
 })
