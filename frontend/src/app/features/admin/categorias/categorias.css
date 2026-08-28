@@ -1,0 +1,67 @@
+/* ===== TITULOS Y CABECERA DE SECCIÓN ===== */
+.section-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+.section-header-text h2 { 
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 4px; 
+    color: var(--dark-gray);
+}
+.section-header-text p { 
+    font-size: 13px; 
+    color: var(--gray-muted, #888); 
+}
+
+/* ===== TABLA DE CATEGORÍAS (es-table) ===== */
+.es-table-wrapper { 
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    overflow: hidden; 
+    background-color: var(--pure-white, #fff); 
+    box-shadow: var(--shadow); 
+}
+.es-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 14px; 
+}
+.es-table th { 
+    padding: 14px 16px; 
+    text-align: left; 
+    font-weight: bold; 
+    background-color: var(--white-color, #fff); 
+    border-bottom: 1px solid var(--border-color);
+}
+.es-table td { 
+    padding: 14px 16px; 
+    border-bottom: 1px solid #f0f0f0; 
+    color: var(--dark-gray);
+}
+.es-table tbody tr:hover {
+    background-color: var(--white-color, #f9f9f9);
+}
+
+/* ===== BOTONES DE ACCIÓN (CRUD) ===== */
+.btn-editar, .btn-eliminar, .btn-primary-es {
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    color: white;
+    transition: transform 0.15s ease;
+}
+.btn-editar { background-color: var(--dark-gray, #333); padding: 6px 10px; }
+.btn-eliminar { background-color: var(--primary-red, rgb(184, 0, 28)); padding: 6px 10px; }
+.btn-primary-es { 
+    background-color: var(--primary-red, rgb(184, 0, 28)); 
+    padding: 12px 24px; 
+    font-weight: bold; 
+    border-radius: 8px; 
+    text-decoration: none;
+}
