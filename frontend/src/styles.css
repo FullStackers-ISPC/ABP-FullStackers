@@ -1,1 +1,491 @@
 /* You can add global styles to this file, and also import other style files */
+/* =========================
+VARIABLES
+========================= */
+:root {
+    --primary-red: rgb(231, 45, 7);
+    --dark-gray: rgb(33, 33, 33);
+    --white-color: rgb(246, 246, 246);
+    --light-gray: #555;
+    --border-color: #ddd;
+    --shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+BODY
+========================= */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--white-color);
+    color: var(--dark-gray);
+    line-height: 1.6;
+}
+
+/* =========================
+IMAGES
+========================= */
+img {
+    width: 100%;
+    display: block;
+}
+
+/* =========================
+CONTAINER
+========================= */
+.container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+/* =========================
+SECTION TITLES
+========================= */
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+}
+
+/* =========================
+HEADER
+========================= */
+.header {
+    background-color: var(--dark-gray);
+    border-bottom: 3px solid var(--primary-red);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+/* =========================
+NAVBAR CONTAINER
+========================= */
+.navbar-container {
+    width: 100%;
+    padding: 0 60px;
+}
+
+/* =========================
+NAVBAR
+========================= */
+.navbar {
+    min-height: 90px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =========================
+LOGO
+========================= */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 58px;
+    width: auto;
+}
+
+.logo-text {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.logo-link:hover .logo-text {
+    color: var(--primary-red);
+}
+
+/* =========================
+NAV LINKS
+========================= */
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 35px;
+
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-red);
+}
+.nav-links .active {
+    color: var(--primary-red);
+}
+
+/* =========================
+BUTTONS
+========================= */
+.nav-button {
+    padding: 10px 18px;
+    border-radius: 6px;
+    background-color: var(--primary-red);
+    color: white;
+    transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: white;
+    color: var(--primary-red);
+    transform: translateY(-1px);
+}
+
+/* =========================
+CARDS
+========================= */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+/* =========================
+FOOTER
+========================= */
+.footer {
+    width: 100%;
+    background-color: var(--dark-gray);
+    color: white;
+    padding-top: 70px;
+    margin-top: 80px;
+}
+
+/* =========================
+FOOTER CONTENT
+========================= */
+.footer-content {
+    display: grid;
+    grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    padding-bottom: 50px;
+}
+
+
+/* =========================
+FOOTER COLUMN
+========================= */
+.footer-column h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.footer-column p {
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+    color: #ccc;
+}
+
+.footer-column ul li a {
+    color: #ccc;
+    transition: color 0.2s ease;
+}
+
+.footer-column ul li a:hover {
+    color: var(--primary-red);
+}
+
+/* =========================
+FOOTER LOGO
+========================= */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+}
+
+.footer-logo img {
+    width: 50px;
+    height: auto;
+}
+
+.footer-logo span {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+/* =========================
+FOOTER BOTTOM
+========================= */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 25px 0;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+@media(max-width: 900px) {
+    .navbar {
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        padding: 25px 0;
+    }
+}
+
+@media(max-width: 600px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+/* =========================
+BOOTSTRAP FIXES
+========================= */
+
+a,
+a:hover,
+a:focus,
+a:active {
+    text-decoration: none !important;
+}
+
+.badge.role-badge {
+    display: inline-block;
+}
+
+/* =========================
+SIDEBAR DASHBOARD (compartido)
+========================= */
+.sidebar {
+    width: 185px;
+    min-height: 100vh;
+    background-color: var(--dark-gray);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-img {
+    width: 100%;
+    max-width: 80px;
+    display: block;
+    margin: 0 auto;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar-nav ul li {
+    margin-bottom: 4px;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px 16px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+    margin: 0 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: #444;
+    color: var(--white-color);
+}
+
+.nav-icon {
+    color: var(--primary-red);
+    width: 16px;
+    text-align: center;
+    margin-right: 6px;
+}
+
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-name {
+    color: var(--white-color);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.user-email {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.btn-logout {
+    width: 100%;
+    padding: 9px;
+    background-color: var(--primary-red);
+    color: var(--white-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    display: block;
+    text-align: center;
+}
+
+.btn-logout:hover {
+    background-color: #c01f00;
+    color: var(--white-color);
+}
+
+/* =========================
+MENÚ HAMBURGUESA (sin JS)
+========================= */
+.nav-toggle-input {
+    display: none;
+}
+
+.hamburger-btn {
+    display: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--dark-gray);
+    margin-right: 8px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.sidebar-close {
+    display: none;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 18px;
+    padding: 12px 16px 0;
+    text-align: right;
+}
+
+.sidebar-close:hover {
+    color: white;
+}
+
+.menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 49px;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 998;
+}
+
+@media (max-width: 600px) {
+
+    .sidebar {
+        min-height: unset;
+        top: 49px;
+        height: calc(100vh - 49px);
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.28s ease;
+        z-index: 999;
+        background-color: rgba(33, 33, 33, 0.93);
+    }
+
+    .nav-toggle-input:checked ~ .sidebar {
+        transform: translateX(0);
+    }
+
+    .nav-toggle-input:checked ~ .menu-overlay {
+        display: block;
+    }
+
+    .hamburger-btn {
+        display: inline-block;
+    }
+
+    .sidebar-close {
+        display: block;
+    }
+}
+
+/* =========================
+ACCESIBILIDAD
+========================= */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
