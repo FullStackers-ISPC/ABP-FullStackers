@@ -1,0 +1,105 @@
+:host {
+  --primary-red: rgb(231, 45, 7);
+  --dark-gray: rgb(33, 33, 33);
+  --white-color: rgb(246, 246, 246);
+  --border-color: #ddd;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: block;
+  min-height: 100vh;
+  background-color: var(--white-color);
+  color: var(--dark-gray);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:host *, :host *::before, :host *::after { box-sizing: border-box; }
+:host p, :host h1, :host h2, :host h3, :host ul { margin-top: 0; }
+:host a { text-decoration: none; }
+
+.sidebar { width: 185px; min-height: 100vh; background-color: var(--dark-gray); display: flex; flex-direction: column; position: fixed; inset: 0 auto 0 0; z-index: 999; }
+.sidebar-header { padding: 20px 16px 16px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.logo-img { width: 100%; max-width: 80px; display: block; margin: 0 auto; }
+.sidebar-nav { flex: 1; padding: 16px 0; }
+.sidebar-nav ul { list-style: none; padding-left: 0; }
+.sidebar-nav li { margin-bottom: 4px; }
+.nav-link { display: block; padding: 10px 16px; color: #ccc; font-size: 14px; border-radius: 4px; margin: 0 8px; transition: background-color .2s ease, color .2s ease; }
+.nav-link:hover, .nav-link.active { background-color: #444; color: var(--white-color); }
+.nav-icon { color: var(--primary-red); width: 16px; text-align: center; margin-right: 6px; }
+.sidebar-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+.user-name { color: var(--white-color); font-size: 14px; font-weight: bold; margin-bottom: 0; }
+.user-email { color: #888; font-size: 12px; margin-bottom: 12px; }
+.btn-logout { width: 100%; padding: 9px; background-color: var(--primary-red); color: var(--white-color); border-radius: 4px; font-size: 13px; font-weight: bold; display: block; text-align: center; }
+
+.main-wrapper { margin-left: 185px; min-height: 100vh; display: flex; flex-direction: column; background-color: var(--white-color); }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 28px; background-color: var(--white-color); border-bottom: 1px solid var(--border-color); }
+.breadcrumb { font-size: 14px; color: #888; margin-bottom: 0; }
+.breadcrumb span { color: var(--primary-red); font-weight: bold; }
+.topbar-user { text-align: right; }
+.topbar-role { font-size: 14px; font-weight: bold; margin-bottom: 0; }
+.topbar-panel { font-size: 12px; color: #888; margin-bottom: 0; }
+.main-content { flex: 1; padding: 28px; display: flex; flex-direction: column; gap: 36px; }
+.section-title { text-align: left; margin-bottom: 4px; font-size: 20px; font-weight: bold; }
+.section-subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+.cards-row { display: flex; gap: 20px; }
+.card, .product-card, .form-movimiento-card { background-color: white; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow); }
+.card { flex: 1; padding: 24px 20px; text-align: center; }
+.card-label { font-size: 14px; margin-bottom: 12px; }
+.card-value { font-size: 36px; font-weight: bold; margin-bottom: 0; }
+.card-icon, .form-movimiento-title i { color: var(--primary-red); }
+.products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.product-card { padding: 16px; }
+.product-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.product-code, .product-category { font-size: 12px; color: #888; }
+.product-name { font-size: 14px; font-weight: bold; margin-bottom: 6px; }
+.product-category { margin-bottom: 10px; }
+.product-stock { font-size: 13px; margin-bottom: 0; }
+.badge, .tipo-badge { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; color: white; }
+.badge-ok, .tipo-entrada { background-color: #228b22; }
+.badge-alerta, .tipo-ajuste { background-color: #d28c00; }
+.badge-critico, .tipo-salida { background-color: var(--primary-red); }
+.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; background-color: white; box-shadow: var(--shadow); }
+.movements-table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14px; }
+.movements-table thead { background-color: var(--white-color); border-bottom: 1px solid var(--border-color); }
+.movements-table th { padding: 12px 16px; text-align: left; font-size: 13px; }
+.movements-table tr { border-bottom: 1px solid #f0f0f0; }
+.movements-table tr:last-child { border-bottom: none; }
+.movements-table td { padding: 12px 16px; }
+.estado-vacio { text-align: center; padding: 40px 20px; background-color: white; border: 1px dashed var(--border-color); border-radius: 8px; margin-bottom: 16px; }
+.estado-vacio-icon { display: block; font-size: 36px; color: #bbb; margin-bottom: 12px; }
+.estado-vacio-texto { font-size: 15px; font-weight: bold; margin-bottom: 4px; }
+.estado-vacio-sub { font-size: 13px; color: #888; margin-bottom: 0; }
+.alerta { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-radius: 6px; font-size: 14px; margin-bottom: 16px; }
+.alerta i { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.alerta-error { background-color: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+.alerta-advertencia { background-color: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
+.alerta-exito { background-color: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+.form-movimiento-card { padding: 24px; margin-bottom: 24px; }
+.form-movimiento-title { font-size: 16px; font-weight: bold; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); }
+.form-label { font-size: 13px; font-weight: bold; margin-bottom: 6px; display: block; }
+.campo-requerido { color: var(--primary-red); }
+.form-select, .form-control { width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 14px; color: var(--dark-gray); background-color: white; outline: none; }
+.form-select:focus, .form-control:focus { border-color: var(--primary-red); box-shadow: 0 0 0 3px rgba(213,38,0,.1); }
+.invalid-feedback { display: block; font-size: 12px; color: #dc3545; margin-top: 4px; }
+.btn-confirmar { padding: 10px 22px; background-color: var(--primary-red); color: white; border: 0; border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.history-title { font-size: 16px; margin-bottom: 8px; }
+.main-footer { text-align: center; padding: 16px; font-size: 12px; color: #888; border-top: 1px solid var(--border-color); }
+.hamburger-btn, .sidebar-close, .menu-overlay { display: none; }
+.pending-link { cursor: default; opacity: .8; }
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+
+@media (max-width: 600px) {
+  .topbar { position: sticky; top: 0; z-index: 1000; padding: 12px 16px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+  .main-wrapper { margin-left: 0; }
+  .main-content { padding: 16px; gap: 24px; }
+  .cards-row { flex-direction: column; }
+  .products-grid { grid-template-columns: 1fr 1fr; }
+  .form-movimiento-card { padding: 16px; }
+  .movements-table { font-size: 12px; }
+  .movements-table th, .movements-table td { padding: 8px; }
+  .sidebar { min-height: unset; top: 49px; bottom: 0; height: calc(100vh - 49px); transform: translateX(-100%); transition: transform .28s ease; background-color: rgba(33,33,33,.93); }
+  /* el sidebar permanece oculto en mobile hasta que angular aplica la clase condicional */
+  .sidebar.sidebar-open { transform: translateX(0); }
+  .hamburger-btn { display: inline-block; border: 0; background: transparent; cursor: pointer; font-size: 18px; color: var(--dark-gray); margin-right: 8px; padding: 0; }
+  .sidebar-close { display: block; width: 100%; border: 0; background: transparent; cursor: pointer; color: #ccc; font-size: 18px; padding: 12px 16px 0; text-align: right; }
+  .menu-overlay.visible { display: block; }
+  .menu-overlay { position: fixed; inset: 49px 0 0; width: 100%; border: 0; background: rgba(0,0,0,.45); z-index: 998; }
+}

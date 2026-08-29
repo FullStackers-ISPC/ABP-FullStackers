@@ -1,0 +1,180 @@
+<!-- en mobile el overlay permite cerrar el sidebar sin agregar rutas o dependencias externas -->
+<button type="button" class="menu-overlay" [class.visible]="sidebarOpen" (click)="closeSidebar()" aria-label="Cerrar menú"></button>
+
+<aside class="sidebar" [class.sidebar-open]="sidebarOpen">
+  <button type="button" class="sidebar-close" (click)="closeSidebar()" aria-label="Cerrar menú">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <header class="sidebar-header">
+    <img src="/logo.png" alt="EasyStock" class="logo-img">
+  </header>
+
+  <nav class="sidebar-nav" aria-label="Navegación del dashboard">
+    <ul>
+      <li><a routerLink="/dashboard/user" class="nav-link active" (click)="closeSidebar()"><i class="fa-solid fa-house nav-icon"></i> Panel</a></li>
+      <!-- routerLink conserva la ruta y fragment desplaza hacia el ID de cada seccion -->
+      <li><a routerLink="/dashboard/user" fragment="categorias" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-table-cells nav-icon"></i> Categorías</a></li>
+      <li><a routerLink="/dashboard/user" fragment="productos" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-box nav-icon"></i> Productos</a></li>
+      <li><a routerLink="/dashboard/user" fragment="movimientos" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-right-left nav-icon"></i> Movimientos</a></li>
+    </ul>
+  </nav>
+
+  <footer class="sidebar-footer">
+    <p class="user-name">Usuario</p>
+    <p class="user-email">usuario@easystock.com</p>
+    <!-- la salida queda pendiente hasta que en equipo definamos la vista y el flujo de autenticacion -->
+    <span class="btn-logout pending-link" aria-disabled="true">Cerrar Sesión</span>
+  </footer>
+</aside>
+
+<div class="main-wrapper">
+  <header class="topbar">
+    <p class="breadcrumb">
+      <button type="button" class="hamburger-btn" (click)="toggleSidebar()" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      Dashboard / <span>Panel</span>
+    </p>
+    <div class="topbar-user">
+      <p class="topbar-role">Usuario</p>
+      <p class="topbar-panel">Panel de Usuario</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <h1 class="visually-hidden">EasyStock - Dashboard de Usuario</h1>
+
+    <section id="panel">
+      <h2 class="section-title">Resumen de Actividad</h2>
+      <p class="section-subtitle">Tu actividad reciente en el inventario.</p>
+      <div class="cards-row">
+        <article class="card">
+          <h3 class="visually-hidden">Productos Disponibles</h3>
+          <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
+          <p class="card-value">22</p>
+        </article>
+        <article class="card">
+          <h3 class="visually-hidden">Mis Movimientos del Día</h3>
+          <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
+          <p class="card-value">5</p>
+        </article>
+        <article class="card">
+          <h3 class="visually-hidden">Productos con Bajo Stock</h3>
+          <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
+          <p class="card-value">8</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="categorias">
+      <h2 class="section-title">Categorías</h2>
+      <p class="section-subtitle">Categorías de productos disponibles en el inventario.</p>
+      <div class="table-wrapper">
+        <table class="movements-table">
+          <thead><tr><th>Código</th><th>Categoría</th><th>Cantidad de Productos</th></tr></thead>
+          <tbody>
+            @for (category of categories; track category.id) {
+            <tr><td>{{ category.id }}</td><td>{{ category.name }}</td><td>{{ category.productCount }}</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="productos">
+      <h2 class="section-title">Productos</h2>
+      <p class="section-subtitle">Catálogo de productos disponibles en el inventario.</p>
+      <div class="estado-vacio">
+        <i class="fa-solid fa-box-open estado-vacio-icon"></i>
+        <p class="estado-vacio-texto">No hay productos registrados en el sistema.</p>
+        <p class="estado-vacio-sub">Comunicate con el administrador para cargar productos al inventario.</p>
+      </div>
+      <div class="products-grid">
+        @for (product of products; track product.code) {
+        <article class="product-card">
+          <div class="product-top"><span class="product-code">#{{ product.code }}</span><span class="badge" [ngClass]="product.statusClass">{{ product.status }}</span></div>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-category">{{ product.category }}</p>
+          <p class="product-stock">Stock: <strong>{{ product.stock }}</strong></p>
+        </article>
+        }
+      </div>
+    </section>
+
+    <section id="movimientos">
+      <h2 class="section-title">Movimientos</h2>
+      <p class="section-subtitle">Registrá entradas, salidas y ajustes de stock, y consultá el historial.</p>
+
+      <div class="form-movimiento-card">
+        <h3 class="form-movimiento-title"><i class="fa-solid fa-plus"></i> Registrar Movimiento</h3>
+        <div class="alerta alerta-error" role="alert">
+          <i class="fa-solid fa-circle-xmark"></i>
+          <div><strong>Stock insuficiente.</strong> No hay suficiente stock disponible para registrar la salida. Stock actual: <strong>1 unidad</strong>.</div>
+        </div>
+        <div class="alerta alerta-advertencia" role="alert">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <div><strong>Datos inválidos.</strong> Corregí los campos marcados antes de continuar.</div>
+        </div>
+
+        <!-- el formulario reactivo valida los campos antes de mostrar la confirmacion -->
+        <form [formGroup]="movementForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row g-3">
+            <div class="col-12 col-sm-6">
+              <label for="tipo-movimiento" class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
+              <select id="tipo-movimiento" class="form-select" formControlName="type" [class.is-invalid]="isInvalid('type')">
+                <option value="">Seleccionar tipo...</option><option value="entrada">Entrada</option><option value="salida">Salida</option><option value="ajuste">Ajuste de Stock</option>
+              </select>
+              @if (isInvalid('type')) { <div class="invalid-feedback">Seleccioná un tipo de movimiento.</div> }
+            </div>
+            <div class="col-12 col-sm-6">
+              <label for="categoria-movimiento" class="form-label">Categoría <span class="campo-requerido">*</span></label>
+              <select id="categoria-movimiento" class="form-select" formControlName="category" [class.is-invalid]="isInvalid('category')">
+                <option value="">Seleccionar categoría...</option><option value="tarjetas-graficas">Tarjetas Gráficas</option><option value="procesadores">Procesadores</option><option value="almacenamiento">Almacenamiento</option><option value="memorias-ram">Memorias RAM</option><option value="placas-madre">Placas Madre</option>
+              </select>
+              @if (isInvalid('category')) { <div class="invalid-feedback">Seleccioná una categoría.</div> }
+            </div>
+            <div class="col-12 col-sm-6">
+              <label for="producto" class="form-label">Producto <span class="campo-requerido">*</span></label>
+              <select id="producto" class="form-select" formControlName="product" [class.is-invalid]="isInvalid('product')">
+                <option value="">Seleccionar producto...</option><option value="1">NVIDIA RTX 4090 24GB</option><option value="2">Intel Core i9-14900K</option><option value="3">Samsung 990 Pro 2TB</option><option value="4">XFX Radeon RX 9070 XT 16GB</option><option value="5">Corsair Vengeance 32GB DDR5</option><option value="6">AMD Ryzen 9 9950X</option><option value="7">AMD Ryzen 5 5500</option><option value="8">ASUS ROG Strix B650-E</option>
+              </select>
+              @if (isInvalid('product')) { <div class="invalid-feedback">Seleccioná un producto.</div> }
+            </div>
+            <div class="col-12 col-sm-6">
+              <label for="cantidad" class="form-label">Cantidad <span class="campo-requerido">*</span></label>
+              <input type="number" id="cantidad" class="form-control" formControlName="quantity" min="1" placeholder="Ej: 5" [class.is-invalid]="isInvalid('quantity')">
+              @if (isInvalid('quantity')) { <div class="invalid-feedback">Ingresá una cantidad válida (mínimo 1).</div> }
+            </div>
+            <div class="col-12">
+              <label for="observacion" class="form-label">Observación</label>
+              <textarea id="observacion" class="form-control" formControlName="observation" rows="2" placeholder="Motivo o detalle del movimiento (opcional)"></textarea>
+            </div>
+            <div class="col-12 d-flex justify-content-end"><button type="submit" class="btn-confirmar"><i class="fa-solid fa-check"></i> Registrar Movimiento</button></div>
+          </div>
+        </form>
+      </div>
+
+      @if (movementRegistered) {
+      <div class="alerta alerta-exito" role="status">
+        <i class="fa-solid fa-circle-check"></i>
+        <div><strong>Movimiento registrado.</strong> La operación fue registrada exitosamente.</div>
+      </div>
+      }
+
+      <h3 class="history-title">Historial de Movimientos</h3>
+      <p class="section-subtitle">Registro de entradas, salidas y ajustes realizados.</p>
+      <div class="table-wrapper">
+        <table class="movements-table">
+          <thead><tr><th>Fecha</th><th>Producto</th><th>Categoría</th><th>Tipo</th><th>Cantidad</th><th>Usuario</th></tr></thead>
+          <tbody>
+            @for (movement of movementHistory; track movement.id) {
+            <tr><td>{{ movement.date }}</td><td>{{ movement.product }}</td><td>{{ movement.category }}</td><td><span class="tipo-badge" [ngClass]="movement.typeClass">{{ movement.type }}</span></td><td>{{ movement.quantity }}</td><td>{{ movement.user }}</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer"><p>© 2026 EasyStock - Gestión de Inventario</p></footer>
+</div>

@@ -15,13 +15,14 @@ export const routes: Routes = [
     path: '',
     component: PublicLayout,
     children: [
-      { 
-        path: '', 
-        redirectTo: 'landing', 
-        pathMatch: 'full' },
-      { 
-        path: 'landing', 
-        component: Landing 
+      {
+        path: '',
+        redirectTo: 'landing',
+        pathMatch: 'full'
+      },
+      {
+        path: 'landing',
+        component: Landing
       },
       {
         path: 'quienes-somos',
@@ -33,15 +34,20 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayoutComponent,
     children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'dashboard', component: DashboardComponent },
-        { path: 'categorias', component: CategoriasComponent },
-        { path: 'productos', component: ProductosComponent },
-        { path: 'crear-producto', component: ProductoFormComponent},
-        {path: 'editar-producto/:id', component: ProductoFormComponent},
-        { path: 'movimientos', component: MovimientosComponent },
-        { path: 'registrar-movimiento', component: MovimientoFormComponent},
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'categorias', component: CategoriasComponent },
+      { path: 'productos', component: ProductosComponent },
+      { path: 'crear-producto', component: ProductoFormComponent },
+      { path: 'editar-producto/:id', component: ProductoFormComponent },
+      { path: 'movimientos', component: MovimientosComponent },
+      { path: 'registrar-movimiento', component: MovimientoFormComponent },
     ]
+  },
+  {
+    path: 'dashboard/user',
+    loadComponent: () =>
+      import('./pages/dashboard-user/dashboard-user')
+        .then((module) => module.DashboardUser)
   }
 ];
-
