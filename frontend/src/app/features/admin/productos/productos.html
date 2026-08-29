@@ -1,0 +1,59 @@
+<section id="productos">
+    <div class="section-header">
+        <div class="section-header-text">
+            <h2>Listado de Productos</h2>
+            <p>Administra los productos registrados en el inventario.</p>
+        </div>
+        <a routerLink="../crear-producto" class="btn-primary-es">
+            <i class="fa-solid fa-plus"></i> Nuevo Producto
+        </a>
+    </div>
+
+    <div class="es-table-wrapper">
+        <div class="es-table-scroll">
+            <table class="es-table">
+                <thead>
+                    <tr>
+                        <th class="col-codigo">Código</th>
+                        <th class="col-producto">Producto</th>
+                        <th class="col-categoria">Categoría</th>
+                        <th class="col-stock">Stock</th>
+                        <th class="col-estado">Estado</th>
+                        <th class="acciones">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @for (prod of productos; track prod.id) {
+                        <tr>
+                            <td class="col-codigo">{{ prod.id }}</td>
+                            <td class="col-producto">{{ prod.nombre }}</td>
+                            <td class="col-categoria">{{ prod.categoria }}</td>
+                            <td class="col-stock">{{ prod.stock }}</td>
+                            <td class="col-estado">
+                                <span class="badge" [class]="getEstado(prod).clase">
+                                    {{ getEstado(prod).texto }}
+                                </span>
+                            </td>
+                            <td class="acciones">
+                                <a [routerLink]="['../editar-producto', prod.id]" class="btn-editar" title="Editar">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <button class="btn-eliminar" title="Eliminar">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 20px; color:#888;">
+                                No hay productos en el inventario.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

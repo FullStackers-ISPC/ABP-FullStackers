@@ -1,0 +1,54 @@
+<section id="movimientos">
+    <div class="section-header">
+        <div class="section-header-text">
+            <h2>Historial de Movimientos</h2>
+            <p>Registro completo de entradas, salidas y ajustes de stock.</p>
+        </div>
+        <a routerLink="../registrar-movimiento" class="btn-primary-es">
+            <i class="fa-solid fa-plus"></i> Registrar Movimiento
+        </a>
+    </div>
+
+    <div class="es-table-wrapper">
+        <div class="es-table-scroll">
+            <table class="es-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Producto</th>
+                        <th class="col-categoria">Categoría</th>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @for (mov of movimientos; track mov.id) {
+                        <tr>
+                            <td>{{ mov.fecha }}</td>
+                            <td>{{ mov.producto }}</td>
+                            <td class="col-categoria">{{ mov.categoria }}</td>
+                            <td>
+                                <span class="tipo-badge" [class]="'tipo-' + mov.tipo">
+                                    {{ mov.tipo | titlecase }}
+                                </span>
+                            </td>
+                            <td>
+                                {{ mov.cantidad > 0 ? '+' + mov.cantidad : mov.cantidad }}
+                            </td>
+                            <td>{{ mov.usuario }}</td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 20px; color:#888;">
+                                No hay historial de movimientos.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

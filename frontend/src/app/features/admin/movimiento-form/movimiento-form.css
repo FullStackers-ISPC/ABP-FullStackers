@@ -1,0 +1,140 @@
+/* ===== ESTRUCTURA DE LA TARJETA DEL FORMULARIO ===== */
+.form-card {
+    background-color: var(--pure-white, #fff);
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: var(--shadow, 0 4px 6px rgba(0,0,0,0.05));
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.form-card-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.form-card-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--dark-gray, #333);
+    margin-bottom: 5px;
+}
+
+.form-card-header p {
+    color: var(--gray-muted, #888);
+    font-size: 14px;
+}
+
+/* ===== ELEMENTOS DEL FORMULARIO ===== */
+.form-label {
+    font-weight: 600;
+    color: var(--dark-gray, #333);
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.campo-requerido {
+    color: var(--primary-red, rgb(184, 0, 28));
+}
+
+.form-control, .form-select {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--dark-gray, #333);
+    box-shadow: 0 0 0 0.25rem rgba(51, 51, 51, 0.1);
+    outline: none;
+}
+
+.form-control.is-invalid, .form-select.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* ===== BOTONES ===== */
+.btn-secondary-es {
+    background-color: #f0f0f0;
+    color: var(--dark-gray, #333);
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-secondary-es:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-primary-es {
+    background-color: var(--primary-red, rgb(184, 0, 28));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-primary-es:hover {
+    background-color: rgb(150, 0, 20);
+    transform: translateY(-1px);
+}
+
+.btn-primary-es:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== ALERTAS ===== */
+.alerta {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.alerta i {
+    font-size: 20px;
+}
+
+.alerta-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #f87171;
+}
+
+.alerta-advertencia {
+    background-color: #fef3c7;
+    color: #b45309;
+    border: 1px solid #fbbf24;
+}
+
+.alerta-exito {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}

@@ -1,0 +1,51 @@
+<section id="categorias">
+    <div class="section-header">
+        <div class="section-header-text">
+            <h2>Categorías del Inventario</h2>
+            <p>Administra las categorías de productos registradas.</p>
+        </div>
+        <button class="btn-primary-es">
+            <i class="fa-solid fa-plus"></i> Nueva Categoría
+        </button>
+    </div>
+
+    <div class="es-table-wrapper">
+        <table class="es-table">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Categoría</th>
+                    <th>Cantidad de Productos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @for (cat of categorias; track cat.id) {
+                    <tr>
+                        <td>{{ cat.id }}</td>
+                        <td>{{ cat.nombre }}</td>
+                        <td>
+                            <strong>{{ cat.cantidad }}</strong>
+                        </td>
+                        <td>
+                            <button class="btn-editar" title="Editar">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn-eliminar" title="Eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="4" class="text-center" style="padding: 20px; color:#888;">
+                            No se encontraron categorías en los productos.
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,107 @@
+/* ===== TITULOS Y CABECERA DE SECCIÓN ===== */
+.section-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+.section-header-text h2 { 
+    font-size: 20px; 
+    font-weight: bold; 
+    margin-bottom: 4px; 
+    color: var(--dark-gray);
+}
+.section-header-text p { 
+    font-size: 13px; 
+    color: var(--gray-muted, #888); 
+}
+
+/* ===== TABLA DE PRODUCTOS (es-table) ===== */
+.es-table-wrapper { 
+    border: 1px solid var(--border-color); 
+    border-radius: 12px; 
+    overflow: hidden; 
+    background-color: var(--pure-white, #fff); 
+    box-shadow: var(--shadow); 
+}
+.es-table-scroll { 
+    overflow-x: auto; 
+    overflow-y: auto; 
+    /* Esta altura máxima hace que la tabla tenga scroll interno si hay muchos productos */
+    max-height: 650px; 
+}
+.es-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    font-size: 14px; 
+}
+.es-table th { 
+    padding: 14px 16px; 
+    text-align: left; 
+    font-weight: bold; 
+    position: sticky; 
+    top: 0; 
+    background-color: var(--white-color, #fff); 
+    z-index: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+.es-table td { 
+    padding: 14px 16px; 
+    border-bottom: 1px solid #f0f0f0; 
+    color: var(--dark-gray);
+}
+.es-table tbody tr:hover {
+    background-color: var(--white-color, #f9f9f9);
+}
+
+/* ===== ANCHO Y COMPORTAMIENTO DE COLUMNAS ===== */
+.col-producto {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+.acciones {
+    white-space: nowrap;
+}
+
+/* ===== BADGES DE ESTADO ===== */
+.badge { 
+    font-size: 11px; 
+    font-weight: bold; 
+    padding: 3px 8px; 
+    border-radius: 4px; 
+    color: white; 
+}
+.badge-ok { background-color: #228B22; }
+.badge-alerta { background-color: #D28C00; }
+.badge-critico { background-color: var(--error, rgb(231, 45, 7)); }
+
+/* ===== BOTONES DE ACCIÓN (CRUD) ===== */
+.btn-editar, .btn-eliminar, .btn-primary-es {
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    color: white;
+    transition: transform 0.15s ease;
+}
+.btn-editar { background-color: var(--dark-gray, #333); padding: 6px 10px; }
+.btn-eliminar { background-color: var(--primary-red, rgb(184, 0, 28)); padding: 6px 10px; }
+.btn-primary-es { 
+    background-color: var(--primary-red, rgb(184, 0, 28)); 
+    padding: 12px 24px; 
+    font-weight: bold; 
+    border-radius: 8px; 
+    text-decoration: none;
+}
+.btn-editar:hover, .btn-eliminar:hover, .btn-primary-es:hover {
+    transform: translateY(-1px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .col-categoria {
+        display: none;
+    }
+}

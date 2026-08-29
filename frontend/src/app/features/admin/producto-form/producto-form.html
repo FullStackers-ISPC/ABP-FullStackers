@@ -1,0 +1,92 @@
+<section id="producto-form">
+    <div class="form-card">
+        <div class="form-card-header">
+            <h2>{{ isEditMode ? 'Editar Producto' : 'Crear nuevo producto' }}</h2>
+            <p>{{ isEditMode ? 'Modifica los datos del producto.' : 'Completa todos los campos para registrar un producto.' }}</p>
+        </div>
+
+        <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+                
+                <div class="col-12">
+                    <label class="form-label">Nombre del producto <span class="campo-requerido">*</span></label>
+                    <input type="text" formControlName="nombre" class="form-control" [class.is-invalid]="isInvalidField('nombre')" placeholder="Ej: AMD Ryzen 7 9800X3D">
+                    @if (isInvalidField('nombre')) {
+                        <div class="invalid-feedback">El nombre del producto es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Código <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="codigo" class="form-control" [class.is-invalid]="isInvalidField('codigo')" placeholder="Ej: 25">
+                    @if (isInvalidField('codigo')) {
+                        <div class="invalid-feedback">El código es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Stock inicial <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="stock" class="form-control" [class.is-invalid]="isInvalidField('stock')" placeholder="Ej: 10">
+                    @if (isInvalidField('stock')) {
+                        <div class="invalid-feedback">El stock es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Stock Alerta <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="stockAlerta" class="form-control" [class.is-invalid]="isInvalidField('stockAlerta')" placeholder="Ej: 8">
+                    @if (isInvalidField('stockAlerta')) {
+                        <div class="invalid-feedback">El stock de alerta es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Stock Crítico <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="stockCritico" class="form-control" [class.is-invalid]="isInvalidField('stockCritico')" placeholder="Ej: 4">
+                    @if (isInvalidField('stockCritico')) {
+                        <div class="invalid-feedback">El stock crítico es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Categoría <span class="campo-requerido">*</span></label>
+                    <select formControlName="categoria" class="form-select" [class.is-invalid]="isInvalidField('categoria')">
+                        <option value="" disabled selected>Seleccionar categoría...</option>
+                        <option value="Procesadores">Procesadores</option>
+                        <option value="Tarjetas Gráficas">Tarjetas Gráficas</option>
+                        <option value="Memorias RAM">Memorias RAM</option>
+                        <option value="Almacenamiento">Almacenamiento</option>
+                        <option value="Placas Madre">Placas Madre</option>
+                    </select>
+                    @if (isInvalidField('categoria')) {
+                        <div class="invalid-feedback">Debes seleccionar una categoría.</div>
+                    }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Precio <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="precio" class="form-control" [class.is-invalid]="isInvalidField('precio')" placeholder="$0">
+                    @if (isInvalidField('precio')) {
+                        <div class="invalid-feedback">El precio es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea formControlName="descripcion" class="form-control" rows="4" placeholder="Describe el producto..."></textarea>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+                    <a routerLink="/admin/productos" class="btn-secondary-es">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-primary-es" [disabled]="productoForm.invalid">
+                        <i class="fa-solid fa-check"></i> 
+                        {{ isEditMode ? 'Actualizar Producto' : 'Guardar Producto' }}
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>

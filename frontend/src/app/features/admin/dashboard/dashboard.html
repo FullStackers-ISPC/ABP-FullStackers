@@ -1,0 +1,128 @@
+<h1 class="visually-hidden">EasyStock - Dashboard de Administración</h1>
+
+<!-- ===== SECCIÓN 1: Resumen de Actividad ===== -->
+<section id="panel">
+    <h2 class="section-title">Resumen de Actividad</h2>
+    <p class="section-subtitle">Tu actividad reciente en el inventario.</p>
+
+    <div class="cards-row">
+        <article class="card">
+            <h3 class="visually-hidden">Productos Disponibles</h3>
+            <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
+            <p class="card-value">22</p>
+        </article>
+        <article class="card">
+            <h3 class="visually-hidden">Mis Movimientos del Día</h3>
+            <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
+            <p class="card-value">5</p>
+        </article>
+        <article class="card">
+            <h3 class="visually-hidden">Productos con Bajo Stock</h3>
+            <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
+            <p class="card-value">{{ productosStockBajo.length }}</p>
+        </article>
+    </div>
+</section>
+
+<!-- ===== SECCIÓN 2: Registro e Historial de Movimientos ===== -->
+<section id="movimientos">
+    <h3 class="section-title">Historial de Movimientos</h3>
+    <p class="section-subtitle">Registro de entradas, salidas y ajustes realizados.</p>
+
+    <div class="table-wrapper">
+        <table class="movements-table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                @for (mov of movimientos; track mov.id) {
+                    <tr>
+                        <td>{{ mov.fecha }}</td>
+                        <td>{{ mov.producto }}</td>
+                        <td>{{ mov.categoria }}</td>
+                        <td>
+                            <span class="tipo-badge" [class]="'tipo-' + mov.tipo">
+                                {{ mov.tipo | titlecase }}
+                            </span>
+                        </td>
+                        <td>{{ mov.cantidad > 0 ? '+' + mov.cantidad : mov.cantidad }}</td>
+                        <td>{{ mov.usuario }}</td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: #888;">
+                            Todavía no hay movimientos registrados en el sistema.
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ===== SECCIÓN 3: Tabla de Stock Bajo ===== -->
+<section id="stock-bajo" style="margin-top: 3rem;">
+    <div class="section-header">
+        <div class="section-header-text">
+            <h2 class="section-title">Productos con Stock Bajo</h2>
+            <p class="section-subtitle">Estos productos requieren reposición inmediata.</p>
+        </div>
+
+        <a routerLink="../productos" class="btn-primary-es">
+            <i class="fa-solid fa-boxes-stacked"></i> Gestionar Productos
+        </a>
+    </div>
+
+    <div class="es-table-wrapper">
+        <div class="es-table-scroll">
+            <table class="es-table">
+                <thead>
+                    <tr>
+                        <th class="col-codigo">Código</th>
+                        <th class="col-producto">Producto</th>
+                        <th class="col-categoria">Categoría</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (prod of productosStockBajo; track prod.id) {
+                        <tr>
+                            <td class="col-codigo">{{ prod.id }}</td>
+                            <td class="col-producto">{{ prod.nombre }}</td>
+                            <td class="col-categoria">{{ prod.categoria }}</td>
+                            <td><strong>{{ prod.stock }}</strong></td>
+                            <td>
+                                <span class="badge" [class]="getEstado(prod).clase">
+                                    {{ getEstado(prod).texto }}
+                                </span>
+                            </td>
+                            <td>
+                                <a [routerLink]="['../editar-producto', prod.id]" class="btn-editar" title="Editar">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <button class="btn-eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 20px; color:#888;">
+                                No hay productos con stock bajo en este momento.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
