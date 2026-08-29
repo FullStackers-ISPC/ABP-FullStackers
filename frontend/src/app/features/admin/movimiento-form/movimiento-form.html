@@ -1,0 +1,93 @@
+<section id="registrar-movimiento">
+    <div class="form-card">
+        <div class="form-card-header">
+            <h2>Registrar Movimiento</h2>
+            <p>Completá los campos para registrar una entrada, salida o ajuste de stock.</p>
+        </div>
+
+        <!-- ALERTA: Error de Stock -->
+        @if (mostrarErrorStock) {
+            <div class="alerta alerta-error">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <div>
+                    <strong>Stock insuficiente.</strong> No hay suficiente stock disponible para registrar esta salida.
+                </div>
+            </div>
+        }
+
+        <!-- ALERTA: Formulario Inválido -->
+        @if (intentoFallido) {
+            <div class="alerta alerta-advertencia">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
+                    <strong>Datos inválidos.</strong> Corregí los campos marcados en rojo antes de continuar.
+                </div>
+            </div>
+        }
+
+        <!-- ALERTA: Éxito -->
+        @if (mostrarExito) {
+            <div class="alerta alerta-exito">
+                <i class="fa-solid fa-circle-check"></i>
+                <div>
+                    <strong>¡Movimiento registrado!</strong> La operación se guardó exitosamente en el sistema.
+                </div>
+            </div>
+        }
+
+        <form [formGroup]="movimientoForm" (ngSubmit)="onSubmit()" class="mt-4">
+            <div class="row g-3">
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
+                    <select formControlName="tipo" class="form-select" [class.is-invalid]="isInvalidField('tipo')">
+                        <option value="" disabled selected>Seleccionar tipo...</option>
+                        <option value="entrada">Entrada</option>
+                        <option value="salida">Salida</option>
+                        <option value="ajuste">Ajuste de Stock</option>
+                    </select>
+                    @if (isInvalidField('tipo')) { <div class="invalid-feedback">Seleccioná un tipo.</div> }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Categoría <span class="campo-requerido">*</span></label>
+                    <select formControlName="categoria" class="form-select" [class.is-invalid]="isInvalidField('categoria')">
+                        <option value="" disabled selected>Seleccionar categoría...</option>
+                        <option value="Procesadores">Procesadores</option>
+                        <option value="Tarjetas Gráficas">Tarjetas Gráficas</option>
+                    </select>
+                    @if (isInvalidField('categoria')) { <div class="invalid-feedback">Seleccioná una categoría.</div> }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Producto <span class="campo-requerido">*</span></label>
+                    <select formControlName="producto" class="form-select" [class.is-invalid]="isInvalidField('producto')">
+                        <option value="" disabled selected>Seleccionar producto...</option>
+                        <option value="1">AMD Ryzen 7 9800X3D</option>
+                        <option value="2">Intel Core i7-14700K</option>
+                    </select>
+                    @if (isInvalidField('producto')) { <div class="invalid-feedback">Seleccioná un producto.</div> }
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Cantidad <span class="campo-requerido">*</span></label>
+                    <input type="number" formControlName="cantidad" class="form-control" [class.is-invalid]="isInvalidField('cantidad')" placeholder="Ej: 5">
+                    @if (isInvalidField('cantidad')) { <div class="invalid-feedback">Ingresá una cantidad válida mayor a 0.</div> }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Observación</label>
+                    <textarea formControlName="observacion" class="form-control" rows="3" placeholder="Motivo o detalle (opcional)"></textarea>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                    <a routerLink="/admin/movimientos" class="btn-secondary-es">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-primary-es">
+                        <i class="fa-solid fa-check"></i> Registrar Movimiento
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
