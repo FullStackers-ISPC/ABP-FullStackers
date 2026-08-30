@@ -1,20 +1,22 @@
 import { Routes } from '@angular/router';
-<<<<<<< HEAD
+
 import { PublicLayout } from './public-layout/public-layout';
 import { QuienesSomos } from './quienes-somos/quienes-somos';
 import { Landing } from './landing/landing';
+
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout';
+
 import { DashboardComponent } from './features/admin/dashboard/dashboard';
 import { CategoriasComponent } from './features/admin/categorias/categorias';
 import { ProductosComponent } from './features/admin/productos/productos';
 import { ProductoFormComponent } from './features/admin/producto-form/producto-form';
 import { MovimientosComponent } from './features/admin/movimientos/movimientos';
 import { MovimientoFormComponent } from './features/admin/movimiento-form/movimiento-form';
+
 import { Login } from './pages/login/login';
 import { Account } from './pages/account/account';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { NotFound } from './pages/not-found/not-found';
-
 
 export const routes: Routes = [
 
@@ -115,13 +117,4 @@ export const routes: Routes = [
     component: NotFound
   }
 
-=======
-import { Home } from './pages/home/home';
-
-export const routes: Routes = [
-  {
-    path: 'home',
-    component: Home
-  }
->>>>>>> daniel-gonzalez
 ];
