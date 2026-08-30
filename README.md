@@ -6,6 +6,8 @@
 
 Este sistema busca digitalizar y centralizar la gestión de inventario, permitiendo el registro, seguimiento y control de productos con alertas de stock bajo y roles diferenciados de administrador y usuario.
 
+El proyecto nació como una maqueta estática en HTML5/CSS3 y se encuentra actualmente **en migración a una Single Page Application (SPA) con Angular**, aplicando arquitectura basada en componentes standalone, ruteo con rutas anidadas y formularios reactivos.
+
 Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto Superior Politécnico de Córdoba (ISPC)** - Año 2026.
 
 ---
@@ -17,30 +19,61 @@ Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto S
 - **Panel de Usuario (User Dashboard)**: Registro de movimientos de inventario (entradas, salidas y ajustes de stock), búsqueda de productos y visualización del historial.
 - **Página principal (Landing Page)**: Presentación del sistema con navegación general.
 - **Quiénes Somos**: Información del equipo y propósito del proyecto.
+- **Página 404**: Vista personalizada para rutas inexistentes.
 
 ---
 
-## Instrucciones para ejecutar la Maqueta
+## Tecnologías utilizadas
 
-La maqueta está desarrollada exclusivamente con HTML5 y CSS3, sin dependencias externas ni frameworks.
+| Tecnología | Versión |
+|---|---|
+| Angular | 22.1.3 |
+| Node.js | 24.15.0 |
+| Angular CLI | 22.1.5 |
+| Bootstrap | 5.3.3 |
+| TypeScript | ~6.0.2 |
 
-1. Clonar o descargar el repositorio:
-   ```
+---
+
+## Instrucciones para ejecutar el proyecto (Angular)
+
+1. Clonar el repositorio:
+   ```bash
    git clone https://github.com/FullStackers-ISPC/ABP-FullStackers.git
    ```
-2. Navegar a la carpeta `Maqueta/`:
+2. Navegar a la carpeta `frontend/`:
+   ```bash
+   cd ABP-FullStackers/frontend
    ```
-   cd ABP-FullStackers/Maqueta
+3. Instalar las dependencias:
+   ```bash
+   npm install
    ```
-3. Abrir cualquiera de los archivos HTML directamente en el navegador:
-   - `index.html` — Página principal / Landing Page
-   - `login.html` — Inicio de sesión
-   - `dashboard-user.html` — Panel de usuario
-   - `dashboard-admin.html` — Panel de administrador
-   - `quienes-somos.html` — Quiénes somos
+4. Levantar el servidor de desarrollo:
+   ```bash
+   ng serve --open
+   ```
+   Esto abre automáticamente el navegador en [http://localhost:4200](http://localhost:4200). Si no se abre solo, se puede acceder manualmente a esa dirección.
 
-No se requiere servidor ni instalación adicional.
-Opcionalmente podría ejecutarlo con el plugin Live Server de Visual Studio Code.
+5. Para generar el build de producción:
+   ```bash
+   ng build
+   ```
+   Los archivos compilados se generan en `frontend/dist/`.
+
+6. Para correr las pruebas unitarias:
+   ```bash
+   ng test
+   ```
+
+### Credenciales de prueba
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Usuario | `user@easystock.com` | `user1234` |
+| Administrador | `admin@easystock.com` | `admin1234` |
+
+> Nota: credenciales de entorno de desarrollo/demo únicamente, no representan datos productivos.
 
 ---
 
@@ -48,22 +81,48 @@ Opcionalmente podría ejecutarlo con el plugin Live Server de Visual Studio Code
 
 ```
 ABP-FullStackers/
-├── Maqueta/
-│   ├── css/
-│   │   ├── global.css
-│   │   ├── home.css
-│   │   ├── login.css
-│   │   ├── dashboard-user.css
-│   │   ├── dashboard-admin.css
-│   │   └── quienes-somos.css
-│   ├── img/
-│   ├── index.html
-│   ├── login.html
-│   ├── dashboard-user.html
-│   ├── dashboard-admin.html
-│   └── quienes-somos.html
+├── frontend/
+│   ├── public/
+│   │   ├── assets/
+│   │   └── img/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── core/               # Servicios, guards e interceptores transversales
+│   │   │   ├── features/           # Lógica de negocio agrupada por dominio
+│   │   │   ├── footer/             # Componente de pie de página compartido
+│   │   │   ├── landing/            # Página principal (Home)
+│   │   │   ├── layouts/            # Layouts compartidos
+│   │   │   ├── navbar-horizontal/  # Navbar compartida (sitio público)
+│   │   │   ├── pages/
+│   │   │   │   ├── account/        # Registro / recuperación de cuenta
+│   │   │   │   ├── dashboard-user/ # Panel de usuario
+│   │   │   │   ├── login/          # Inicio de sesión
+│   │   │   │   └── not-found/      # Página 404
+│   │   │   ├── public-layout/      # Layout del sitio público (navbar + footer + router-outlet)
+│   │   │   ├── quienes-somos/      # Página institucional
+│   │   │   ├── shared/             # Componentes, pipes y directivas reutilizables
+│   │   │   ├── app.config.ts
+│   │   │   ├── app.css
+│   │   │   ├── app.html
+│   │   │   ├── app.routes.ts
+│   │   │   └── app.ts
+│   │   ├── index.html
+│   │   └── main.ts
+│   ├── angular.json
+│   └── package.json
+├── Maqueta/                        # Maqueta original en HTML5/CSS3 (referencia de diseño)
 └── backend/
 ```
+
+> La carpeta `Maqueta/` se conserva como referencia visual y de contenido durante la migración, pero el desarrollo activo ocurre exclusivamente en `frontend/`.
+
+---
+
+## Flujo de trabajo con Git
+
+- Rama evaluada: `main`.
+- Convención de commits: [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `refactor:`, `style:`, `docs:`, `test:`).
+- Cada integrante trabaja sobre el componente o sección de la que es responsable, evitando pisar código de otros módulos.
 
 ---
 
@@ -79,5 +138,5 @@ ABP-FullStackers/
 
 ---
 
-**Docentes:** Ivana Córsico / Carolina Ahumada  
+**Docentes:** Ivana Córsico / Carolina Ahumada
 **Grupo:** FullStackers - Comisión B
