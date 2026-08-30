@@ -1,0 +1,285 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: #1f1f1f;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  background-color: #2b2b2b;
+  border-radius: 14px;
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.35);
+
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.back-link {
+  display: inline-block;
+  margin: 1.2rem 1.5rem 0;
+
+  color: #cfcfcf;
+
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.back-link:hover {
+  color: #f2380a;
+  transform: translateX(-3px);
+}
+
+.login-header {
+  padding: 1.5rem 2rem 2rem;
+  text-align: center;
+}
+
+.login-logo {
+  width: 90px;
+  height: auto;
+  margin-bottom: 1rem;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.login-logo:hover {
+  transform: scale(1.05);
+
+  filter:
+    drop-shadow(0 4px 8px rgba(242, 56, 10, 0.25));
+}
+
+.login-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.login-header p {
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+
+  color: #aaaaaa;
+}
+
+.login-body {
+  padding: 2rem;
+  background-color: #242424;
+}
+
+.login-body h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+
+  color: #ffffff;
+
+  text-align: center;
+}
+
+.subtitle {
+  margin-bottom: 1.8rem;
+
+  color: #a5a5a5;
+
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  color: #dddddd;
+
+  font-size: 0.9rem;
+}
+
+.form-control {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 0.85rem 1rem;
+
+  color: #ffffff;
+  background-color: #333333;
+
+  border: 1px solid #444444;
+  border-radius: 7px;
+
+  outline: none;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.form-control::placeholder {
+  color: #888888;
+}
+
+.form-control:hover {
+  background-color: #383838;
+  border-color: #666666;
+}
+
+.form-control:focus {
+  background-color: #383838;
+
+  border-color: #f2380a;
+
+  box-shadow:
+    0 0 0 3px rgba(242, 56, 10, 0.15);
+}
+
+.mensaje-error {
+  margin-top: -0.2rem;
+  margin-bottom: 1rem;
+
+  padding: 0.7rem 0.8rem;
+
+  color: #ff6b6b;
+  background-color: rgba(255, 77, 77, 0.08);
+
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  border-radius: 6px;
+
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.forgot-password {
+  display: block;
+
+  margin-top: -0.2rem;
+  margin-bottom: 1.5rem;
+
+  color: #aaaaaa;
+
+  text-align: right;
+  text-decoration: none;
+
+  font-size: 0.85rem;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #f2380a;
+  text-decoration: underline;
+}
+
+
+
+.btn-login {
+  width: 100%;
+
+  padding: 0.9rem;
+
+  color: #ffffff;
+  background-color: #f2380a;
+
+  border: none;
+  border-radius: 7px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #d92f07;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 16px rgba(242, 56, 10, 0.30);
+}
+
+.btn-login:active {
+  transform: translateY(0) scale(0.99);
+
+  box-shadow:
+    0 2px 8px rgba(242, 56, 10, 0.20);
+}
+
+
+
+.register {
+  margin-top: 1.5rem;
+
+  color: #aaaaaa;
+
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.register a {
+  color: #ffffff;
+
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color 0.3s ease,
+    text-decoration 0.3s ease;
+}
+
+.register a:hover {
+  color: #f2380a;
+  text-decoration: underline;
+}
+
+
+@media (max-width: 576px) {
+
+  .login-page {
+    padding: 1rem;
+  }
+
+  .login-body {
+    padding: 1.5rem;
+  }
+
+  .login-header {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+}

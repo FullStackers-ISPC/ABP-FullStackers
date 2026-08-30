@@ -9,8 +9,14 @@ import { ProductosComponent } from './features/admin/productos/productos';
 import { ProductoFormComponent } from './features/admin/producto-form/producto-form';
 import { MovimientosComponent } from './features/admin/movimientos/movimientos';
 import { MovimientoFormComponent } from './features/admin/movimiento-form/movimiento-form';
+import { Login } from './pages/login/login';
+import { Account } from './pages/account/account';
+import { AuthLayout } from './layouts/auth-layout/auth-layout';
+import { NotFound } from './pages/not-found/not-found';
+
 
 export const routes: Routes = [
+
   {
     path: '',
     component: PublicLayout,
@@ -26,28 +32,86 @@ export const routes: Routes = [
       },
       {
         path: 'quienes-somos',
-        component: QuienesSomos,
-      },
-    ],
+        component: QuienesSomos
+      }
+    ]
   },
+
+  {
+    path: '',
+    component: AuthLayout,
+    children: [
+      {
+        path: 'login',
+        component: Login
+      },
+      {
+        path: 'registro',
+        component: Account,
+        data: {
+          modo: 'registro'
+        }
+      },
+      {
+        path: 'recuperar',
+        component: Account,
+        data: {
+          modo: 'recuperar'
+        }
+      }
+    ]
+  },
+
   {
     path: 'admin',
     component: AdminLayoutComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'categorias', component: CategoriasComponent },
-      { path: 'productos', component: ProductosComponent },
-      { path: 'crear-producto', component: ProductoFormComponent },
-      { path: 'editar-producto/:id', component: ProductoFormComponent },
-      { path: 'movimientos', component: MovimientosComponent },
-      { path: 'registrar-movimiento', component: MovimientoFormComponent },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'categorias',
+        component: CategoriasComponent
+      },
+      {
+        path: 'productos',
+        component: ProductosComponent
+      },
+      {
+        path: 'crear-producto',
+        component: ProductoFormComponent
+      },
+      {
+        path: 'editar-producto/:id',
+        component: ProductoFormComponent
+      },
+      {
+        path: 'movimientos',
+        component: MovimientosComponent
+      },
+      {
+        path: 'registrar-movimiento',
+        component: MovimientoFormComponent
+      }
     ]
   },
+
   {
     path: 'dashboard/user',
     loadComponent: () =>
       import('./pages/dashboard-user/dashboard-user')
         .then((module) => module.DashboardUser)
+  },
+
+  {
+    path: '**',
+    component: NotFound
   }
+
 ];

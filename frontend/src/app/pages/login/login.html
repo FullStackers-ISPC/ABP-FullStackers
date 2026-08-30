@@ -1,0 +1,98 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <a routerLink="/" class="back-link">
+      ← Volver al inicio
+    </a>
+
+    <div class="login-header">
+
+      <img
+        src="assets/Branding/logo-st.png"
+        alt="Logo EasyStock"
+        class="login-logo"
+      >
+
+      <h1>EasyStock</h1>
+      <p>Gestor de inventario</p>
+
+    </div>
+
+    <div class="login-body">
+
+      <h2>Iniciar sesión</h2>
+
+      <p class="subtitle">
+        Ingresá tus datos para acceder al sistema
+      </p>
+
+      <form (ngSubmit)="iniciarSesion()">
+
+        <div class="form-group">
+
+          <label for="email">
+            Email o usuario
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="usuario@email.com"
+            [(ngModel)]="email"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+            Contraseña
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Ingresá tu contraseña"
+            [(ngModel)]="password"
+            required
+          >
+
+        </div>
+
+        @if (mensajeError) {
+          <p class="mensaje-error">
+            {{ mensajeError }}
+          </p>
+        }
+
+        <a routerLink="/recuperar" class="forgot-password">
+          ¿Olvidaste tu contraseña?
+        </a>
+
+        <button
+          type="submit"
+          class="btn-login"
+        >
+          Iniciar sesión
+        </button>
+
+      </form>
+
+      <div class="register">
+        ¿No tenés una cuenta?
+        <a routerLink="/registro">
+          Registrate
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

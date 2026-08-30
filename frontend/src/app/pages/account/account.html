@@ -1,0 +1,258 @@
+<div class="account-page">
+
+  <div class="account-card">
+
+    <a routerLink="/login" class="back-link">
+      ← Volver al login
+    </a>
+
+    <div class="account-header">
+
+      @if (modo === 'registro') {
+
+        <h1>Crear cuenta</h1>
+
+        <p>
+          Completá tus datos para registrarte en EasyStock
+        </p>
+
+      } @else {
+
+        <h1>Recuperar contraseña</h1>
+
+        <p>
+          Ingresá tu correo para recuperar el acceso a tu cuenta
+        </p>
+
+      }
+
+    </div>
+
+    <form (ngSubmit)="enviar()" class="account-form">
+
+      @if (modo === 'registro') {
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+
+            <input
+              id="nombre"
+              name="nombre"
+              type="text"
+              class="form-control"
+              placeholder="Ingresá tu nombre"
+              [(ngModel)]="nombre"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+
+            <input
+              id="apellido"
+              name="apellido"
+              type="text"
+              class="form-control"
+              placeholder="Ingresá tu apellido"
+              [(ngModel)]="apellido"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="usuario">Usuario</label>
+
+            <input
+              id="usuario"
+              name="usuario"
+              type="text"
+              class="form-control"
+              placeholder="Elegí un usuario"
+              [(ngModel)]="usuario"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              class="form-control"
+              placeholder="correo@ejemplo.com"
+              [(ngModel)]="email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              class="form-control"
+              placeholder="Mínimo 8 caracteres"
+              [(ngModel)]="password"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="confirmarPassword">
+              Confirmar contraseña
+            </label>
+
+            <input
+              id="confirmarPassword"
+              name="confirmarPassword"
+              type="password"
+              class="form-control"
+              placeholder="Repetí la contraseña"
+              [(ngModel)]="confirmarPassword"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="ciudad">Ciudad</label>
+
+            <input
+              id="ciudad"
+              name="ciudad"
+              type="text"
+              class="form-control"
+              placeholder="Ingresá tu ciudad"
+              [(ngModel)]="ciudad"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="provincia">Provincia</label>
+
+            <select
+              id="provincia"
+              name="provincia"
+              class="form-control"
+              [(ngModel)]="provincia"
+            >
+              <option value="">
+                Seleccioná una provincia
+              </option>
+
+              <option value="Buenos Aires">
+                Buenos Aires
+              </option>
+
+              <option value="Córdoba">
+                Córdoba
+              </option>
+
+              <option value="Santa Fe">
+                Santa Fe
+              </option>
+
+              <option value="Otra">
+                Otra
+              </option>
+
+            </select>
+          </div>
+
+        </div>
+
+        <div class="terms">
+
+          <input
+            id="terminos"
+            name="terminos"
+            type="checkbox"
+            [(ngModel)]="terminos"
+          >
+
+          <label for="terminos">
+            Acepto los términos y condiciones
+          </label>
+
+        </div>
+
+      } @else {
+
+        <div class="form-group">
+
+          <label for="email-recuperar">
+            Email
+          </label>
+
+          <input
+            id="email-recuperar"
+            name="email"
+            type="email"
+            class="form-control"
+            placeholder="correo@ejemplo.com"
+            [(ngModel)]="email"
+            required
+          >
+
+        </div>
+
+      }
+
+      @if (error) {
+        <div class="mensaje-error">
+          {{ error }}
+        </div>
+      }
+
+      @if (mensaje) {
+        <div class="mensaje-exito">
+          {{ mensaje }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn-submit"
+      >
+
+        @if (modo === 'registro') {
+          Registrarme
+        } @else {
+          Recuperar contraseña
+        }
+
+      </button>
+
+    </form>
+
+    <div class="account-footer">
+
+      @if (modo === 'registro') {
+
+        ¿Ya tenés una cuenta?
+
+        <a routerLink="/login">
+          Iniciar sesión
+        </a>
+
+      } @else {
+
+        ¿Recordaste tu contraseña?
+
+        <a routerLink="/login">
+          Volver al login
+        </a>
+
+      }
+
+    </div>
+
+  </div>
+
+</div>
