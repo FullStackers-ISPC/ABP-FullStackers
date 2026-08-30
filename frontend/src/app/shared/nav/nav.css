@@ -1,0 +1,14 @@
+.pruebacss{
+    margin: 0px 10px 0px 10px;
+}
+
+.nav-link i {
+  color: #ff3515;
+  font-size: 1.1rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}

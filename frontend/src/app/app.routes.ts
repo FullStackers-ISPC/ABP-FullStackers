@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+<<<<<<< HEAD
 import { PublicLayout } from './public-layout/public-layout';
 import { QuienesSomos } from './quienes-somos/quienes-somos';
 import { Landing } from './landing/landing';
@@ -114,4 +115,13 @@ export const routes: Routes = [
     component: NotFound
   }
 
+=======
+import { Home } from './pages/home/home';
+
+export const routes: Routes = [
+  {
+    path: 'home',
+    component: Home
+  }
+>>>>>>> daniel-gonzalez
 ];
