@@ -1,47 +1,117 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   imports: [
     RouterLink,
-    FormsModule
+    ReactiveFormsModule
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class Login {
 
-  email: string = '';
-  password: string = '';
+  loginForm: FormGroup;
   mensajeError: string = '';
+  cargando: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
+
+    this.loginForm = this.fb.group({
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+      password: [
+        '',
+        Validators.required
+      ]
+    });
+
+  }
 
   iniciarSesion(): void {
 
-    if (
-      this.email === 'admin@easystock.com' &&
-      this.password === 'admin1234'
-    ) {
+    this.mensajeError = '';
 
-      this.mensajeError = '';
-      this.router.navigate(['/admin/dashboard']);
-
-    } else if (
-      this.email === 'user@easystock.com' &&
-      this.password === 'user1234'
-    ) {
-
-      this.mensajeError = '';
-      this.router.navigate(['/dashboard/user']);
-
-    } else {
-
-      this.mensajeError = 'Usuario no registrado o contraseña incorrecta.';
-
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
     }
+
+    const { email, password } =
+      this.loginForm.getRawValue();
+
+    this.cargando = true;
+
+    this.authService
+      .login(email, password)
+      .subscribe({
+
+        next: (usuarios) => {
+
+          this.cargando = false;
+
+          if (usuarios.length === 0) {
+            this.mensajeError =
+              'Usuario no registrado o contraseña incorrecta.';
+            return;
+          }
+
+          const usuario = usuarios[0];
+
+          if (usuario.rol === 'admin') {
+
+            this.router.navigate([
+              '/admin/dashboard'
+            ]);
+
+          } else if (usuario.rol === 'user') {
+
+            this.router.navigate([
+              '/dashboard/user'
+            ]);
+
+          } else {
+
+            this.mensajeError =
+              'El usuario no tiene un rol válido.';
+
+          }
+
+        },
+
+        error: (error) => {
+
+          this.cargando = false;
+
+          console.error(
+            'Error al iniciar sesión:',
+            error
+          );
+
+          this.mensajeError =
+            'No se pudo conectar con el servidor.';
+
+        }
+
+      });
 
   }
 

@@ -15,35 +15,59 @@
       >
 
       <h1>EasyStock</h1>
-      <p>Gestor de inventario</p>
+
+      <p>
+        Gestor de inventario
+      </p>
 
     </div>
 
     <div class="login-body">
 
-      <h2>Iniciar sesión</h2>
+      <h2>
+        Iniciar sesión
+      </h2>
 
       <p class="subtitle">
         Ingresá tus datos para acceder al sistema
       </p>
 
-      <form (ngSubmit)="iniciarSesion()">
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="iniciarSesion()"
+      >
 
         <div class="form-group">
 
           <label for="email">
-            Email o usuario
+            Email
           </label>
 
           <input
             type="email"
             id="email"
-            name="email"
             class="form-control"
             placeholder="usuario@email.com"
-            [(ngModel)]="email"
-            required
+            formControlName="email"
           >
+
+          @if (
+            loginForm.get('email')?.touched &&
+            loginForm.get('email')?.hasError('required')
+          ) {
+            <p class="mensaje-error">
+              El email es obligatorio.
+            </p>
+          }
+
+          @if (
+            loginForm.get('email')?.touched &&
+            loginForm.get('email')?.hasError('email')
+          ) {
+            <p class="mensaje-error">
+              Ingresá un email válido.
+            </p>
+          }
 
         </div>
 
@@ -56,12 +80,19 @@
           <input
             type="password"
             id="password"
-            name="password"
             class="form-control"
             placeholder="Ingresá tu contraseña"
-            [(ngModel)]="password"
-            required
+            formControlName="password"
           >
+
+          @if (
+            loginForm.get('password')?.touched &&
+            loginForm.get('password')?.hasError('required')
+          ) {
+            <p class="mensaje-error">
+              La contraseña es obligatoria.
+            </p>
+          }
 
         </div>
 
@@ -71,24 +102,37 @@
           </p>
         }
 
-        <a routerLink="/recuperar" class="forgot-password">
+        <a
+          routerLink="/recuperar"
+          class="forgot-password"
+        >
           ¿Olvidaste tu contraseña?
         </a>
 
         <button
           type="submit"
           class="btn-login"
+          [disabled]="cargando"
         >
-          Iniciar sesión
+
+          @if (cargando) {
+            Ingresando...
+          } @else {
+            Iniciar sesión
+          }
+
         </button>
 
       </form>
 
       <div class="register">
+
         ¿No tenés una cuenta?
+
         <a routerLink="/registro">
           Registrate
         </a>
+
       </div>
 
     </div>

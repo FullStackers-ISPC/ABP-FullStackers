@@ -2,7 +2,10 @@
 
   <div class="account-card">
 
-    <a routerLink="/login" class="back-link">
+    <a
+      routerLink="/login"
+      class="back-link"
+    >
       ← Volver al login
     </a>
 
@@ -10,7 +13,9 @@
 
       @if (modo === 'registro') {
 
-        <h1>Crear cuenta</h1>
+        <h1>
+          Crear cuenta
+        </h1>
 
         <p>
           Completá tus datos para registrarte en EasyStock
@@ -18,7 +23,9 @@
 
       } @else {
 
-        <h1>Recuperar contraseña</h1>
+        <h1>
+          Recuperar contraseña
+        </h1>
 
         <p>
           Ingresá tu correo para recuperar el acceso a tu cuenta
@@ -28,120 +35,228 @@
 
     </div>
 
-    <form (ngSubmit)="enviar()" class="account-form">
 
-      @if (modo === 'registro') {
+    @if (modo === 'registro') {
+
+      <form
+        [formGroup]="registroForm"
+        (ngSubmit)="enviar()"
+        class="account-form"
+      >
 
         <div class="form-grid">
 
+          <!-- NOMBRE -->
           <div class="form-group">
-            <label for="nombre">Nombre</label>
+
+            <label for="nombre">
+              Nombre
+            </label>
 
             <input
               id="nombre"
-              name="nombre"
               type="text"
               class="form-control"
               placeholder="Ingresá tu nombre"
-              [(ngModel)]="nombre"
-              required
+              formControlName="nombre"
             >
+
+            @if (
+              registroForm.get('nombre')?.touched &&
+              registroForm.get('nombre')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                El nombre es obligatorio.
+              </div>
+            }
+
           </div>
 
+
+          <!-- APELLIDO -->
           <div class="form-group">
-            <label for="apellido">Apellido</label>
+
+            <label for="apellido">
+              Apellido
+            </label>
 
             <input
               id="apellido"
-              name="apellido"
               type="text"
               class="form-control"
               placeholder="Ingresá tu apellido"
-              [(ngModel)]="apellido"
-              required
+              formControlName="apellido"
             >
+
+            @if (
+              registroForm.get('apellido')?.touched &&
+              registroForm.get('apellido')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                El apellido es obligatorio.
+              </div>
+            }
+
           </div>
 
+
+          <!-- USUARIO -->
           <div class="form-group">
-            <label for="usuario">Usuario</label>
+
+            <label for="usuario">
+              Usuario
+            </label>
 
             <input
               id="usuario"
-              name="usuario"
               type="text"
               class="form-control"
               placeholder="Elegí un usuario"
-              [(ngModel)]="usuario"
-              required
+              formControlName="usuario"
             >
+
+            @if (
+              registroForm.get('usuario')?.touched &&
+              registroForm.get('usuario')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                El usuario es obligatorio.
+              </div>
+            }
+
           </div>
 
+
+          <!-- EMAIL -->
           <div class="form-group">
-            <label for="email">Email</label>
+
+            <label for="email">
+              Email
+            </label>
 
             <input
               id="email"
-              name="email"
               type="email"
               class="form-control"
               placeholder="correo@ejemplo.com"
-              [(ngModel)]="email"
-              required
+              formControlName="email"
             >
+
+            @if (
+              registroForm.get('email')?.touched &&
+              registroForm.get('email')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                El email es obligatorio.
+              </div>
+            }
+
+            @if (
+              registroForm.get('email')?.touched &&
+              registroForm.get('email')?.hasError('email')
+            ) {
+              <div class="mensaje-error">
+                Ingresá un email válido.
+              </div>
+            }
+
           </div>
 
+
+          <!-- CONTRASEÑA -->
           <div class="form-group">
-            <label for="password">Contraseña</label>
+
+            <label for="password">
+              Contraseña
+            </label>
 
             <input
               id="password"
-              name="password"
               type="password"
               class="form-control"
               placeholder="Mínimo 8 caracteres"
-              [(ngModel)]="password"
-              required
+              formControlName="password"
             >
+
+            @if (
+              registroForm.get('password')?.touched &&
+              registroForm.get('password')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                La contraseña es obligatoria.
+              </div>
+            }
+
+            @if (
+              registroForm.get('password')?.touched &&
+              registroForm.get('password')?.hasError('minlength')
+            ) {
+              <div class="mensaje-error">
+                La contraseña debe tener al menos 8 caracteres.
+              </div>
+            }
+
           </div>
 
+
+          <!-- CONFIRMAR CONTRASEÑA -->
           <div class="form-group">
+
             <label for="confirmarPassword">
               Confirmar contraseña
             </label>
 
             <input
               id="confirmarPassword"
-              name="confirmarPassword"
               type="password"
               class="form-control"
               placeholder="Repetí la contraseña"
-              [(ngModel)]="confirmarPassword"
-              required
+              formControlName="confirmarPassword"
             >
+
+            @if (
+              registroForm.get('confirmarPassword')?.touched &&
+              registroForm.get('confirmarPassword')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                Confirmá la contraseña.
+              </div>
+            }
+
           </div>
 
+
+          <!-- CIUDAD -->
           <div class="form-group">
-            <label for="ciudad">Ciudad</label>
+
+            <label for="ciudad">
+              Ciudad
+            </label>
 
             <input
               id="ciudad"
-              name="ciudad"
               type="text"
               class="form-control"
               placeholder="Ingresá tu ciudad"
-              [(ngModel)]="ciudad"
+              formControlName="ciudad"
             >
+
           </div>
 
+
+          <!-- PROVINCIA -->
           <div class="form-group">
-            <label for="provincia">Provincia</label>
+
+            <label for="provincia">
+              Provincia
+            </label>
 
             <select
               id="provincia"
-              name="provincia"
               class="form-control"
-              [(ngModel)]="provincia"
+              formControlName="provincia"
             >
+
               <option value="">
                 Seleccioná una provincia
               </option>
@@ -163,17 +278,19 @@
               </option>
 
             </select>
+
           </div>
 
         </div>
 
+
+        <!-- TÉRMINOS -->
         <div class="terms">
 
           <input
             id="terminos"
-            name="terminos"
             type="checkbox"
-            [(ngModel)]="terminos"
+            formControlName="terminos"
           >
 
           <label for="terminos">
@@ -182,7 +299,56 @@
 
         </div>
 
-      } @else {
+        @if (
+          registroForm.get('terminos')?.touched &&
+          registroForm.get('terminos')?.hasError('required')
+        ) {
+          <div class="mensaje-error">
+            Debés aceptar los términos y condiciones.
+          </div>
+        }
+
+
+        @if (error) {
+          <div class="mensaje-error">
+            {{ error }}
+          </div>
+        }
+
+
+        @if (mensaje) {
+          <div class="mensaje-exito">
+            {{ mensaje }}
+          </div>
+        }
+
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="cargando"
+        >
+
+          @if (cargando) {
+            Registrando...
+          } @else {
+            Registrarme
+          }
+
+        </button>
+
+      </form>
+
+    }
+
+
+    @if (modo === 'recuperar') {
+
+      <form
+        [formGroup]="recuperarForm"
+        (ngSubmit)="enviar()"
+        class="account-form"
+      >
 
         <div class="form-group">
 
@@ -192,44 +358,65 @@
 
           <input
             id="email-recuperar"
-            name="email"
             type="email"
             class="form-control"
             placeholder="correo@ejemplo.com"
-            [(ngModel)]="email"
-            required
+            formControlName="email"
           >
 
+          @if (
+            recuperarForm.get('email')?.touched &&
+            recuperarForm.get('email')?.hasError('required')
+          ) {
+            <div class="mensaje-error">
+              El email es obligatorio.
+            </div>
+          }
+
+          @if (
+            recuperarForm.get('email')?.touched &&
+            recuperarForm.get('email')?.hasError('email')
+          ) {
+            <div class="mensaje-error">
+              Ingresá un email válido.
+            </div>
+          }
+
         </div>
 
-      }
 
-      @if (error) {
-        <div class="mensaje-error">
-          {{ error }}
-        </div>
-      }
-
-      @if (mensaje) {
-        <div class="mensaje-exito">
-          {{ mensaje }}
-        </div>
-      }
-
-      <button
-        type="submit"
-        class="btn-submit"
-      >
-
-        @if (modo === 'registro') {
-          Registrarme
-        } @else {
-          Recuperar contraseña
+        @if (error) {
+          <div class="mensaje-error">
+            {{ error }}
+          </div>
         }
 
-      </button>
 
-    </form>
+        @if (mensaje) {
+          <div class="mensaje-exito">
+            {{ mensaje }}
+          </div>
+        }
+
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="cargando"
+        >
+
+          @if (cargando) {
+            Verificando...
+          } @else {
+            Recuperar contraseña
+          }
+
+        </button>
+
+      </form>
+
+    }
+
 
     <div class="account-footer">
 

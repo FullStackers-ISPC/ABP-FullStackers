@@ -1,0 +1,38 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Administrador",
+      "apellido": "Admin",
+      "usuario": "admin",
+      "email": "admin@easystock.com",
+      "password": "admin1234",
+      "ciudad": "Cordoba",
+      "provincia": "Córdoba",
+      "rol": "admin"
+    },
+    {
+      "id": "2",
+      "nombre": "Usuario",
+      "apellido": "User",
+      "usuario": "user1",
+      "email": "user@easystock.com",
+      "password": "user1234",
+      "ciudad": "Cordoba",
+      "provincia": "Cordoba",
+      "rol": "user"
+    },
+    {
+      "nombre": "daniel esteban",
+      "apellido": "gonzalez lara",
+      "usuario": "danielgonz",
+      "email": "dani.esteban.gonzalez.lara@gmail.com",
+      "password": "dani1234",
+      "ciudad": "cordoba",
+      "provincia": "Córdoba",
+      "rol": "user",
+      "id": "jZjN0DXgSyY"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
