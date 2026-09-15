@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Producto, ProductosService } from '../../../core/services/productos.service';
 
@@ -13,10 +13,19 @@ import { Producto, ProductosService } from '../../../core/services/productos.ser
 
 export class ProductosComponent implements OnInit {
   private productosService = inject(ProductosService);
+  private cdr = inject(ChangeDetectorRef);
   productos: Producto[] = [];
 
   ngOnInit(): void {
-    this.productos = this.productosService.getProductos();
+    this.productosService.getProductos().subscribe({
+      next: (data) => {
+        this.productos = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar productos:', err);
+      }
+    });
   }
 
   getEstado(prod: Producto): { texto: string, clase: string } {

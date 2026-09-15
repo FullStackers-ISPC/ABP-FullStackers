@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Movimiento, MovimientosService } from '../../../core/services/movimientos.service';
-import { Producto, ProductosService } from '../../../core/services/productos.service'; // IMPORTANTE
+import { Producto, ProductosService } from '../../../core/services/productos.service'; 
 
 @Component({
   selector: 'app-admin-panel',
@@ -13,14 +13,25 @@ import { Producto, ProductosService } from '../../../core/services/productos.ser
 })
 export class DashboardComponent implements OnInit {
   private movimientosService = inject(MovimientosService);
-  private productosService = inject(ProductosService); // INYECTAMOS
+  private productosService = inject(ProductosService); 
+  private cdr = inject(ChangeDetectorRef);
+  
   
   movimientos: Movimiento[] = [];
-  productosStockBajo: Producto[] = []; // NUEVA VARIABLE
+  productosStockBajo: Producto[] = []; 
 
   ngOnInit(): void {
     this.movimientos = this.movimientosService.getMovimientos();
-    this.productosStockBajo = this.productosService.getProductosConBajoStock();
+
+    this.productosService.getProductosConBajoStock().subscribe({
+      next: (data) => {
+        this.productosStockBajo = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar productos con bajo stock:', err);
+      }
+    });
   }
 
   getEstado(prod: Producto): { texto: string, clase: string } {
