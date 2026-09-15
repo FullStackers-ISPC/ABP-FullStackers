@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface Movimiento {
-  id: number;
-  fecha: string;
-  producto: string;
-  categoria: string;
-  tipo: 'entrada' | 'salida' | 'ajuste';
-  cantidad: number;
-  usuario: string;
-}
+import { Movimiento } from '../models/movimiento.model';
 
 @Injectable({
   providedIn: 'root' 
