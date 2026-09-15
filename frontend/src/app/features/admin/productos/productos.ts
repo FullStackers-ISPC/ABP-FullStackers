@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Producto, ProductosService } from '../../../core/services/productos.service';
+import { ProductosService } from '../../../core/services/productos.service';
+import { Producto } from '../../../core/models/producto.model';
 
 
 @Component({

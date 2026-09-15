@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Movimiento, MovimientosService } from '../../../core/services/movimientos.service';
-import { Producto, ProductosService } from '../../../core/services/productos.service'; 
+import { ProductosService } from '../../../core/services/productos.service'; 
+import { Producto } from '../../../core/models/producto.model';
 
 @Component({
   selector: 'app-admin-panel',
