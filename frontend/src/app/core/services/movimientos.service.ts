@@ -16,4 +16,8 @@ export class MovimientosService {
   getProductos(): Observable<Movimiento[]> {
     return this.http.get<Movimiento[]>(this.apiUrl);
   }
+
+  crearMovimiento(movimiento: Omit<Movimiento, 'id'>): Observable<Movimiento> {
+    return this.http.post<Movimiento>(this.apiUrl, movimiento);
+  }
 }

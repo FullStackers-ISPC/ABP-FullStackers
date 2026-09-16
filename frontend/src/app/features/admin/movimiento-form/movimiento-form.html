@@ -62,10 +62,15 @@
                     <label class="form-label">Producto <span class="campo-requerido">*</span></label>
                     <select formControlName="producto" class="form-select" [class.is-invalid]="isInvalidField('producto')">
                         <option value="" disabled selected>Seleccionar producto...</option>
-                        <option value="1">AMD Ryzen 7 9800X3D</option>
-                        <option value="2">Intel Core i7-14700K</option>
+                        @for (prod of productos; track prod.id) {
+                            <option [value]="prod.nombre">
+                                {{ prod.nombre }}
+                            </option>
+                        }
                     </select>
-                    @if (isInvalidField('producto')) { <div class="invalid-feedback">Seleccioná un producto.</div> }
+                    @if (isInvalidField('producto')) { 
+                        <div class="invalid-feedback">Seleccioná un producto.</div> 
+                    }
                 </div>
 
                 <div class="col-12 col-sm-6">
