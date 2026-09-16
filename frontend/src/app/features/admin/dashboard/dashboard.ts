@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Movimiento, MovimientosService } from '../../../core/services/movimientos.service';
+import { MovimientosService } from '../../../core/services/movimientos.service';
 import { ProductosService } from '../../../core/services/productos.service'; 
 import { Producto } from '../../../core/models/producto.model';
+import { Movimiento } from '../../../core/models/movimiento.model';
 
 @Component({
   selector: 'app-admin-panel',
@@ -22,7 +23,15 @@ export class DashboardComponent implements OnInit {
   productosStockBajo: Producto[] = []; 
 
   ngOnInit(): void {
-    this.movimientos = this.movimientosService.getMovimientos();
+    this.movimientosService.getProductos().subscribe({
+      next: (data) => {
+        this.movimientos = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar movimientos:', err);
+      }
+    });
 
     this.productosService.getProductosConBajoStock().subscribe({
       next: (data) => {
