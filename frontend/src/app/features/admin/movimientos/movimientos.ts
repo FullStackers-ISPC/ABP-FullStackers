@@ -19,7 +19,7 @@ export class MovimientosComponent implements OnInit {
   movimientos: Movimiento[] = [];
 
   ngOnInit(): void {
-    this.movimientosService.getProductos().subscribe({
+    this.movimientosService.getMovimientos().subscribe({
       next: (data) => {
         this.movimientos = data;
         this.cdr.detectChanges();

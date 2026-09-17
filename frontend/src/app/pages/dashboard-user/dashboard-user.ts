@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Movimiento } from '../../core/models/movimiento.model';
+import { Producto } from '../../core/models/producto.model';
+import { MovimientosService } from '../../core/services/movimientos.service';
+import { ProductosService } from '../../core/services/productos.service';
 
 @Component({
   selector: 'app-dashboard-user',
@@ -9,56 +13,143 @@ import { RouterLink } from '@angular/router';
   templateUrl: './dashboard-user.html',
   styleUrl: './dashboard-user.css'
 })
-export class DashboardUser {
-  // uan variable booleana permite controlar el menu mobile
-  // esta variable booleana controla la apertura y el cierre del sidebar mobile
+export class DashboardUser implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly productosService = inject(ProductosService);
+  private readonly movimientosService = inject(MovimientosService);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   sidebarOpen = false;
   submitted = false;
   movementRegistered = false;
+  stockIssue = false;
+  stockIssueMessage = '';
+  isLoadingProducts = true;
+  isLoadingMovements = true;
+  isSubmitting = false;
 
-  // estos arreglos son datos estaticos de prueba, separados del HTML para renderizar listas dinamicamente
-  readonly categories = [
-    { id: 1, name: 'Tarjetas Gráficas', productCount: 6 },
-    { id: 2, name: 'Procesadores', productCount: 5 },
-    { id: 3, name: 'Almacenamiento', productCount: 4 },
-    { id: 4, name: 'Memorias RAM', productCount: 3 },
-    { id: 5, name: 'Placas Madre', productCount: 4 }
-  ];
+  products: Producto[] = [];
+  categories: Array<{ id: number; name: string; productCount: number }> = [];
+  movementHistory: Movimiento[] = [];
 
-  readonly products = [
-    { code: 1, status: 'Disponible', statusClass: 'badge-ok', name: 'NVIDIA RTX 4090 24GB', category: 'Tarjetas Gráficas', stock: 15 },
-    { code: 2, status: 'Disponible', statusClass: 'badge-ok', name: 'Intel Core i9-14900K', category: 'Procesadores', stock: 10 },
-    { code: 3, status: 'Disponible', statusClass: 'badge-ok', name: 'Samsung 990 Pro 2TB', category: 'Almacenamiento', stock: 20 },
-    { code: 4, status: 'Alerta', statusClass: 'badge-alerta', name: 'XFX Radeon RX 9070 XT 16GB', category: 'Tarjetas Gráficas', stock: 3 },
-    { code: 5, status: 'Disponible', statusClass: 'badge-ok', name: 'Corsair Vengeance 32GB DDR5', category: 'Memorias RAM', stock: 18 },
-    { code: 6, status: 'Crítico', statusClass: 'badge-critico', name: 'AMD Ryzen 9 9950X', category: 'Procesadores', stock: 1 },
-    { code: 7, status: 'Crítico', statusClass: 'badge-critico', name: 'AMD Ryzen 5 5500', category: 'Procesadores', stock: 1 },
-    { code: 8, status: 'Disponible', statusClass: 'badge-ok', name: 'ASUS ROG Strix B650-E', category: 'Placas Madre', stock: 12 }
-  ];
-
-  readonly movementHistory = [
-    { id: 1, date: '11/05/2026', product: 'NVIDIA RTX 4090 24GB', category: 'Tarjetas Gráficas', type: 'Entrada', typeClass: 'tipo-entrada', quantity: '+5', user: 'usuario' },
-    { id: 2, date: '11/05/2026', product: 'Intel Core i9-14900K', category: 'Procesadores', type: 'Salida', typeClass: 'tipo-salida', quantity: '-2', user: 'usuario' },
-    { id: 3, date: '10/05/2026', product: 'Samsung 990 Pro 2TB', category: 'Almacenamiento', type: 'Entrada', typeClass: 'tipo-entrada', quantity: '+10', user: 'usuario' },
-    { id: 4, date: '10/05/2026', product: 'AMD Ryzen 5 5500', category: 'Procesadores', type: 'Ajuste', typeClass: 'tipo-ajuste', quantity: '-3', user: 'usuario' },
-    { id: 5, date: '09/05/2026', product: 'Corsair Vengeance 32GB DDR5', category: 'Memorias RAM', type: 'Salida', typeClass: 'tipo-salida', quantity: '-4', user: 'usuario' },
-    { id: 6, date: '09/05/2026', product: 'ASUS ROG Strix B650-E', category: 'Placas Madre', type: 'Entrada', typeClass: 'tipo-entrada', quantity: '+6', user: 'usuario' },
-    { id: 7, date: '08/05/2026', product: 'XFX Radeon RX 9070 XT 16GB', category: 'Tarjetas Gráficas', type: 'Salida', typeClass: 'tipo-salida', quantity: '-1', user: 'usuario' },
-    { id: 8, date: '08/05/2026', product: 'AMD Ryzen 9 9950X', category: 'Procesadores', type: 'Ajuste', typeClass: 'tipo-ajuste', quantity: '+2', user: 'usuario' }
-  ];
-
-  // formulario reactivo con validaciones para impedir datos incompletos
   readonly movementForm: FormGroup;
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor() {
+    // el formulario reactive se conserva con la misma validación visual y funcional
     this.movementForm = this.formBuilder.group({
       type: ['', Validators.required],
       category: ['', Validators.required],
       product: ['', Validators.required],
-      // la cantidad es obligatoria y debe ser como minimo una unidad
       quantity: [null as number | null, [Validators.required, Validators.min(1)]],
       observation: ['']
     });
+  }
+
+  ngOnInit(): void {
+    // carga inicial de productos desde json-server para renderizar el catalogo del dashboard
+    this.productosService.getProductos().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.categories = this.buildCategories(data);
+        this.isLoadingProducts = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar productos del dashboard usuario:', err);
+        this.isLoadingProducts = false;
+        this.cdr.detectChanges();
+      }
+    });
+
+    // carga inicial del historial de movimientos que luego se muestra en la tabla del dashboard
+    this.movimientosService.getMovimientos().subscribe({
+      next: (data) => {
+        this.movementHistory = data;
+        this.isLoadingMovements = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al cargar movimientos del dashboard usuario:', err);
+        this.isLoadingMovements = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  // se derivan las categorías a partir de los productos reales del backend para evitar replicarlas en db.json
+  buildCategories(productos: Producto[]): Array<{ id: number; name: string; productCount: number }> {
+    const grouped = new Map<string, { id: number; name: string; productCount: number }>();
+
+    productos.forEach((producto, index) => {
+      if (!grouped.has(producto.categoria)) {
+        grouped.set(producto.categoria, {
+          id: index + 1,
+          name: producto.categoria,
+          productCount: 0
+        });
+      }
+
+      const current = grouped.get(producto.categoria)!;
+      current.productCount += 1;
+    });
+
+    return Array.from(grouped.values());
+  }
+
+  // las metricas del resumen se calculan en tiempo real para reflejar el estado actual del inventario
+  getAvailableProductsCount(): number {
+    return this.products.filter((producto) => producto.stock > 0).length;
+  }
+
+  getLowStockCount(): number {
+    return this.products.filter((producto) => producto.stock <= producto.stockAlerta).length;
+  }
+
+  getTodayMovementsCount(): number {
+    return this.movementHistory.filter((movimiento) => movimiento.fecha === new Date().toLocaleDateString('es-AR')).length;
+  }
+
+  getProductStatus(product: Producto): { label: string; className: string } {
+    if (product.stock <= product.stockCritico) {
+      return { label: 'Crítico', className: 'badge-critico' };
+    }
+
+    if (product.stock <= product.stockAlerta) {
+      return { label: 'Alerta', className: 'badge-alerta' };
+    }
+
+    return { label: 'Disponible', className: 'badge-ok' };
+  }
+
+  getMovementTypeLabel(tipo: string): string {
+    switch (tipo) {
+      case 'entrada':
+        return 'Entrada';
+      case 'salida':
+        return 'Salida';
+      case 'ajuste':
+        return 'Ajuste';
+      default:
+        return 'Movimiento';
+    }
+  }
+
+  getMovementTypeClass(tipo: string): string {
+    switch (tipo) {
+      case 'entrada':
+        return 'tipo-entrada';
+      case 'salida':
+        return 'tipo-salida';
+      case 'ajuste':
+        return 'tipo-ajuste';
+      default:
+        return 'tipo-entrada';
+    }
+  }
+
+  getMovementAmount(movimiento: Movimiento): string {
+    const absolute = Math.abs(movimiento.cantidad);
+    return `${movimiento.cantidad >= 0 ? '+' : '-'}${absolute}`;
   }
 
   toggleSidebar(): void {
@@ -69,16 +160,77 @@ export class DashboardUser {
     this.sidebarOpen = false;
   }
 
+  // el submit mantiene la validación reactiva y si el stock lo permite envía un POST a /movimientos
   onSubmit(): void {
     this.submitted = true;
     this.movementRegistered = false;
+    this.stockIssue = false;
+    this.stockIssueMessage = '';
 
     if (this.movementForm.invalid) {
       this.movementForm.markAllAsTouched();
       return;
     }
 
-    this.movementRegistered = true;
+    const formValue = this.movementForm.getRawValue();
+    const selectedProduct = this.products.find(
+      (producto) => String(producto.id) === String(formValue.product)
+    );
+    const quantity = Number(formValue.quantity);
+
+    // el flujo de salida exige revisar el stock real antes de enviar el movimiento, como en el comportamiento
+    // original de la maqueta, pero ahora con datos extraídos del backend
+    if (formValue.type === 'salida' && selectedProduct && quantity > selectedProduct.stock) {
+      this.stockIssue = true;
+      this.stockIssueMessage = `No hay suficiente stock disponible para registrar la salida. Stock actual: ${selectedProduct.stock} unidad${selectedProduct.stock === 1 ? '' : 'es'}.`;
+      return;
+    }
+
+    if (!selectedProduct) {
+      return;
+    }
+
+    const numericIds = this.movementHistory
+      .map((movimiento) => Number(movimiento.id))
+      .filter((id) => Number.isInteger(id));
+    const nextMovementId = String(Math.max(0, ...numericIds) + 1);
+
+    const nuevoMovimiento = {
+      id: nextMovementId,
+      fecha: new Date().toLocaleDateString('es-AR'),
+      producto: selectedProduct.nombre,
+      categoria: selectedProduct.categoria,
+      tipo: formValue.type as 'entrada' | 'salida' | 'ajuste',
+      cantidad: formValue.type === 'salida' ? -quantity : quantity,
+      usuario: 'usuario',
+      observacion: formValue.observation || undefined
+    };
+
+    this.isSubmitting = true;
+
+    // cuando el POST responde con exito, se inserta el movimiento nuevo al principio del historial para
+    // reflejar la operación en la interfaz sin necesidad de recargar la pagina
+    this.movimientosService.crearMovimiento(nuevoMovimiento).subscribe({
+      next: (movimientoCreado) => {
+        this.movementHistory = [movimientoCreado, ...this.movementHistory];
+        this.movementRegistered = true;
+        this.movementForm.reset({
+          type: '',
+          category: '',
+          product: '',
+          quantity: null,
+          observation: ''
+        });
+        this.submitted = false;
+        this.isSubmitting = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error al registrar movimiento desde el dashboard usuario:', err);
+        this.isSubmitting = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   isInvalid(controlName: string): boolean {

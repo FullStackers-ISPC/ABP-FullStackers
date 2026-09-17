@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   productosStockBajo: Producto[] = []; 
 
   ngOnInit(): void {
-    this.movimientosService.getProductos().subscribe({
+    this.movimientosService.getMovimientos().subscribe({
       next: (data) => {
         this.movimientos = data;
         this.cdr.detectChanges();
