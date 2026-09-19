@@ -4,9 +4,9 @@
             <h2>Categorías del Inventario</h2>
             <p>Administra las categorías de productos registradas.</p>
         </div>
-        <button class="btn-primary-es">
+        <a routerLink="/admin/crear-categoria" class="btn-primary-es">
             <i class="fa-solid fa-plus"></i> Nueva Categoría
-        </button>
+        </a>
     </div>
 
     <div class="es-table-wrapper">
@@ -29,9 +29,9 @@
                             <strong>{{ cat.cantidad }}</strong>
                         </td>
                         <td>
-                            <button class="btn-editar" title="Editar">
+                            <a [routerLink]="['/admin/editar-categoria', cat.id]" class="btn-editar" title="Editar">
                                 <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
+                            </a>
                             <button class="btn-eliminar" title="Eliminar">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
@@ -40,7 +40,7 @@
                 } @empty {
                     <tr>
                         <td colspan="4" class="text-center" style="padding: 20px; color:#888;">
-                            No se encontraron categorías en los productos.
+                            No hay categorías registradas.
                         </td>
                     </tr>
                 }

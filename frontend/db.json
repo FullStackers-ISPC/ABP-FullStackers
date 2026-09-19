@@ -34,6 +34,33 @@
       "id": "jZjN0DXgSyY"
     }
   ],
+  "categorias": [
+    {
+      "id": 1,
+      "nombre": "Procesadores",
+      "descripcion": "CPUs de escritorio para gaming y productividad."
+    },
+    {
+      "id": 2,
+      "nombre": "Tarjetas Gráficas",
+      "descripcion": "Placas de video para gaming, diseño y renderizado."
+    },
+    {
+      "id": 3,
+      "nombre": "Memorias RAM",
+      "descripcion": "Módulos de memoria RAM DDR4 y DDR5."
+    },
+    {
+      "id": 4,
+      "nombre": "Almacenamiento",
+      "descripcion": "Discos SSD, NVMe y HDD."
+    },
+    {
+      "nombre": "Placas Madre",
+      "descripcion": "Motherboards compatibles con los procesadores del catálogo.",
+      "id": 5
+    }
+  ],
   "productos": [
     {
       "id": 1,

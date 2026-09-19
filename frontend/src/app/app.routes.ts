@@ -12,6 +12,7 @@ import { ProductosComponent } from './features/admin/productos/productos';
 import { ProductoFormComponent } from './features/admin/producto-form/producto-form';
 import { MovimientosComponent } from './features/admin/movimientos/movimientos';
 import { MovimientoFormComponent } from './features/admin/movimiento-form/movimiento-form';
+import { CategoriaFormComponent } from './features/admin/categoria-form/categoria-form';
 
 import { Login } from './pages/login/login';
 import { Account } from './pages/account/account';
@@ -81,6 +82,14 @@ export const routes: Routes = [
       {
         path: 'categorias',
         component: CategoriasComponent
+      },
+      {
+        path: 'crear-categoria',
+        component: CategoriaFormComponent
+      },
+      {
+        path: 'editar-categoria/:id',
+        component: CategoriaFormComponent
       },
       {
         path: 'productos',
