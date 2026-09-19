@@ -6,7 +6,7 @@
 
 Este sistema busca digitalizar y centralizar la gestión de inventario, permitiendo el registro, seguimiento y control de productos con alertas de stock bajo y roles diferenciados de administrador y usuario.
 
-El proyecto nació como una maqueta estática en HTML5/CSS3 y se encuentra actualmente **en migración a una Single Page Application (SPA) con Angular**, aplicando arquitectura basada en componentes standalone, ruteo con rutas anidadas y formularios reactivos.
+El proyecto nació como una maqueta estática en HTML5/CSS3, luego se migró a una Single Page Application (SPA) con Angular, y actualmente **se encuentra conectado a una API de prueba (json-server)**: los datos de productos, categorías, movimientos y usuarios ya no están hardcodeados en los componentes, sino que se consumen de forma asíncrona mediante `HttpClient` y `Observable`.
 
 Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto Superior Politécnico de Córdoba (ISPC)** - Año 2026.
 
@@ -14,12 +14,14 @@ Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto S
 
 ## Funcionalidades
 
-- **Inicio de sesión con roles**: Acceso diferenciado para Administrador y Usuario con validación de credenciales.
-- **Panel de Administrador (Admin Dashboard)**: Visualización de métricas del sistema, gestión de productos (registrar, modificar, actualizar precio, eliminar) y asignación de roles.
-- **Panel de Usuario (User Dashboard)**: Registro de movimientos de inventario (entradas, salidas y ajustes de stock), búsqueda de productos y visualización del historial.
-- **Página principal (Landing Page)**: Presentación del sistema con navegación general.
-- **Quiénes Somos**: Información del equipo y propósito del proyecto.
-- **Página 404**: Vista personalizada para rutas inexistentes.
+- **Inicio de sesión y registro con roles**: formularios reactivos conectados a json-server, con validación de credenciales.
+- **Panel de Administrador (Admin Dashboard)**: métricas del sistema y gestión de productos (alta, edición, listado con alertas de stock bajo).
+- **Gestión de Categorías**: listado, alta y edición de categorías conectado a json-server mediante formularios reactivos (GET, POST y PUT reales).
+- **Gestión de Movimientos**: registro de entradas, salidas y ajustes de stock, persistidos en json-server.
+- **Panel de Usuario (User Dashboard)**: búsqueda de productos y visualización del historial de movimientos.
+- **Quiénes Somos**: información del equipo, obtenida dinámicamente desde json-server.
+- **Página principal (Landing Page)**: presentación del sistema con navegación general.
+- **Página 404**: vista personalizada para rutas inexistentes.
 
 ---
 
@@ -32,39 +34,59 @@ Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto S
 | Angular CLI | 22.1.5 |
 | Bootstrap | 5.3.3 |
 | TypeScript | ~6.0.2 |
+| json-server | usado como API de prueba (backend simulado) |
 
 ---
 
-## Instrucciones para ejecutar el proyecto (Angular)
+## Instrucciones para ejecutar el proyecto
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/FullStackers-ISPC/ABP-FullStackers.git
-   ```
-2. Navegar a la carpeta `frontend/`:
-   ```bash
-   cd ABP-FullStackers/frontend
-   ```
-3. Instalar las dependencias:
-   ```bash
-   npm install
-   ```
-4. Levantar el servidor de desarrollo:
-   ```bash
-   ng serve --open
-   ```
-   Esto abre automáticamente el navegador en [http://localhost:4200](http://localhost:4200). Si no se abre solo, se puede acceder manualmente a esa dirección.
+Esta aplicación necesita **dos servidores corriendo en simultáneo**: Angular (frontend) y json-server (API de prueba). Sin json-server levantado, las pantallas que consumen datos (login, productos, categorías, movimientos, quiénes somos) van a fallar con un error de conexión.
 
-5. Para generar el build de producción:
-   ```bash
-   ng build
-   ```
-   Los archivos compilados se generan en `frontend/dist/`.
+### 1. Clonar el repositorio
 
-6. Para correr las pruebas unitarias:
-   ```bash
-   ng test
-   ```
+```bash
+git clone https://github.com/FullStackers-ISPC/ABP-FullStackers.git
+cd ABP-FullStackers/frontend
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Instalar json-server (si no lo tenés ya)
+
+```bash
+npm install -g json-server
+```
+
+### 4. Levantar json-server
+
+Desde la carpeta `frontend/` (donde está `db.json`), en una terminal:
+
+```bash
+json-server --watch db.json
+```
+
+Por defecto queda escuchando en `http://localhost:3000`. Verificá que loguee los endpoints disponibles: `usuarios`, `categorias`, `productos`, `movimientos`.
+
+### 5. Levantar Angular
+
+En **otra terminal**, sin cerrar la anterior:
+
+```bash
+ng serve --open
+```
+
+Esto abre automáticamente el navegador en [http://localhost:4200](http://localhost:4200). Si no se abre solo, se puede acceder manualmente a esa dirección.
+
+### 6. Build de producción y tests
+
+```bash
+ng build   # genera frontend/dist/
+ng test    # corre las pruebas unitarias
+```
 
 ### Credenciales de prueba
 
@@ -83,15 +105,25 @@ Proyecto desarrollado en el marco del módulo **Full Stack I** del **Instituto S
 ABP-FullStackers/
 ├── frontend/
 │   ├── public/
-│   │   ├── assets/
 │   │   └── img/
+│   ├── db.json                     # Base de datos de prueba para json-server
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── core/               # Servicios, guards e interceptores transversales
-│   │   │   ├── features/           # Lógica de negocio agrupada por dominio
+│   │   │   ├── core/
+│   │   │   │   ├── models/         # Interfaces: Categoria, Producto, Movimiento, Usuario
+│   │   │   │   └── services/       # CategoriasService, ProductosService, MovimientosService, AuthService
+│   │   │   ├── features/
+│   │   │   │   └── admin/
+│   │   │   │       ├── dashboard/
+│   │   │   │       ├── categorias/         # Listado de categorías
+│   │   │   │       ├── categoria-form/     # Alta y edición de categorías (form reactivo)
+│   │   │   │       ├── productos/
+│   │   │   │       ├── producto-form/
+│   │   │   │       ├── movimientos/
+│   │   │   │       └── movimiento-form/
 │   │   │   ├── footer/             # Componente de pie de página compartido
 │   │   │   ├── landing/            # Página principal (Home)
-│   │   │   ├── layouts/            # Layouts compartidos
+│   │   │   ├── layouts/            # AdminLayout, AuthLayout, layouts compartidos
 │   │   │   ├── navbar-horizontal/  # Navbar compartida (sitio público)
 │   │   │   ├── pages/
 │   │   │   │   ├── account/        # Registro / recuperación de cuenta
@@ -99,11 +131,9 @@ ABP-FullStackers/
 │   │   │   │   ├── login/          # Inicio de sesión
 │   │   │   │   └── not-found/      # Página 404
 │   │   │   ├── public-layout/      # Layout del sitio público (navbar + footer + router-outlet)
-│   │   │   ├── quienes-somos/      # Página institucional
+│   │   │   ├── quienes-somos/      # Página institucional (datos vía json-server)
 │   │   │   ├── shared/             # Componentes, pipes y directivas reutilizables
 │   │   │   ├── app.config.ts
-│   │   │   ├── app.css
-│   │   │   ├── app.html
 │   │   │   ├── app.routes.ts
 │   │   │   └── app.ts
 │   │   ├── index.html
@@ -111,10 +141,8 @@ ABP-FullStackers/
 │   ├── angular.json
 │   └── package.json
 ├── Maqueta/                        # Maqueta original en HTML5/CSS3 (referencia de diseño)
-└── backend/
+└── backend/                        # Aún sin desarrollar; json-server actúa como API de prueba mientras tanto
 ```
-
-> La carpeta `Maqueta/` se conserva como referencia visual y de contenido durante la migración, pero el desarrollo activo ocurre exclusivamente en `frontend/`.
 
 ---
 
