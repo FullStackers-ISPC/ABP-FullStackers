@@ -349,35 +349,35 @@
       "nombre": "Rodrigo Mateo Chavez Cuffa",
       "rol": "Backend Developer",
       "email": "rodrichc1@gmail.com",
-      "imagen": "/assets/Integrantes/rodri.jpeg"
+      "imagen": "/assets/Integrantes/Rodri.jpeg"
     },
     {
       "id": 2,
       "nombre": "Fausto Santino Fili",
       "rol": "Frontend Developer",
       "email": "faustosantinofili@gmail.com",
-      "imagen": "/assets/Integrantes/fausto.jpeg"
+      "imagen": "/assets/Integrantes/Fausto.jpeg"
     },
     {
       "id": 3,
       "nombre": "Ignacio Javier Moreira",
       "rol": "Frontend Developer",
       "email": "ignaciomoreira2121@gmail.com",
-      "imagen": "/assets/Integrantes/ignacio.jpeg"
+      "imagen": "/assets/Integrantes/Ignacio.jpeg"
     },
     {
       "id": 4,
       "nombre": "Daniel Esteban Gonzalez Lara",
       "rol": "Backend Developer",
       "email": "dani.esteban.gonzalez.lara@gmail.com",
-      "imagen": "/assets/Integrantes/daniel.jpg"
+      "imagen": "/assets/Integrantes/Daniel.jpg"
     },
     {
       "id": 5,
       "nombre": "Kevin Agustin Requelme",
       "rol": "Database Developer",
       "email": "kevinrequelme82@gmail.com",
-      "imagen": "/assets/Integrantes/kevin.jpg"
+      "imagen": "/assets/Integrantes/Kevin.jpg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
