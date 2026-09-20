@@ -212,150 +212,34 @@
 
             <div class="row g-4 justify-content-center">
 
-                <!-- RODRIGO -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="member-card card h-100">
+                @for (integrante of integrantes; track integrante.id) {
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <article class="member-card card h-100">
 
-                        <div class="member-image">
-                            <img
-                                src="/assets/Integrantes/Rodri.jpeg"
-                                alt="Rodrigo Mateo Chavez Cuffa"
-                                loading="lazy"
-                            >
-                        </div>
+                            <div class="member-image">
+                                <img
+                                    [src]="integrante.imagen"
+                                    [alt]="integrante.nombre"
+                                >
+                            </div>
 
-                        <div class="member-info">
-                            <h3>
-                                Rodrigo Mateo Chavez Cuffa
-                            </h3>
+                            <div class="member-info">
+                                <h3>
+                                    {{ integrante.nombre }}
+                                </h3>
 
-                            <span class="badge role-badge">
-                                Backend Developer
-                            </span>
+                                <span class="badge role-badge">
+                                    {{ integrante.rol }}
+                                </span>
 
-                            <a href="mailto:rodrichc1@gmail.com">
-                                rodrichc1@gmail.com
-                            </a>
-                        </div>
+                                <a [href]="'mailto:' + integrante.email">
+                                    {{ integrante.email }}
+                                </a>
+                            </div>
 
-                    </article>
-                </div>
-
-                <!-- FAUSTO -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="member-card card h-100">
-
-                        <div class="member-image">
-                            <img
-                                src="/assets/Integrantes/Fausto.jpeg"
-                                alt="Fausto Santino Fili"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <div class="member-info">
-                            <h3>
-                                Fausto Santino Fili
-                            </h3>
-
-                            <span class="badge role-badge">
-                                Frontend Developer
-                            </span>
-
-                            <a href="mailto:faustosantinofili@gmail.com">
-                                faustosantinofili@gmail.com
-                            </a>
-                        </div>
-
-                    </article>
-                </div>
-
-                <!-- IGNACIO -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="member-card card h-100">
-
-                        <div class="member-image">
-                            <img
-                                src="/assets/Integrantes/Ignacio.jpeg"
-                                alt="Ignacio Javier Moreira"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <div class="member-info">
-                            <h3>
-                                Ignacio Javier Moreira
-                            </h3>
-
-                            <span class="badge role-badge">
-                                Frontend Developer
-                            </span>
-
-                            <a href="mailto:ignaciomoreira2121@gmail.com">
-                                ignaciomoreira2121@gmail.com
-                            </a>
-                        </div>
-
-                    </article>
-                </div>
-
-                <!-- DANIEL -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="member-card card h-100">
-
-                        <div class="member-image">
-                            <img
-                                src="/assets/Integrantes/Daniel.jpg"
-                                alt="Daniel Esteban Gonzalez Lara"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <div class="member-info">
-                            <h3>
-                                Daniel Esteban Gonzalez Lara
-                            </h3>
-
-                            <span class="badge role-badge">
-                                Backend Developer
-                            </span>
-
-                            <a href="mailto:dani.esteban.gonzalez.lara@gmail.com">
-                                dani.esteban.gonzalez.lara@gmail.com
-                            </a>
-                        </div>
-
-                    </article>
-                </div>
-
-                <!-- KEVIN -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <article class="member-card card h-100">
-
-                        <div class="member-image">
-                            <img
-                                src="/assets/Integrantes/Kevin.jpg"
-                                alt="Kevin Requelme"
-                                loading="lazy"
-                            >
-                        </div>
-
-                        <div class="member-info">
-                            <h3>
-                                Kevin Requelme
-                            </h3>
-
-                            <span class="badge role-badge">
-                                Database Developer
-                            </span>
-
-                            <a href="mailto:kevinrequelme82@gmail.com">
-                                kevinrequelme82@gmail.com
-                            </a>
-                        </div>
-
-                    </article>
-                </div>
+                        </article>
+                    </div>
+                }
 
             </div>
         </div>
