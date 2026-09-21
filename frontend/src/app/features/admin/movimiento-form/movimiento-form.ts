@@ -27,8 +27,8 @@ export class MovimientoFormComponent implements OnInit {
 
   movimientoForm = this.fb.group({
     tipo: ['', Validators.required],
-    categoria: ['', Validators.required],
     producto: ['', Validators.required], 
+    categoria: [{ value: '', disabled: true }, Validators.required], 
     cantidad: [1, [Validators.required, Validators.min(1)]],
     observacion: ['']
   });
@@ -36,10 +36,22 @@ export class MovimientoFormComponent implements OnInit {
   ngOnInit(): void {
     this.productosService.getProductos().subscribe({
       next: (data) => {
-        this.productos = data;
+        this.productos = data.filter(p => p.nombre);
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al cargar productos en formulario:', err)
+    });
+
+    this.movimientoForm.get('producto')?.valueChanges.subscribe((nombreProd) => {
+      if (!nombreProd) {
+        this.movimientoForm.patchValue({ categoria: '' });
+        return;
+      }
+
+      const prod = this.productos.find(p => p.nombre === nombreProd);
+      if (prod) {
+        this.movimientoForm.patchValue({ categoria: prod.categoria });
+      }
     });
   }
 
@@ -61,21 +73,25 @@ export class MovimientoFormComponent implements OnInit {
 
     const formVal = this.movimientoForm.getRawValue();
     const prodSeleccionado = this.productos.find(p => p.nombre === formVal.producto);
+
+    if (!prodSeleccionado) {
+      return;
+    }
+
     const cantidad = Number(formVal.cantidad);
 
-    // validacion de stock
-    if (formVal.tipo === 'salida' && prodSeleccionado && cantidad > prodSeleccionado.stock) {
+    if (formVal.tipo === 'salida' && cantidad > prodSeleccionado.stock) {
       this.mostrarErrorStock = true;
       return;
     }
 
     const nuevoMovimiento: Omit<Movimiento, 'id'> = {
       fecha: new Date().toLocaleDateString('es-AR'),
-      producto: formVal.producto!,
-      categoria: formVal.categoria!,
+      producto: prodSeleccionado.nombre,
+      categoria: prodSeleccionado.categoria, 
       tipo: formVal.tipo as 'entrada' | 'salida' | 'ajuste',
       cantidad: formVal.tipo === 'salida' ? -cantidad : cantidad,
-      usuario: 'admin' 
+      usuario: 'admin'
     };
 
     this.movimientosService.crearMovimiento(nuevoMovimiento).subscribe({
@@ -84,7 +100,7 @@ export class MovimientoFormComponent implements OnInit {
         this.movimientoForm.reset({ cantidad: 1, tipo: '', categoria: '', producto: '' });
         this.cdr.detectChanges();
         
-        setTimeout(() => this.router.navigate(['/admin']), 2000);
+        setTimeout(() => this.router.navigate(['/admin']), 1500);
       },
       error: (err) => console.error('Error al registrar movimiento:', err)
     });

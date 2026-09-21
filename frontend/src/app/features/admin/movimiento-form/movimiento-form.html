@@ -37,6 +37,8 @@
 
         <form [formGroup]="movimientoForm" (ngSubmit)="onSubmit()" class="mt-4">
             <div class="row g-3">
+                
+                <!-- Tipo de Movimiento -->
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
                     <select formControlName="tipo" class="form-select" [class.is-invalid]="isInvalidField('tipo')">
@@ -48,23 +50,14 @@
                     @if (isInvalidField('tipo')) { <div class="invalid-feedback">Seleccioná un tipo.</div> }
                 </div>
 
-                <div class="col-12 col-sm-6">
-                    <label class="form-label">Categoría <span class="campo-requerido">*</span></label>
-                    <select formControlName="categoria" class="form-select" [class.is-invalid]="isInvalidField('categoria')">
-                        <option value="" disabled selected>Seleccionar categoría...</option>
-                        <option value="Procesadores">Procesadores</option>
-                        <option value="Tarjetas Gráficas">Tarjetas Gráficas</option>
-                    </select>
-                    @if (isInvalidField('categoria')) { <div class="invalid-feedback">Seleccioná una categoría.</div> }
-                </div>
-
+                <!-- Producto -->
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Producto <span class="campo-requerido">*</span></label>
                     <select formControlName="producto" class="form-select" [class.is-invalid]="isInvalidField('producto')">
                         <option value="" disabled selected>Seleccionar producto...</option>
                         @for (prod of productos; track prod.id) {
                             <option [value]="prod.nombre">
-                                {{ prod.nombre }}
+                                {{ prod.nombre }} (Stock: {{ prod.stock }})
                             </option>
                         }
                     </select>
@@ -73,17 +66,32 @@
                     }
                 </div>
 
+                <!-- Categoría -->
+                <div class="col-12 col-sm-6">
+                    <label class="form-label">Categoría</label>
+                    <input 
+                        type="text" 
+                        formControlName="categoria" 
+                        class="form-control" 
+                        placeholder="Se autocompleta al elegir producto..." 
+                        readonly 
+                    />
+                </div>
+
+                <!-- Cantidad -->
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Cantidad <span class="campo-requerido">*</span></label>
-                    <input type="number" formControlName="cantidad" class="form-control" [class.is-invalid]="isInvalidField('cantidad')" placeholder="Ej: 5">
+                    <input type="number" formControlName="cantidad" class="form-control" [class.is-invalid]="isInvalidField('cantidad')" placeholder="Ej: 5" min="1">
                     @if (isInvalidField('cantidad')) { <div class="invalid-feedback">Ingresá una cantidad válida mayor a 0.</div> }
                 </div>
 
+                <!-- Observación -->
                 <div class="col-12">
                     <label class="form-label">Observación</label>
                     <textarea formControlName="observacion" class="form-control" rows="3" placeholder="Motivo o detalle (opcional)"></textarea>
                 </div>
 
+                <!-- Botones -->
                 <div class="col-12 d-flex justify-content-end gap-2 mt-3">
                     <a routerLink="/admin/movimientos" class="btn-secondary-es">
                         <i class="fa-solid fa-xmark"></i> Cancelar
