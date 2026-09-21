@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Producto } from '../models/producto.model';
 
 
@@ -29,5 +29,20 @@ export class ProductosService {
           .sort((a, b) => a.stock - b.stock)
       )
     );
+  }
+
+  crearProducto(producto: Producto): Observable<Producto> {
+    return this.http.post<Producto>(this.apiUrl, producto).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('Ocurrió un error de red:', error.error);
+    } else {
+      console.error(`El backend devolvió el código ${error.status}, body:`, error.error);
+    }
+    return throwError(() => new Error('No se pudo completar la operación con productos. Intentá nuevamente.'));
   }
 }
