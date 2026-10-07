@@ -1,0 +1,44 @@
+# Entornos virtuales de Python
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# Byte-compiled / archivos temporales de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Bases de datos locales (evita subir SQLite o volcados accidentales)
+*.sqlite3
+*.db
+*.sql
+
+# Variables de entorno y credenciales sensibles
+.env
+.env.local
+.env.*.local
+
+# Archivos estáticos y subidos por usuarios en local
+media/
+staticfiles/
+
+# Archivos de configuración de IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs y reportes
+*.log
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
