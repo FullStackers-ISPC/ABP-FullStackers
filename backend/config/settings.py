@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'movimientos',
 ]
 
-AUTH_USER_MODEL = 'usuarios.Usuario'
-
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
