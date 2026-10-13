@@ -83,3 +83,23 @@
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+.alerta {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.alerta i {
+    font-size: 20px;
+}
+
+.alerta-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #f87171;
+}

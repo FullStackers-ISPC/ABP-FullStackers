@@ -5,6 +5,15 @@
             <p>{{ isEditMode ? 'Modifica los datos del producto.' : 'Completa todos los campos para registrar un producto.' }}</p>
         </div>
 
+        @if (errorGuardado) {
+            <div class="alerta alerta-error">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <div>
+                    <strong>No se pudo guardar.</strong> Ocurrió un error al crear el producto. Intentá nuevamente.
+                </div>
+            </div>
+        }
+
         <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
             <div class="row g-3">
                 
@@ -80,9 +89,9 @@
                     <a routerLink="/admin/productos" class="btn-secondary-es">
                         <i class="fa-solid fa-xmark"></i> Cancelar
                     </a>
-                    <button type="submit" class="btn-primary-es" [disabled]="productoForm.invalid">
+                    <button type="submit" class="btn-primary-es" [disabled]="productoForm.invalid || guardando">
                         <i class="fa-solid fa-check"></i> 
-                        {{ isEditMode ? 'Actualizar Producto' : 'Guardar Producto' }}
+                        {{ guardando ? 'Guardando...' : (isEditMode ? 'Actualizar Producto' : 'Guardar Producto') }}
                     </button>
                 </div>
 

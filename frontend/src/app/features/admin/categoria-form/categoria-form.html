@@ -1,0 +1,46 @@
+<section id="categoria-form">
+    <div class="form-card">
+        <div class="form-card-header">
+            <h2>{{ isEditMode ? 'Editar categoría' : 'Crear nueva categoría' }}</h2>
+            <p>{{ isEditMode ? 'Modificá los datos de la categoría.' : 'Completá los datos para registrar una categoría en el inventario.' }}</p>
+        </div>
+
+        @if (errorGuardado) {
+            <div class="alerta alerta-error">
+                <i class="fa-solid fa-circle-xmark"></i>
+                <div>
+                    <strong>No se pudo guardar.</strong> Ocurrió un error al procesar la categoría. Intentá nuevamente.
+                </div>
+            </div>
+        }
+
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="form-label">Nombre de la categoría <span class="campo-requerido">*</span></label>
+                    <input type="text" formControlName="nombre" class="form-control" [class.is-invalid]="isInvalidField('nombre')" placeholder="Ej: Refrigeración">
+                    @if (isInvalidField('nombre')) {
+                        <div class="invalid-feedback">El nombre de la categoría es obligatorio.</div>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea formControlName="descripcion" class="form-control" rows="3" placeholder="Describe brevemente la categoría (opcional)..."></textarea>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2 mt-4">
+                    <a routerLink="/admin/categorias" class="btn-secondary-es">
+                        <i class="fa-solid fa-xmark"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-primary-es" [disabled]="guardando">
+                        <i class="fa-solid fa-check"></i>
+                        {{ guardando ? 'Guardando...' : (isEditMode ? 'Actualizar Categoría' : 'Guardar Categoría') }}
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</section>

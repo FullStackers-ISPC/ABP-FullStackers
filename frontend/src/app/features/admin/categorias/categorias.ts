@@ -1,9 +1,11 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProductosService } from '../../../core/services/productos.service';
+import { CategoriasService } from '../../../core/services/categorias.service';
 
 
 export interface CategoriaResumen {
-  id: number;
+  id: string | number;
   nombre: string;
   cantidad: number;
 }
@@ -11,37 +13,38 @@ export interface CategoriaResumen {
 @Component({
   selector: 'app-categorias',
   standalone: true,
+  imports: [RouterLink],
   templateUrl: './categorias.html',
   styleUrl: './categorias.css'
 })
 export class CategoriasComponent implements OnInit {
 
+  private categoriasService = inject(CategoriasService);
   private productosService = inject(ProductosService);
   private cdr = inject(ChangeDetectorRef);
-  
+
   categorias: CategoriaResumen[] = [];
 
   ngOnInit(): void {
-    this.productosService.getProductos().subscribe({
-      next: (todosLosProductos) => {
-        const contador = new Map<string, number>();
+    this.categoriasService.getCategorias().subscribe({
+      next: (categorias) => {
+        this.productosService.getProductos().subscribe({
+          next: (productos) => {
+            this.categorias = categorias.map(categoria => ({
+              id: categoria.id,
+              nombre: categoria.nombre,
+              cantidad: productos.filter(prod => prod.categoria === categoria.nombre).length
+            }));
 
-        todosLosProductos.forEach(prod => {
-          const cantidadActual = contador.get(prod.categoria) || 0;
-          contador.set(prod.categoria, cantidadActual + 1);
+            this.cdr.detectChanges();
+          },
+          error: (err) => {
+            console.error('Error al cargar productos para contar por categoría:', err);
+          }
         });
-
-        let idGenerado = 1;
-        this.categorias = Array.from(contador.entries()).map(([nombre, cantidad]) => ({
-          id: idGenerado++,
-          nombre,
-          cantidad
-        }));
-        
-        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error al cargar productos para categorías:', err);
+        console.error('Error al cargar categorías:', err);
       }
     });
   }
