@@ -32,3 +32,4 @@ class RegistroSerializer(serializers.ModelSerializer):
         usuario.full_clean()
         usuario.save()
         return usuario
+    
