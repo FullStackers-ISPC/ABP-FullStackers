@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegistroSerializer
+from .serializers import RegistroSerializer, UsuarioSerializer
 from .models import Usuario
 
 class RegistroAPIView(APIView):
@@ -24,6 +24,7 @@ class RegistroAPIView(APIView):
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginAPIView(APIView):
     """
@@ -64,5 +65,23 @@ class LoginAPIView(APIView):
             'email': user.email,
             'rol': user.id_rol.nombre
         }, status=status.HTTP_200_OK)
+
+
+class UsuarioDetalleView(APIView):
+    """
+    GET /api/v1/usuarios/<id>/
+    Devuelve los datos de un usuario especifico.
+    """
+    def get(self, request, pk):
+        try:
+            usuario = Usuario.objects.select_related('id_rol').get(pk=pk)
+        except Usuario.DoesNotExist:
+            return Response(
+                {'error': 'Usuario no encontrado.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        serializer = UsuarioSerializer(usuario)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     
