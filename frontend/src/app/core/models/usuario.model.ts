@@ -1,15 +1,21 @@
 export interface Usuario {
-  id?: string;
-
-  nombre: string;
-  apellido?: string;
-  usuario?: string;
-
+  id_usuario?: number;
   email: string;
-  password: string;
-
+  password?: string;
+  nombre: string;
+  apellido: string;
   ciudad?: string;
   provincia?: string;
+  id_rol: number;
+  rol?: string;         
+  rol_nombre?: string;  
+  activo?: boolean;
+}
 
-  rol: 'admin' | 'user';
+export interface LoginResponse {
+  id_usuario: number;
+  nombre: string;
+  apellido: string;
+  email: string;
+  rol: string;
 }
