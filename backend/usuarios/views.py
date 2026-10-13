@@ -15,7 +15,6 @@ class RegistroAPIView(APIView):
                 usuario = serializer.save()
                 return Response({
                     'id_usuario': usuario.id_usuario,
-                    'username': usuario.username,
                     'email': usuario.email,
                     'nombre': usuario.nombre,
                     'apellido': usuario.apellido,
@@ -31,18 +30,20 @@ class LoginAPIView(APIView):
     POST /api/v1/auth/login/
     """
     def post(self, request):
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
 
-        if not username or not password:
+        if not email or not password:
             return Response(
-                {'error': 'Debe ingresar username y password.'},
+                {'error': 'Debe ingresar email y password.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        email_normalizado = email.strip().lower()
+
         try:
             user = Usuario.objects.select_related('id_rol').get(
-                username=username,
+                email=email_normalizado,
                 password=password
             )
         except Usuario.DoesNotExist:
@@ -59,7 +60,6 @@ class LoginAPIView(APIView):
 
         return Response({
             'id_usuario': user.id_usuario,
-            'username': user.username,
             'nombre': user.nombre,
             'apellido': user.apellido,
             'email': user.email,

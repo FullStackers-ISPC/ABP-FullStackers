@@ -25,7 +25,6 @@ class Usuario(models.Model):
 
     nombre = models.CharField(max_length=100, validators=[solo_letras])
     apellido = models.CharField(max_length=100, validators=[solo_letras])
-    username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=150, unique=True)
     password = models.CharField(max_length=255)
     id_rol = models.ForeignKey(Rol, on_delete=models.PROTECT, db_column='id_rol')
@@ -42,10 +41,8 @@ class Usuario(models.Model):
         super().clean()
         if self.email:
             self.email = self.email.lower().strip()
-        if len(self.username) < 4:
-            raise ValidationError({'username': 'El nombre de usuario debe tener al menos 4 caracteres.'})
         if len(self.password) < 8:
             raise ValidationError({'password': 'La contraseña debe tener al menos 8 caracteres.'})
 
     def __str__(self):
-        return f"{self.username} ({self.id_rol.nombre})"
+        return f"{self.email} ({self.id_rol.nombre})"
