@@ -20,8 +20,8 @@
   </nav>
 
   <footer class="sidebar-footer">
-    <p class="user-name">Usuario</p>
-    <p class="user-email">usuario@easystock.com</p>
+    <p class="user-name">{{ nombreUsuario }}</p>
+    <p class="user-email">{{ emailUsuario }}</p>
     <button class="btn-logout" routerLink="/landing"> Cerrar Sesión</button>
   </footer>
 </aside>
@@ -35,7 +35,7 @@
       Dashboard / <span>Panel</span>
     </p>
     <div class="topbar-user">
-      <p class="topbar-role">Usuario</p>
+      <p class="topbar-role">{{ rolUsuario }}</p>
       <p class="topbar-panel">Panel de Usuario</p>
     </div>
   </header>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { RouterLink } from '@angular/router';
 import { Movimiento } from '../../core/models/movimiento.model';
 import { Producto } from '../../core/models/producto.model';
+import { AuthService } from '../../core/services/auth.service';
 import { MovimientosService } from '../../core/services/movimientos.service';
 import { ProductosService } from '../../core/services/productos.service';
 
@@ -15,9 +16,18 @@ import { ProductosService } from '../../core/services/productos.service';
 })
 export class DashboardUser implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
   private readonly productosService = inject(ProductosService);
   private readonly movimientosService = inject(MovimientosService);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly usuarioActual = this.getUsuarioActual();
+
+  readonly nombreUsuario = [this.usuarioActual?.nombre, this.usuarioActual?.apellido]
+    .map((parte) => parte?.trim())
+    .filter((parte): parte is string => Boolean(parte))
+    .join(' ') || 'Usuario';
+  readonly emailUsuario = this.usuarioActual?.email?.trim() || 'Sin sesión iniciada';
+  readonly rolUsuario = this.usuarioActual?.rol === 'admin' ? 'Administrador' : 'Usuario';
 
   sidebarOpen = false;
   submitted = false;
@@ -35,6 +45,14 @@ export class DashboardUser implements OnInit {
   movementHistory: Movimiento[] = [];
 
   readonly movementForm: FormGroup;
+
+  private getUsuarioActual() {
+    try {
+      return this.authService.getUsuarioActual();
+    } catch {
+      return null;
+    }
+  }
 
   constructor() {
     // el formulario reactive se conserva con la misma validación visual y funcional

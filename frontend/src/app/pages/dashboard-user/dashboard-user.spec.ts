@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { Subject, of } from 'rxjs';
 import { Movimiento } from '../../core/models/movimiento.model';
@@ -14,12 +15,14 @@ describe('Dashboard de Usuario', () => {
   let movementsResponse: Subject<Movimiento[]>;
 
   beforeEach(async () => {
+    localStorage.removeItem('usuario_actual');
     productsResponse = new Subject<Producto[]>();
     movementsResponse = new Subject<Movimiento[]>();
 
     await TestBed.configureTestingModule({
       imports: [DashboardUser],
       providers: [
+        provideHttpClient(),
         provideRouter([]),
         {
           provide: ProductosService,
@@ -35,10 +38,18 @@ describe('Dashboard de Usuario', () => {
       ]
     }).compileComponents();
 
+    createComponent();
+  });
+
+  afterEach(() => {
+    localStorage.removeItem('usuario_actual');
+  });
+
+  function createComponent(): void {
     fixture = TestBed.createComponent(DashboardUser);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }
 
   function sampleProducts(): Producto[] {
     return [
@@ -61,6 +72,31 @@ describe('Dashboard de Usuario', () => {
 
   it('debería crear el componente', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('debería mostrar la identidad guardada en la sesión', () => {
+    localStorage.setItem('usuario_actual', JSON.stringify({
+      id_usuario: 7,
+      nombre: 'Ana',
+      apellido: 'Pérez',
+      email: 'ana@example.com',
+      rol: 'usuario'
+    }));
+    fixture.destroy();
+    createComponent();
+
+    const page = fixture.nativeElement as HTMLElement;
+    expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Ana Pérez');
+    expect(page.querySelector('.user-email')?.textContent?.trim()).toBe('ana@example.com');
+    expect(page.querySelector('.topbar-role')?.textContent?.trim()).toBe('Usuario');
+  });
+
+  it('debería mostrar valores de respaldo si no hay sesión', () => {
+    const page = fixture.nativeElement as HTMLElement;
+
+    expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Usuario');
+    expect(page.querySelector('.user-email')?.textContent?.trim()).toBe('Sin sesión iniciada');
+    expect(page.querySelector('.topbar-role')?.textContent?.trim()).toBe('Usuario');
   });
 
   it('debería mostrar la carga mientras se obtienen productos y movimientos', () => {
