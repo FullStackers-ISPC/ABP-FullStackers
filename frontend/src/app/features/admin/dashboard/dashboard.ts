@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MovimientosService } from '../../../core/services/movimientos.service';
-import { ProductosService } from '../../../core/services/productos.service'; 
+import { DashboardService } from '../../../core/services/dashboard.service';
 import { Producto } from '../../../core/models/producto.model';
 import { Movimiento } from '../../../core/models/movimiento.model';
 
@@ -14,32 +13,25 @@ import { Movimiento } from '../../../core/models/movimiento.model';
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent implements OnInit {
-  private movimientosService = inject(MovimientosService);
-  private productosService = inject(ProductosService); 
+  private dashboardService = inject(DashboardService);
   private cdr = inject(ChangeDetectorRef);
-  
-  
+
+  productosDisponibles = 0;
+  movimientosHoy = 0;
   movimientos: Movimiento[] = [];
-  productosStockBajo: Producto[] = []; 
+  productosStockBajo: Producto[] = [];
 
   ngOnInit(): void {
-    this.movimientosService.getMovimientos().subscribe({
+    this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
-        this.movimientos = data;
+        this.productosDisponibles = data.availableProducts;
+        this.movimientosHoy = data.movementsToday;
+        this.movimientos = data.movements;
+        this.productosStockBajo = data.lowStockProducts;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error al cargar movimientos:', err);
-      }
-    });
-
-    this.productosService.getProductosConBajoStock().subscribe({
-      next: (data) => {
-        this.productosStockBajo = data;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error al cargar productos con bajo stock:', err);
+        console.error('Error al cargar los datos del dashboard:', err);
       }
     });
   }
