@@ -17,6 +17,10 @@ __pycache__/
 *.db
 *.sql
 
+# Scripts SQL versionados del proyecto (esquema y datos iniciales requeridos)
+!database/
+!database/*.sql
+
 # Variables de entorno y credenciales sensibles
 .env
 .env.local

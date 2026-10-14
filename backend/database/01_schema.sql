@@ -18,7 +18,7 @@ USE easystock;
 -- =========================
 
 CREATE TABLE rol (
-    id_rol INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE,
 
     CONSTRAINT chk_rol_nombre
@@ -31,12 +31,12 @@ CREATE TABLE rol (
 -- =========================
 
 CREATE TABLE usuario (
-    id_usuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    id_rol INT UNSIGNED NOT NULL,
+    id_rol INT NOT NULL,
     ciudad VARCHAR(100),
     provincia VARCHAR(100),
     activo BOOLEAN NOT NULL DEFAULT TRUE,
@@ -66,7 +66,7 @@ CREATE TABLE usuario (
 -- =========================
 
 CREATE TABLE categorias (
-    id_categoria INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL UNIQUE,
     descripcion VARCHAR(255),
     fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -81,15 +81,15 @@ CREATE TABLE categorias (
 -- =========================
 
 CREATE TABLE productos (
-    id_producto INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(30) NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     descripcion VARCHAR(255),
     stock_actual INT UNSIGNED NOT NULL DEFAULT 0,
-    stock_alerta INT UNSIGNED NOT NULL DEFAULT 0,
-    stock_critico INT UNSIGNED NOT NULL DEFAULT 0,
+    stock_alerta INT UNSIGNED NOT NULL,
+    stock_critico INT UNSIGNED NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
-    id_categoria INT UNSIGNED NOT NULL,
+    id_categoria INT NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT TRUE,
 
     fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -132,7 +132,7 @@ CREATE TABLE productos (
 -- =========================
 
 CREATE TABLE movimientos (
-    id_movimiento INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_movimiento INT AUTO_INCREMENT PRIMARY KEY,
 
     tipo ENUM('ENTRADA', 'SALIDA', 'AJUSTE') NOT NULL,
 
@@ -145,8 +145,8 @@ CREATE TABLE movimientos (
     fecha_movimiento DATETIME NOT NULL
         DEFAULT CURRENT_TIMESTAMP,
 
-    id_producto INT UNSIGNED NOT NULL,
-    id_usuario INT UNSIGNED NOT NULL,
+    id_producto INT NOT NULL,
+    id_usuario INT NOT NULL,
 
     CONSTRAINT chk_movimientos_cantidad_por_tipo
         CHECK (
