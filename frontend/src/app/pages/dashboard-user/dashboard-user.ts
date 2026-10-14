@@ -26,6 +26,8 @@ export class DashboardUser implements OnInit {
   stockIssueMessage = '';
   isLoadingProducts = true;
   isLoadingMovements = true;
+  productsErrorMessage = '';
+  movementsErrorMessage = '';
   isSubmitting = false;
 
   products: Producto[] = [];
@@ -52,11 +54,13 @@ export class DashboardUser implements OnInit {
         this.products = data;
         this.categories = this.buildCategories(data);
         this.isLoadingProducts = false;
+        this.productsErrorMessage = '';
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cargar productos del dashboard usuario:', err);
         this.isLoadingProducts = false;
+        this.productsErrorMessage = 'No se pudieron cargar los productos y categorías. Verificá la conexión e intentá nuevamente.';
         this.cdr.detectChanges();
       }
     });
@@ -66,11 +70,13 @@ export class DashboardUser implements OnInit {
       next: (data) => {
         this.movementHistory = data;
         this.isLoadingMovements = false;
+        this.movementsErrorMessage = '';
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cargar movimientos del dashboard usuario:', err);
         this.isLoadingMovements = false;
+        this.movementsErrorMessage = 'No se pudo cargar el historial de movimientos. Verificá la conexión e intentá nuevamente.';
         this.cdr.detectChanges();
       }
     });

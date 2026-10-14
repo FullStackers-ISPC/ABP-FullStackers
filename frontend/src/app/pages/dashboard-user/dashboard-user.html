@@ -74,7 +74,11 @@
           <thead><tr><th>Código</th><th>Categoría</th><th>Cantidad de Productos</th></tr></thead>
           <tbody>
             <!-- las categorías se buscan del catálogo real para evitar duplicar información harcodeada -->
-            @if (categories.length === 0) {
+            @if (isLoadingProducts) {
+              <tr><td colspan="3"><div class="alerta alerta-advertencia" role="status" aria-live="polite"><i class="fa-solid fa-spinner" aria-hidden="true"></i><span>Cargando categorías...</span></div></td></tr>
+            } @else if (productsErrorMessage) {
+              <tr><td colspan="3"><div class="alerta alerta-error" role="alert">{{ productsErrorMessage }}</div></td></tr>
+            } @else if (categories.length === 0) {
               <tr>
                 <td colspan="3">No hay categorías disponibles.</td>
               </tr>
@@ -91,25 +95,36 @@
     <section id="productos">
       <h2 class="section-title">Productos</h2>
       <p class="section-subtitle">Catálogo de productos disponibles en el inventario.</p>
-      @if (products.length === 0 && !isLoadingProducts) {
+      @if (isLoadingProducts) {
+        <div class="alerta alerta-advertencia" role="status" aria-live="polite">
+          <i class="fa-solid fa-spinner" aria-hidden="true"></i>
+          <span>Cargando productos...</span>
+        </div>
+      } @else if (productsErrorMessage) {
+        <div class="alerta alerta-error" role="alert">
+          <i class="fa-solid fa-circle-xmark" aria-hidden="true"></i>
+          <span>{{ productsErrorMessage }}</span>
+        </div>
+      } @else if (products.length === 0) {
         <div class="estado-vacio">
           <i class="fa-solid fa-box-open estado-vacio-icon"></i>
           <p class="estado-vacio-texto">No hay productos registrados en el sistema.</p>
           <p class="estado-vacio-sub">Comunicate con el administrador para cargar productos al inventario.</p>
         </div>
+      } @else {
+        <div class="products-grid">
+          <!-- el catálogo se renderiza desde el backend y mantiene el mismo layout visual original -->
+          @for (product of products; track product.id) {
+            @let status = getProductStatus(product);
+            <article class="product-card">
+              <div class="product-top"><span class="product-code">#{{ product.id }}</span><span class="badge" [ngClass]="status.className">{{ status.label }}</span></div>
+              <h3 class="product-name">{{ product.nombre }}</h3>
+              <p class="product-category">{{ product.categoria }}</p>
+              <p class="product-stock">Stock: <strong>{{ product.stock }}</strong></p>
+            </article>
+          }
+        </div>
       }
-      <div class="products-grid">
-        <!-- el catálogo se renderiza desde el backend y mantiene el mismo layout visual original -->
-        @for (product of products; track product.id) {
-          @let status = getProductStatus(product);
-          <article class="product-card">
-            <div class="product-top"><span class="product-code">#{{ product.id }}</span><span class="badge" [ngClass]="status.className">{{ status.label }}</span></div>
-            <h3 class="product-name">{{ product.nombre }}</h3>
-            <p class="product-category">{{ product.categoria }}</p>
-            <p class="product-stock">Stock: <strong>{{ product.stock }}</strong></p>
-          </article>
-        }
-      </div>
     </section>
 
     <section id="movimientos">
@@ -196,7 +211,11 @@
           <thead><tr><th>Fecha</th><th>Producto</th><th>Categoría</th><th>Tipo</th><th>Cantidad</th><th>Usuario</th></tr></thead>
           <tbody>
             <!-- la tabla se llena con los movimientos reales del backend y se actualiza tras el POST -->
-            @if (movementHistory.length === 0 && !isLoadingMovements) {
+            @if (isLoadingMovements) {
+              <tr><td colspan="6"><div class="alerta alerta-advertencia" role="status" aria-live="polite"><i class="fa-solid fa-spinner" aria-hidden="true"></i><span>Cargando movimientos...</span></div></td></tr>
+            } @else if (movementsErrorMessage) {
+              <tr><td colspan="6"><div class="alerta alerta-error" role="alert">{{ movementsErrorMessage }}</div></td></tr>
+            } @else if (movementHistory.length === 0) {
               <tr>
                 <td colspan="6">Todavía no hay movimientos registrados.</td>
               </tr>
