@@ -19,9 +19,9 @@ class CategoriaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id_categoria', 'fecha_creacion', 'cantidad_productos']
 
     def validate(self, attrs):
-        categoria = Categoria(**attrs)
-        if self.instance is not None:
-            categoria.pk = self.instance.pk
+        categoria = self.instance or Categoria()
+        for campo, valor in attrs.items():
+            setattr(categoria, campo, valor)
 
         categoria.full_clean()
         return attrs
