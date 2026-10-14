@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   private dashboardService = inject(DashboardService);
   private cdr = inject(ChangeDetectorRef);
 
+  isLoadingDashboard = true;
+  dashboardErrorMessage = '';
   productosDisponibles = 0;
   movimientosHoy = 0;
   movimientos: Movimiento[] = [];
@@ -28,10 +30,15 @@ export class DashboardComponent implements OnInit {
         this.movimientosHoy = data.movementsToday;
         this.movimientos = data.movements;
         this.productosStockBajo = data.lowStockProducts;
+        this.isLoadingDashboard = false;
+        this.dashboardErrorMessage = '';
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error al cargar los datos del dashboard:', err);
+        this.isLoadingDashboard = false;
+        this.dashboardErrorMessage = 'No se pudieron cargar los datos del panel. Verificá la conexión e intentá nuevamente.';
+        this.cdr.detectChanges();
       }
     });
   }

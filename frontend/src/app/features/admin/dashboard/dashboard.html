@@ -1,5 +1,14 @@
 <h1 class="visually-hidden">EasyStock - Dashboard de Administración</h1>
 
+@if (isLoadingDashboard) {
+    <div class="alert alert-info" role="status" aria-live="polite">
+        Cargando los datos del panel...
+    </div>
+} @else if (dashboardErrorMessage) {
+    <div class="alert alert-danger" role="alert">
+        {{ dashboardErrorMessage }}
+    </div>
+} @else {
 <!-- ===== SECCIÓN 1: Resumen de Actividad ===== -->
 <section id="panel">
     <h2 class="section-title">Resumen de Actividad</h2>
@@ -126,3 +135,4 @@
         </div>
     </div>
 </section>
+}
