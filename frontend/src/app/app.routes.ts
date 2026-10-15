@@ -18,6 +18,7 @@ import { Login } from './pages/login/login';
 import { Account } from './pages/account/account';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { NotFound } from './pages/not-found/not-found';
+import { adminGuard, userGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -69,6 +70,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [adminGuard],
     children: [
       {
         path: '',
@@ -118,7 +120,8 @@ export const routes: Routes = [
     path: 'dashboard/user',
     loadComponent: () =>
       import('./pages/dashboard-user/dashboard-user')
-        .then((module) => module.DashboardUser)
+        .then((module) => module.DashboardUser),
+    canActivate: [userGuard]
   },
 
   {
