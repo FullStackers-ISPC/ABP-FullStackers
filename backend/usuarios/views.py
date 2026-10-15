@@ -6,7 +6,7 @@ from .models import Usuario
 
 class RegistroAPIView(APIView):
     """
-    POST /api/v1/auth/registro/
+    POST /api/v1/usuarios/registro/
     """
     def post(self, request):
         serializer = RegistroSerializer(data=request.data)
@@ -27,7 +27,7 @@ class RegistroAPIView(APIView):
 
 class LoginAPIView(APIView):
     """
-    POST /api/v1/auth/login/
+    POST /api/v1/usuarios/login/
     """
     def post(self, request):
         email = request.data.get('email')
@@ -67,21 +67,58 @@ class LoginAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class UsuarioListaView(APIView):
+    """
+    GET /api/v1/usuarios/
+    Lista todos los usuarios registrados.
+    """
+    def get(self, request):
+        usuarios = Usuario.objects.select_related('id_rol').all()
+        serializer = UsuarioSerializer(usuarios, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class UsuarioDetalleView(APIView):
     """
-    GET /api/v1/usuarios/<id>/
-    Devuelve los datos de un usuario especifico.
+    GET, PUT, DELETE /api/v1/usuarios/<pk>/
+    Consulta, actualización y baja de un usuario puntual.
     """
-    def get(self, request, pk):
+    def get_object(self, pk):
         try:
-            usuario = Usuario.objects.select_related('id_rol').get(pk=pk)
+            return Usuario.objects.select_related('id_rol').get(pk=pk)
         except Usuario.DoesNotExist:
+            return None
+
+    def get(self, request, pk):
+        usuario = self.get_object(pk)
+        if not usuario:
             return Response(
                 {'error': 'Usuario no encontrado.'},
                 status=status.HTTP_404_NOT_FOUND
             )
-        
         serializer = UsuarioSerializer(usuario)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def put(self, request, pk):
+        usuario = self.get_object(pk)
+        if not usuario:
+            return Response(
+                {'error': 'Usuario no encontrado.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = UsuarioSerializer(usuario, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        usuario = self.get_object(pk)
+        if not usuario:
+            return Response(
+                {'error': 'Usuario no encontrado.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        usuario.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
