@@ -9,7 +9,7 @@ import { Usuario, LoginResponse } from '../models/usuario.model';
 })
 export class AuthService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/v1';
+  private apiUrl = 'http://127.0.0.1:8000/api/v1/usuarios';
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class AuthService {
    * Autenticación contra Django por email y contraseña.
    */
   login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login/`, {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login/`, {
       email: email.trim().toLowerCase(),
       password: password
     }).pipe(
@@ -34,7 +34,7 @@ export class AuthService {
    * Envía los datos para crear el registro en la base de datos.
    */
   registrar(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/auth/registro/`, usuario);
+    return this.http.post<Usuario>(`${this.apiUrl}/registro/`, usuario);
   }
 
   /**
@@ -42,7 +42,7 @@ export class AuthService {
    * Obtiene la información del usuario por id_usuario.
    */
   obtenerUsuario(id_usuario: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/usuarios/${id_usuario}/`);
+    return this.http.get<Usuario>(`${this.apiUrl}/${id_usuario}/`);
   }
 
   /**
