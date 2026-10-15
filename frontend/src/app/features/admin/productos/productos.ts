@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductosService } from '../../../core/services/productos.service';
 import { Producto } from '../../../core/models/producto.model';
+import { obtenerMensajeError } from '../../../core/utils/mensaje-error';
 
 
 @Component({
@@ -15,16 +16,71 @@ import { Producto } from '../../../core/models/producto.model';
 export class ProductosComponent implements OnInit {
   private productosService = inject(ProductosService);
   private cdr = inject(ChangeDetectorRef);
+
   productos: Producto[] = [];
+  cargando = true;
+  mensajeError = '';
+  busqueda = '';
+  categoriaFiltro = '';
+
+  get categoriasDisponibles(): string[] {
+    return [...new Set(this.productos.map((p) => p.categoria))].sort();
+  }
+
+  get productosFiltrados(): Producto[] {
+    const texto = this.busqueda.trim().toLowerCase();
+    return this.productos.filter((p) =>
+      (!this.categoriaFiltro || p.categoria === this.categoriaFiltro) &&
+      (!texto ||
+        p.nombre.toLowerCase().includes(texto) ||
+        p.codigo.toLowerCase().includes(texto))
+    );
+  }
+
+  onBuscar(event: Event): void {
+    this.busqueda = (event.target as HTMLInputElement).value;
+  }
+
+  onFiltrarCategoria(event: Event): void {
+    this.categoriaFiltro = (event.target as HTMLSelectElement).value;
+  }
 
   ngOnInit(): void {
+    this.cargarProductos();
+  }
+
+  cargarProductos(): void {
+    this.cargando = true;
+    this.mensajeError = '';
+
     this.productosService.getProductos().subscribe({
       next: (data) => {
         this.productos = data;
+        this.cargando = false;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error al cargar productos:', err);
+        this.cargando = false;
+        this.mensajeError = obtenerMensajeError(err);
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  eliminarProducto(producto: Producto): void {
+    const confirmar = window.confirm(
+      `¿Eliminar el producto “${producto.nombre}”? Esta acción no se puede deshacer.`
+    );
+    if (!confirmar) {
+      return;
+    }
+
+    this.mensajeError = '';
+    this.productosService.eliminarProducto(producto.id).subscribe({
+      next: () => this.cargarProductos(),
+      error: (err) => {
+        this.mensajeError = obtenerMensajeError(err);
+        this.cdr.detectChanges();
       }
     });
   }
