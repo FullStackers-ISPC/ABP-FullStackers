@@ -1,28 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { of } from 'rxjs';
+import { Categorias } from './categorias';
 
-import { CategoriasComponent } from './categorias';
-import { CategoriasService } from '../../../core/services/categorias.service';
-
-describe('CategoriasComponent', () => {
-  let component: CategoriasComponent;
-  let fixture: ComponentFixture<CategoriasComponent>;
+describe('Categorias', () => {
+  let component: Categorias;
+  let fixture: ComponentFixture<Categorias>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoriasComponent],
-      providers: [{
-        provide: CategoriasService,
-        useValue: {
-          getCategorias: () => of([]),
-          eliminarCategoria: () => of(void 0),
-        },
-      }],
+      imports: [Categorias]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CategoriasComponent);
+    fixture = TestBed.createComponent(Categorias);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

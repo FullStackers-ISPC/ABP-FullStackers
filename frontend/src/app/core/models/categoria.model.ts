@@ -1,9 +1,5 @@
 export interface Categoria {
-  id_categoria: number;
+  id: string | number;
   nombre: string;
-  descripcion: string | null;
-  fecha_creacion?: string;
-  cantidad_productos: number;
+  descripcion?: string;
 }
-
-export type CategoriaPayload = Pick<Categoria, 'nombre' | 'descripcion'>;

@@ -7,20 +7,6 @@
         <a routerLink="../crear-producto" class="btn-primary-es">
             <i class="fa-solid fa-plus"></i> Nuevo Producto
         </a>
-        @if (mensajeError) {
-            <div> class= "alerta alerta-error" role="alert">{{ mensajeError }}</div>
-        }
-    </div>
-
-    <div class="filtros">
-        <input type="search" class="form-control" placeholder="Buscar por nombre o código..."
-                aria-label="Buscar productos" [value]="busqueda" (input)="onBuscar($event)">
-        <select class="form-select" aria-label="Filtrar por categoría" (change)="onFiltrarCategoria($event)">
-            <option value="">Todas las categorías</option>
-            @for (cat of categoriasDisponibles; track cat) {
-                <option [value]="cat">{{ cat }}</option>
-            }
-        </select>
     </div>
 
     <div class="es-table-wrapper">
@@ -38,9 +24,9 @@
                 </thead>
                 <tbody>
                     
-                    @for (prod of productosFiltrados; track prod.id) {
+                    @for (prod of productos; track prod.id) {
                         <tr>
-                            <td class="col-codigo">{{ prod.codigo }}</td>
+                            <td class="col-codigo">{{ prod.id }}</td>
                             <td class="col-producto">{{ prod.nombre }}</td>
                             <td class="col-categoria">{{ prod.categoria }}</td>
                             <td class="col-stock">{{ prod.stock }}</td>
@@ -53,7 +39,7 @@
                                 <a [routerLink]="['../editar-producto', prod.id]" class="btn-editar" title="Editar">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                    <button class="btn-eliminar" title="Eliminar" (click)="eliminarProducto(prod)">
+                                <button class="btn-eliminar" title="Eliminar">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -61,7 +47,7 @@
                     } @empty {
                         <tr>
                             <td colspan="6" class="text-center" style="padding: 20px; color:#888;">
-                                'Cargando productos...' : (productos.length ? 'Ningún producto coincide con la búsqueda.' : 'No hay productos en el inventario.')
+                                No hay productos en el inventario.
                             </td>
                         </tr>
                     }

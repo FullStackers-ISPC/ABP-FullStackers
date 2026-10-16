@@ -105,34 +105,3 @@
         display: none;
     }
 }
-
-.alerta {
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 14px;
-}
-
-.alerta-error {
-    background-color: #fee2e2;
-    color: #b91c1c;
-    border: 1px solid #f87171;
-}
-
-.filtros {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.filtros .form-control {
-    flex: 2 1 220px;
-}
-
-.filtros .form-select {
-    flex: 1 1 180px;
-}

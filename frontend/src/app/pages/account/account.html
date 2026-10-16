@@ -99,8 +99,36 @@
 
           </div>
 
+
+          <!-- USUARIO -->
+          <div class="form-group">
+
+            <label for="usuario">
+              Usuario
+            </label>
+
+            <input
+              id="usuario"
+              type="text"
+              class="form-control"
+              placeholder="Elegí un usuario"
+              formControlName="usuario"
+            >
+
+            @if (
+              registroForm.get('usuario')?.touched &&
+              registroForm.get('usuario')?.hasError('required')
+            ) {
+              <div class="mensaje-error">
+                El usuario es obligatorio.
+              </div>
+            }
+
+          </div>
+
+
           <!-- EMAIL -->
-          <div class="form-group form-group-full">
+          <div class="form-group">
 
             <label for="email">
               Email
