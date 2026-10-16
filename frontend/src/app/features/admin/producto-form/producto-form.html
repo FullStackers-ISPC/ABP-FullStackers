@@ -5,12 +5,10 @@
             <p>{{ isEditMode ? 'Modifica los datos del producto.' : 'Completa todos los campos para registrar un producto.' }}</p>
         </div>
 
-        @if (errorGuardado) {
-            <div class="alerta alerta-error">
+        @if (mensajeError) {
+            <div class="alerta alerta-error" role="alert">
                 <i class="fa-solid fa-circle-xmark"></i>
-                <div>
-                    <strong>No se pudo guardar.</strong> Ocurrió un error al crear el producto. Intentá nuevamente.
-                </div>
+                <div><strong>No se pudo guardar.</strong> {{ mensajeError }}</div>
             </div>
         }
 
@@ -27,9 +25,9 @@
 
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Código <span class="campo-requerido">*</span></label>
-                    <input type="number" formControlName="codigo" class="form-control" [class.is-invalid]="isInvalidField('codigo')" placeholder="Ej: 25">
+                    <input type="text" formControlName="codigo" class="form-control" [class.is-invalid]="isInvalidField('codigo')" placeholder="Ej: 25">
                     @if (isInvalidField('codigo')) {
-                        <div class="invalid-feedback">El código es obligatorio.</div>
+                        <div class="invalid-feedback">El código es obligatorio (entre 3 y 30 caracteres).</div>
                     }
                 </div>
 
@@ -55,26 +53,27 @@
                     @if (isInvalidField('stockCritico')) {
                         <div class="invalid-feedback">El stock crítico es obligatorio.</div>
                     }
+                    @if (criticoInvalido) {
+                        <div class="invalid-feedback d-block">El stock crítico debe ser menor al stock de alerta.</div>
+                    }
                 </div>
 
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Categoría <span class="campo-requerido">*</span></label>
-                    <select formControlName="categoria" class="form-select" [class.is-invalid]="isInvalidField('categoria')">
-                        <option value="" disabled selected>Seleccionar categoría...</option>
-                        <option value="Procesadores">Procesadores</option>
-                        <option value="Tarjetas Gráficas">Tarjetas Gráficas</option>
-                        <option value="Memorias RAM">Memorias RAM</option>
-                        <option value="Almacenamiento">Almacenamiento</option>
-                        <option value="Placas Madre">Placas Madre</option>
+                    <select formControlName="idCategoria" class="form-select" [class.is-invalid]="isInvalidField('idCategoria')">
+                        <option [ngValue]="null" disabled>Seleccionar categoría...</option>
+                        @for (cat of categorias; track cat.id_categoria) {
+                            <option [ngValue]="cat.id_categoria">{{ cat.nombre }}</option>
+                        }
                     </select>
-                    @if (isInvalidField('categoria')) {
+                    @if (isInvalidField('idCategoria')) {
                         <div class="invalid-feedback">Debes seleccionar una categoría.</div>
                     }
                 </div>
 
                 <div class="col-12 col-sm-6">
                     <label class="form-label">Precio <span class="campo-requerido">*</span></label>
-                    <input type="number" formControlName="precio" class="form-control" [class.is-invalid]="isInvalidField('precio')" placeholder="$0">
+                    <input type="number" step="0.01" formControlName="precio" class="form-control" [class.is-invalid]="isInvalidField('precio')" placeholder="$0">
                     @if (isInvalidField('precio')) {
                         <div class="invalid-feedback">El precio es obligatorio.</div>
                     }

@@ -266,3 +266,7 @@ select.form-control {
   }
 
 }
+
+.form-group-full {
+  grid-column: 1 / -1;
+}
