@@ -269,43 +269,7 @@
       "id": "K5f7_kc9bMc"
     }
   ],
-  "integrantes": [
-    {
-      "id": 1,
-      "nombre": "Rodrigo Mateo Chavez Cuffa",
-      "rol": "Backend Developer",
-      "email": "rodrichc1@gmail.com",
-      "imagen": "/assets/Integrantes/rodri.jpeg"
-    },
-    {
-      "id": 2,
-      "nombre": "Fausto Santino Fili",
-      "rol": "Frontend Developer",
-      "email": "faustosantinofili@gmail.com",
-      "imagen": "/assets/Integrantes/fausto.jpeg"
-    },
-    {
-      "id": 3,
-      "nombre": "Ignacio Javier Moreira",
-      "rol": "Frontend Developer",
-      "email": "ignaciomoreira2121@gmail.com",
-      "imagen": "/assets/Integrantes/ignacio.jpeg"
-    },
-    {
-      "id": 4,
-      "nombre": "Daniel Esteban Gonzalez Lara",
-      "rol": "Backend Developer",
-      "email": "dani.esteban.gonzalez.lara@gmail.com",
-      "imagen": "/assets/Integrantes/daniel.jpg"
-    },
-    {
-      "id": 5,
-      "nombre": "Kevin Agustin Requelme",
-      "rol": "Database Developer",
-      "email": "kevinrequelme82@gmail.com",
-      "imagen": "/assets/Integrantes/kevin.jpg"
-    }
-  ],  "movimientos": [
+  "movimientos": [
     {
       "id": 1,
       "fecha": "11/05/2026",

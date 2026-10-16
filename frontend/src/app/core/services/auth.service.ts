@@ -1,69 +1,69 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpParams
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Usuario, LoginResponse } from '../models/usuario.model';
+
+import { Usuario } from '../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api/v1';
+  private apiUrl =
+    'http://localhost:3000/usuarios';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
-  /**
-   * POST /api/v1/auth/login/
-   * Autenticación contra Django por email y contraseña.
-   */
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login/`, {
-      email: email.trim().toLowerCase(),
-      password: password
-    }).pipe(
-      tap((res) => {
-        // Guarda la sesión en localStorage para mantenerla al recargar
-        localStorage.setItem('usuario_actual', JSON.stringify(res));
-      })
+  login(
+    email: string,
+    password: string
+  ): Observable<Usuario[]> {
+
+    const params = new HttpParams()
+      .set(
+        'email',
+        email.trim().toLowerCase()
+      )
+      .set(
+        'password',
+        password
+      );
+
+    return this.http.get<Usuario[]>(
+      this.apiUrl,
+      { params }
     );
   }
 
-  /**
-   * POST /api/v1/auth/registro/
-   * Envía los datos para crear el registro en la base de datos.
-   */
-  registrar(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/auth/registro/`, usuario);
+  registrar(
+    usuario: Usuario
+  ): Observable<Usuario> {
+
+    return this.http.post<Usuario>(
+      this.apiUrl,
+      usuario
+    );
   }
 
-  /**
-   * GET /api/v1/usuarios/:id/
-   * Obtiene la información del usuario por id_usuario.
-   */
-  obtenerUsuario(id_usuario: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/usuarios/${id_usuario}/`);
+  buscarPorEmail(
+    email: string
+  ): Observable<Usuario[]> {
+
+    const params = new HttpParams()
+      .set(
+        'email',
+        email.trim().toLowerCase()
+      );
+
+    return this.http.get<Usuario[]>(
+      this.apiUrl,
+      { params }
+    );
   }
 
-  /**
-   * Cierra sesión eliminando los datos guardados en el navegador.
-   */
-  logout(): void {
-    localStorage.removeItem('usuario_actual');
-  }
-
-  /**
-   * Retorna el objeto del usuario logueado actualmente o null.
-   */
-  getUsuarioActual(): LoginResponse | null {
-    const data = localStorage.getItem('usuario_actual');
-    return data ? JSON.parse(data) : null;
-  }
-
-  /**
-   * Comprueba si el usuario tiene una sesión activa.
-   */
-  estaAutenticado(): boolean {
-    return this.getUsuarioActual() !== null;
-  }
 }
