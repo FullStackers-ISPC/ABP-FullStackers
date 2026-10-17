@@ -30,7 +30,7 @@ describe('Dashboard', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('debería crear el componente', () => {
     expect(component).toBeTruthy();
   });
 
@@ -41,6 +41,8 @@ describe('Dashboard', () => {
 
   it('debería mostrar las métricas y los listados tras una respuesta exitosa', () => {
     dashboardResponse.next({
+      totalProducts: 3,
+      criticalStockProducts: 1,
       availableProducts: 2,
       movementsToday: 1,
       lowStockProducts: [
@@ -61,6 +63,12 @@ describe('Dashboard', () => {
     expect(component.isLoadingDashboard).toBe(false);
     expect(component.productosDisponibles).toBe(2);
     expect(component.movimientosHoy).toBe(1);
+    expect(component.totalProductos).toBe(3);
+    expect(component.productosStockCritico).toBe(1);
+    const page = fixture.nativeElement as HTMLElement;
+    expect(page.textContent).toContain('PR-002');
+    expect(page.textContent).not.toContain('Mis Movimientos');
+    expect(page.querySelector('.btn-eliminar')).toBeNull();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Producto de prueba');
   });
 
@@ -77,6 +85,8 @@ describe('Dashboard', () => {
 
   it('debería conservar los estados vacios tras una respuesta exitosa sin registros', () => {
     dashboardResponse.next({
+      totalProducts: 0,
+      criticalStockProducts: 0,
       availableProducts: 0,
       movementsToday: 0,
       lowStockProducts: [],
@@ -90,8 +100,10 @@ describe('Dashboard', () => {
     expect(pageText).toContain('No hay productos con stock bajo en este momento.');
   });
 
-  it('should calculate summary metrics from service data', () => {
+  it('debería calcular las métricas con los datos del servicio', () => {
     dashboardResponse.next({
+      totalProducts: 3,
+      criticalStockProducts: 1,
       availableProducts: 2,
       movementsToday: 1,
       lowStockProducts: [
@@ -103,5 +115,12 @@ describe('Dashboard', () => {
     expect(component.productosDisponibles).toBe(2);
     expect(component.movimientosHoy).toBe(1);
     expect(component.productosStockBajo).toHaveLength(1);
+  });
+
+  it('debería mostrar el signo según el tipo de movimiento', () => {
+    const base = { id: 1, fecha: '', producto: '', categoria: '', usuario: '1' };
+    expect(component.getCantidad({ ...base, tipo: 'salida', cantidad: 3 })).toBe('-3');
+    expect(component.getCantidad({ ...base, tipo: 'entrada', cantidad: 3 })).toBe('+3');
+    expect(component.getCantidad({ ...base, tipo: 'ajuste', cantidad: -2 })).toBe('-2');
   });
 });

@@ -12,9 +12,9 @@
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 
 /* ===== CARDS ROW (Resumen) ===== */
-.cards-row { display: flex; gap: 20px; }
+.cards-row { display: flex; flex-wrap: wrap; gap: 20px; }
 .card {
-    flex: 1;
+    flex: 1 1 200px;
     background-color: white;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -61,7 +61,7 @@
 
 /* ===== TABLA MOVIMIENTOS ===== */
 #movimientos { margin-top: 48px; }
-.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background-color: white; }
+.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; background-color: white; }
 .movements-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .movements-table th { padding: 12px 16px; text-align: left; font-weight: bold; background-color: var(--white-color); border-bottom: 1px solid var(--border-color); }
 .movements-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
@@ -83,5 +83,6 @@
 
 @media (max-width: 600px) {
     .cards-row { flex-direction: column; }
+    .card { flex-basis: auto; }
     .form-movimiento-card { padding: 16px; }
 }

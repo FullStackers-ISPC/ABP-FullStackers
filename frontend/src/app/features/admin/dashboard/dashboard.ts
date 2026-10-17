@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { DashboardService } from '../../../core/services/dashboard.service';
 import { Producto } from '../../../core/models/producto.model';
 import { Movimiento } from '../../../core/models/movimiento.model';
+import { obtenerMensajeError } from '../../../core/utils/mensaje-error';
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,6 +20,8 @@ export class DashboardComponent implements OnInit {
   isLoadingDashboard = true;
   dashboardErrorMessage = '';
   productosDisponibles = 0;
+  totalProductos = 0;
+  productosStockCritico = 0;
   movimientosHoy = 0;
   movimientos: Movimiento[] = [];
   productosStockBajo: Producto[] = [];
@@ -27,6 +30,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
         this.productosDisponibles = data.availableProducts;
+        this.totalProductos = data.totalProducts;
+        this.productosStockCritico = data.criticalStockProducts;
         this.movimientosHoy = data.movementsToday;
         this.movimientos = data.movements;
         this.productosStockBajo = data.lowStockProducts;
@@ -37,10 +42,15 @@ export class DashboardComponent implements OnInit {
       error: (err) => {
         console.error('Error al cargar los datos del dashboard:', err);
         this.isLoadingDashboard = false;
-        this.dashboardErrorMessage = 'No se pudieron cargar los datos del panel. Verificá la conexión e intentá nuevamente.';
+        this.dashboardErrorMessage = `No se pudieron cargar los datos del panel. ${obtenerMensajeError(err)}`;
         this.cdr.detectChanges();
       }
     });
+  }
+
+  getCantidad(movimiento: Movimiento): string {
+    if (movimiento.tipo === 'salida') return `-${Math.abs(movimiento.cantidad)}`;
+    return movimiento.cantidad > 0 ? `+${movimiento.cantidad}` : String(movimiento.cantidad);
   }
 
   getEstado(prod: Producto): { texto: string, clase: string } {

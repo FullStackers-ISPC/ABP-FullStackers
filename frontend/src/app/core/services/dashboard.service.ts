@@ -6,6 +6,8 @@ import { MovimientosService } from './movimientos.service';
 import { ProductosService } from './productos.service';
 
 export interface DashboardData {
+  totalProducts: number;
+  criticalStockProducts: number;
   availableProducts: number;
   movementsToday: number;
   lowStockProducts: Producto[];
@@ -31,6 +33,8 @@ export class DashboardService {
           .sort((first, second) => first.stock - second.stock);
 
         return {
+          totalProducts: products.length,
+          criticalStockProducts: products.filter(product => product.stock <= product.stockCritico).length,
           availableProducts: products.filter((product) => product.stock > 0).length,
           movementsToday: movements.filter((movement) => this.isToday(movement.fecha, today)).length,
           lowStockProducts,
