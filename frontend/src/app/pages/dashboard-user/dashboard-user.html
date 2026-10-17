@@ -391,6 +391,7 @@
                 id="categoria-movimiento"
                 class="form-select"
                 formControlName="category"
+                (change)="cambiarCategoria()"
                 [class.is-invalid]="isInvalid('category')">
 
                 <option value="">
@@ -431,7 +432,7 @@
                   Seleccionar producto...
                 </option>
 
-                @for (product of products; track product.id) {
+                @for (product of productosDeCategoria; track product.id) {
                   <option [value]="product.id">
                     {{ product.nombre }}
                     (Stock: {{ product.stock }})

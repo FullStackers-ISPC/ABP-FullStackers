@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { Subject, of } from 'rxjs';
+import { Subject, of, throwError } from 'rxjs';
 import { Movimiento } from '../../core/models/movimiento.model';
 import { Producto } from '../../core/models/producto.model';
 import { MovimientosService } from '../../core/services/movimientos.service';
@@ -13,9 +13,15 @@ describe('Dashboard de Usuario', () => {
   let component: DashboardUser;
   let productsResponse: Subject<Producto[]>;
   let movementsResponse: Subject<Movimiento[]>;
+  let crearMovimiento: ReturnType<typeof vi.fn>;
 
   beforeEach(async () => {
     localStorage.removeItem('usuario_actual');
+    localStorage.setItem('usuario_actual', JSON.stringify({
+      id_usuario: 2, nombre: 'Usuario', apellido: 'Demo',
+      email: 'user@easystock.com', rol: 'usuario'
+    }));
+    crearMovimiento = vi.fn(() => of({}));
     productsResponse = new Subject<Producto[]>();
     movementsResponse = new Subject<Movimiento[]>();
 
@@ -32,7 +38,7 @@ describe('Dashboard de Usuario', () => {
           provide: MovimientosService,
           useValue: {
             getMovimientos: () => movementsResponse.asObservable(),
-            crearMovimiento: () => of({} as Movimiento)
+            crearMovimiento
           }
         }
       ]
@@ -61,12 +67,12 @@ describe('Dashboard de Usuario', () => {
   function sampleMovements(): Movimiento[] {
     return [{
       id: 1,
-      fecha: new Date().toLocaleDateString('es-AR'),
+      fecha: new Date().toISOString(),
       producto: 'Producto disponible',
       categoria: 'Periféricos',
       tipo: 'entrada',
       cantidad: 2,
-      usuario: 'usuario'
+      usuario: '2'
     }];
   }
 
@@ -76,22 +82,25 @@ describe('Dashboard de Usuario', () => {
 
   it('debería mostrar la identidad guardada en la sesión', () => {
     localStorage.setItem('usuario_actual', JSON.stringify({
-      id_usuario: 7,
-      nombre: 'Ana',
-      apellido: 'Pérez',
-      email: 'ana@example.com',
+      id_usuario: 2,
+      nombre: 'Usuario',
+      apellido: 'Demo',
+      email: 'user@easystock.com',
       rol: 'usuario'
     }));
     fixture.destroy();
     createComponent();
 
     const page = fixture.nativeElement as HTMLElement;
-    expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Ana Pérez');
-    expect(page.querySelector('.user-email')?.textContent?.trim()).toBe('ana@example.com');
+    expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Usuario Demo');
+    expect(page.querySelector('.user-email')?.textContent?.trim()).toBe('user@easystock.com');
     expect(page.querySelector('.topbar-role')?.textContent?.trim()).toBe('Usuario');
   });
 
   it('debería mostrar valores de respaldo si no hay sesión', () => {
+    localStorage.removeItem('usuario_actual');
+    fixture.destroy();
+    createComponent();
     const page = fixture.nativeElement as HTMLElement;
 
     expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Usuario');
@@ -161,5 +170,67 @@ describe('Dashboard de Usuario', () => {
     expect(pageText).toContain('No hay categorías disponibles');
     expect(pageText).toContain('No hay productos registrados en el sistema');
     expect(pageText).toContain('Todavía no hay movimientos registrados');
+  });
+
+  it('debería mostrar y contar únicamente los movimientos del usuario actual', () => {
+    const propio = sampleMovements()[0];
+    movementsResponse.next([propio, { ...propio, id: 2, usuario: '8' }]);
+    expect(component.movementHistory).toEqual([propio]);
+    expect(component.getTodayMovementsCount()).toBe(1);
+  });
+
+  it('debería ocultar movimientos si no hay sesión', () => {
+    localStorage.removeItem('usuario_actual');
+    fixture.destroy();
+    createComponent();
+    movementsResponse.next(sampleMovements());
+    expect(component.movementHistory).toEqual([]);
+  });
+
+  it('debería filtrar productos y limpiar la selección al cambiar categoría', () => {
+    productsResponse.next(sampleProducts());
+    component.movementForm.patchValue({ category: 'Periféricos', product: 1 });
+    expect(component.productosDeCategoria.length).toBe(2);
+    component.movementForm.patchValue({ category: 'Otra' });
+    component.cambiarCategoria();
+    expect(component.productosDeCategoria).toEqual([]);
+    expect(component.movementForm.get('product')?.value).toBe('');
+  });
+
+  function prepararMovimiento(): void {
+    productsResponse.next(sampleProducts());
+    component.movementForm.setValue({
+      type: 'entrada', category: 'Periféricos', product: 1,
+      quantity: 2, observation: ''
+    });
+  }
+
+  it('debería enviar los IDs y recargar datos después de registrar', () => {
+    prepararMovimiento();
+    component.onSubmit();
+    expect(crearMovimiento).toHaveBeenCalledWith({
+      tipo: 'entrada', cantidad: 2, producto: 1, usuario: 2
+    });
+    expect(component.movementRegistered).toBe(true);
+    expect(component.isLoadingProducts).toBe(true);
+    expect(component.isLoadingMovements).toBe(true);
+  });
+
+  it('debería rechazar un producto de otra categoría sin enviar el POST', () => {
+    prepararMovimiento();
+    component.movementForm.patchValue({ category: 'Otra' });
+    component.onSubmit();
+    expect(crearMovimiento).not.toHaveBeenCalled();
+    expect(component.mensajeError).toContain('categoría elegida');
+  });
+
+  it('debería mostrar el detalle del backend al rechazar un movimiento', () => {
+    prepararMovimiento();
+    crearMovimiento.mockImplementation(() => throwError(() => new HttpErrorResponse({
+      status: 400, error: { cantidad: ['Stock insuficiente. Stock actual: 1'] }
+    })));
+    component.onSubmit();
+    expect(component.mensajeError).toContain('Stock insuficiente. Stock actual: 1');
+    expect(component.isSubmitting).toBe(false);
   });
 });

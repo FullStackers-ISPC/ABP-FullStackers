@@ -26,6 +26,7 @@ import { Producto } from '../../core/models/producto.model';
 import { AuthService } from '../../core/services/auth.service';
 import { MovimientosService } from '../../core/services/movimientos.service';
 import { ProductosService } from '../../core/services/productos.service';
+import { obtenerMensajeError } from '../../core/utils/mensaje-error';
 
 @Component({
   selector: 'app-dashboard-user',
@@ -100,6 +101,8 @@ export class DashboardUser implements OnInit {
 
   // Obtener productos desde Django
   cargarProductos(): void {
+    this.isLoadingProducts = true;
+    this.productsErrorMessage = '';
     this.productosService.getProductos().subscribe({
       next: (data) => {
         this.products = data;
@@ -111,7 +114,7 @@ export class DashboardUser implements OnInit {
       error: (err) => {
         console.error('Error al cargar productos:', err);
         this.isLoadingProducts = false;
-        this.productsErrorMessage = 'No se pudieron cargar los productos y categorías. Verificá la conexión e intentá nuevamente.';
+        this.productsErrorMessage = `No se pudieron cargar los productos y categorías. ${obtenerMensajeError(err)}`;
         this.cdr.detectChanges();
       }
     });
@@ -119,9 +122,13 @@ export class DashboardUser implements OnInit {
 
   // Obtener historial desde Django
   cargarMovimientos(): void {
+    this.isLoadingMovements = true;
+    this.movementsErrorMessage = '';
     this.movimientosService.getMovimientos().subscribe({
       next: (data) => {
-        this.movementHistory = data;
+        this.movementHistory = this.usuarioActual
+          ? data.filter(movimiento => movimiento.usuario === String(this.usuarioActual!.id_usuario))
+          : [];
         this.isLoadingMovements = false;
         this.movementsErrorMessage = '';
         this.cdr.detectChanges();
@@ -129,7 +136,7 @@ export class DashboardUser implements OnInit {
       error: (err) => {
         console.error('Error al cargar movimientos:', err);
         this.isLoadingMovements = false;
-        this.movementsErrorMessage = 'No se pudo cargar el historial de movimientos. Verificá la conexión e intentá nuevamente.';
+        this.movementsErrorMessage = `No se pudo cargar el historial de movimientos. ${obtenerMensajeError(err)}`;
         this.cdr.detectChanges();
       }
     });
@@ -188,6 +195,15 @@ export class DashboardUser implements OnInit {
   }
 
   // Estado del producto
+  get productosDeCategoria(): Producto[] {
+    const categoria = this.movementForm.get('category')?.value;
+    return this.products.filter(producto => producto.categoria === categoria);
+  }
+
+  cambiarCategoria(): void {
+    this.movementForm.get('product')?.reset('');
+  }
+
   getProductStatus(product: Producto): {
     label: string;
     className: string;
@@ -283,7 +299,7 @@ export class DashboardUser implements OnInit {
     }
 
     // Obtener usuario actual
-    const usuarioActual = this.authService.getUsuarioActual();
+    const usuarioActual = this.getUsuarioActual();
 
     if (!usuarioActual) {
       this.mensajeError =
@@ -301,6 +317,12 @@ export class DashboardUser implements OnInit {
 
     if (!selectedProduct) {
       this.mensajeError = 'El producto seleccionado no existe.';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (selectedProduct.categoria !== formValue.category) {
+      this.mensajeError = 'Seleccioná un producto de la categoría elegida.';
       this.cdr.detectChanges();
       return;
     }
@@ -407,19 +429,7 @@ export class DashboardUser implements OnInit {
 
         this.isSubmitting = false;
 
-        if (err.status === 400) {
-          this.mensajeError =
-            'Movimiento inválido. Verificá la cantidad y el stock disponible.';
-        } else if (err.status === 404) {
-          this.mensajeError =
-            'El producto o usuario no existe en Django.';
-        } else if (err.status === 0) {
-          this.mensajeError =
-            'No se pudo conectar con Django.';
-        } else {
-          this.mensajeError =
-            'No se pudo registrar el movimiento.';
-        }
+        this.mensajeError = obtenerMensajeError(err);
 
         this.cdr.detectChanges();
       }
