@@ -1,106 +1,201 @@
+
 <section id="registrar-movimiento">
-    <div class="form-card">
-        <div class="form-card-header">
-            <h2>Registrar Movimiento</h2>
-            <p>Completá los campos para registrar una entrada, salida o ajuste de stock.</p>
+  <div class="form-card">
+
+    <div class="form-card-header">
+      <h2>Registrar Movimiento</h2>
+      <p>
+        Completá los campos para registrar una entrada,
+        salida o ajuste de stock.
+      </p>
+    </div>
+
+    <!-- ALERTA: Stock insuficiente -->
+    @if (mostrarErrorStock) {
+      <div class="alerta alerta-error">
+        <i class="fa-solid fa-circle-xmark"></i>
+        <div>
+          <strong>Stock insuficiente.</strong>
+          La operación no puede dejar el stock del producto
+          por debajo de cero.
+        </div>
+      </div>
+    }
+
+    <!-- ALERTA: Errores del formulario o backend -->
+    @if (mensajeError) {
+      <div class="alerta alerta-error">
+        <i class="fa-solid fa-circle-xmark"></i>
+        <div>
+          {{ mensajeError }}
+        </div>
+      </div>
+    }
+
+    <!-- ALERTA: Formulario inválido -->
+    @if (intentoFallido) {
+      <div class="alerta alerta-advertencia">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <strong>Datos inválidos.</strong>
+          Corregí los campos marcados antes de continuar.
+        </div>
+      </div>
+    }
+
+    <!-- ALERTA: Movimiento registrado -->
+    @if (mostrarExito) {
+      <div class="alerta alerta-exito">
+        <i class="fa-solid fa-circle-check"></i>
+        <div>
+          <strong>¡Movimiento registrado!</strong>
+          La operación se guardó correctamente.
+        </div>
+      </div>
+    }
+
+    <form
+      [formGroup]="movimientoForm"
+      (ngSubmit)="onSubmit()"
+      class="mt-4"
+    >
+      <div class="row g-3">
+
+        <!-- Tipo de movimiento -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label" for="tipo">
+            Tipo de Movimiento
+            <span class="campo-requerido">*</span>
+          </label>
+
+          <select
+            id="tipo"
+            formControlName="tipo"
+            class="form-select"
+            [class.is-invalid]="isInvalidField('tipo')"
+          >
+            <option value="" disabled>
+              Seleccionar tipo...
+            </option>
+            <option value="entrada">Entrada</option>
+            <option value="salida">Salida</option>
+            <option value="ajuste">Ajuste de Stock</option>
+          </select>
+
+          @if (isInvalidField('tipo')) {
+            <div class="invalid-feedback">
+              Seleccioná un tipo de movimiento.
+            </div>
+          }
         </div>
 
-        <!-- ALERTA: Error de Stock -->
-        @if (mostrarErrorStock) {
-            <div class="alerta alerta-error">
-                <i class="fa-solid fa-circle-xmark"></i>
-                <div>
-                    <strong>Stock insuficiente.</strong> No hay suficiente stock disponible para registrar esta salida.
-                </div>
+        <!-- Producto -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label" for="producto">
+            Producto
+            <span class="campo-requerido">*</span>
+          </label>
+
+          <select
+            id="producto"
+            formControlName="producto"
+            class="form-select"
+            [class.is-invalid]="isInvalidField('producto')"
+          >
+            <option value="" disabled>
+              Seleccionar producto...
+            </option>
+
+            @for (prod of productos; track prod.id) {
+              <option [value]="prod.id">
+                {{ prod.nombre }} (Stock: {{ prod.stock }})
+              </option>
+            }
+          </select>
+
+          @if (isInvalidField('producto')) {
+            <div class="invalid-feedback">
+              Seleccioná un producto.
             </div>
-        }
+          }
+        </div>
 
-        <!-- ALERTA: Formulario Inválido -->
-        @if (intentoFallido) {
-            <div class="alerta alerta-advertencia">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <div>
-                    <strong>Datos inválidos.</strong> Corregí los campos marcados en rojo antes de continuar.
-                </div>
+        <!-- Categoría -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label" for="categoria">
+            Categoría
+          </label>
+
+          <input
+            id="categoria"
+            type="text"
+            formControlName="categoria"
+            class="form-control"
+            placeholder="Se autocompleta al elegir producto..."
+            readonly
+          />
+        </div>
+
+        <!-- Cantidad -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label" for="cantidad">
+            Cantidad
+            <span class="campo-requerido">*</span>
+          </label>
+
+          <input
+            id="cantidad"
+            type="number"
+            formControlName="cantidad"
+            class="form-control"
+            [class.is-invalid]="isInvalidField('cantidad')"
+            placeholder="Ej: 5"
+            step="1"
+            [attr.min]="movimientoForm.get('tipo')?.value === 'ajuste' ? null : 1"
+          />
+
+          @if (isInvalidField('cantidad')) {
+            <div class="invalid-feedback">
+              Ingresá una cantidad válida.
             </div>
-        }
+          }
 
-        <!-- ALERTA: Éxito -->
-        @if (mostrarExito) {
-            <div class="alerta alerta-exito">
-                <i class="fa-solid fa-circle-check"></i>
-                <div>
-                    <strong>¡Movimiento registrado!</strong> La operación se guardó exitosamente en el sistema.
-                </div>
-            </div>
-        }
+          @if (movimientoForm.get('tipo')?.value === 'ajuste') {
+            <small class="text-muted">
+              Para aumentar stock ingresá un número positivo.
+              Para disminuirlo, uno negativo. No se permite cero.
+            </small>
+          } @else {
+            <small class="text-muted">
+              Ingresá una cantidad entera mayor a cero.
+            </small>
+          }
+        </div>
 
-        <form [formGroup]="movimientoForm" (ngSubmit)="onSubmit()" class="mt-4">
-            <div class="row g-3">
-                
-                <!-- Tipo de Movimiento -->
-                <div class="col-12 col-sm-6">
-                    <label class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
-                    <select formControlName="tipo" class="form-select" [class.is-invalid]="isInvalidField('tipo')">
-                        <option value="" disabled selected>Seleccionar tipo...</option>
-                        <option value="entrada">Entrada</option>
-                        <option value="salida">Salida</option>
-                        <option value="ajuste">Ajuste de Stock</option>
-                    </select>
-                    @if (isInvalidField('tipo')) { <div class="invalid-feedback">Seleccioná un tipo.</div> }
-                </div>
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-end gap-2 mt-3">
 
-                <!-- Producto -->
-                <div class="col-12 col-sm-6">
-                    <label class="form-label">Producto <span class="campo-requerido">*</span></label>
-                    <select formControlName="producto" class="form-select" [class.is-invalid]="isInvalidField('producto')">
-                        <option value="" disabled selected>Seleccionar producto...</option>
-                        @for (prod of productos; track prod.id) {
-                            <option [value]="prod.nombre">
-                                {{ prod.nombre }} (Stock: {{ prod.stock }})
-                            </option>
-                        }
-                    </select>
-                    @if (isInvalidField('producto')) { 
-                        <div class="invalid-feedback">Seleccioná un producto.</div> 
-                    }
-                </div>
+          <a
+            routerLink="/admin/movimientos"
+            class="btn-secondary-es"
+          >
+            <i class="fa-solid fa-xmark"></i>
+            Cancelar
+          </a>
 
-                <!-- Categoría -->
-                <div class="col-12 col-sm-6">
-                    <label class="form-label">Categoría</label>
-                    <input 
-                        type="text" 
-                        formControlName="categoria" 
-                        class="form-control" 
-                        placeholder="Se autocompleta al elegir producto..." 
-                        readonly 
-                    />
-                </div>
+          <button
+            type="submit"
+            class="btn-primary-es"
+            [disabled]="guardando"
+          >
+            <i class="fa-solid fa-check"></i>
+            {{ guardando ? 'Guardando...' : 'Registrar Movimiento' }}
+          </button>
 
-                <!-- Cantidad -->
-                <div class="col-12 col-sm-6">
-                    <label class="form-label">Cantidad <span class="campo-requerido">*</span></label>
-                    <input type="number" formControlName="cantidad" class="form-control" [class.is-invalid]="isInvalidField('cantidad')" placeholder="Ej: 5" min="1">
-                    @if (isInvalidField('cantidad')) { <div class="invalid-feedback">Ingresá una cantidad válida mayor a 0.</div> }
-                </div>
+        </div>
 
-                <!-- Observación -->
-                <div class="col-12">
-                    <label class="form-label">Observación</label>
-                    <textarea formControlName="observacion" class="form-control" rows="3" placeholder="Motivo o detalle (opcional)"></textarea>
-                </div>
+      </div>
+    </form>
 
-                <!-- Botones -->
-                <div class="col-12 d-flex justify-content-end gap-2 mt-3">
-                    <a routerLink="/admin/movimientos" class="btn-secondary-es">
-                        <i class="fa-solid fa-xmark"></i> Cancelar
-                    </a>
-                    <button type="submit" class="btn-primary-es">
-                        <i class="fa-solid fa-check"></i> Registrar Movimiento
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
+  </div>
 </section>
