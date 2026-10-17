@@ -14,7 +14,7 @@ import {
   Validators
 } from '@angular/forms';
 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import {
   Movimiento,
@@ -39,6 +39,7 @@ export class DashboardUser implements OnInit {
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   private readonly productosService = inject(ProductosService);
   private readonly movimientosService = inject(MovimientosService);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -276,6 +277,11 @@ export class DashboardUser implements OnInit {
 
   closeSidebar(): void {
     this.sidebarOpen = false;
+  }
+
+  cerrarSesion(): void {
+    this.authService.logout();
+    this.router.navigate(['/landing']);
   }
 
   // Registrar movimiento en Django

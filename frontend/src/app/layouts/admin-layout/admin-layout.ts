@@ -87,6 +87,7 @@ export class AdminLayoutComponent {
   }
 
   cerrarSesion(): void {
+    this.authService.logout();
     this.router.navigate(['/landing']);
   }
 

@@ -1,4 +1,6 @@
 /* ===== CONTENEDOR PRINCIPAL ===== */
+:host { --primary-red: #c62808; }
+.logo-img { height: auto; }
 .main-wrapper {
     margin-left: 185px; /* Espacio para el sidebar fijo */
     flex: 1;
@@ -26,18 +28,18 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.breadcrumb { font-size: 14px; color: #888; }
+.breadcrumb { font-size: 14px; color: #666; }
 .breadcrumb span { color: var(--primary-red); font-weight: bold; }
 .topbar-user { text-align: right; }
 .topbar-role { font-size: 14px; font-weight: bold; color: var(--dark-gray); }
-.topbar-panel { font-size: 12px; color: #888; }
+.topbar-panel { font-size: 12px; color: #666; }
 
 /* ===== FOOTER ===== */
 .main-footer {
     text-align: center;
     padding: 16px;
     font-size: 12px;
-    color: #888;
+    color: #666;
     border-top: 1px solid var(--border-color);
 }
 

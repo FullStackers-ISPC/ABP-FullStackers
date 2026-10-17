@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { Subject, of, throwError } from 'rxjs';
 import { Movimiento } from '../../core/models/movimiento.model';
 import { Producto } from '../../core/models/producto.model';
@@ -106,6 +106,13 @@ describe('Dashboard de Usuario', () => {
     expect(page.querySelector('.user-name')?.textContent?.trim()).toBe('Usuario');
     expect(page.querySelector('.user-email')?.textContent?.trim()).toBe('Sin sesión iniciada');
     expect(page.querySelector('.topbar-role')?.textContent?.trim()).toBe('Usuario');
+  });
+
+  it('debería borrar la sesión al pulsar Cerrar Sesión', () => {
+    const navegar = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.btn-logout')!.click();
+    expect(localStorage.getItem('usuario_actual')).toBeNull();
+    expect(navegar).toHaveBeenCalledWith(['/landing']);
   });
 
   it('debería mostrar la carga mientras se obtienen productos y movimientos', () => {
