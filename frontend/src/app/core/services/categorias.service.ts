@@ -8,7 +8,7 @@ import { Categoria, CategoriaPayload } from '../models/categoria.model';
 })
 export class CategoriasService {
 
-  private readonly apiUrl = 'http://localhost:8000/api/v1/categorias/';
+  private readonly apiUrl = 'http://localhost:8000/api/v1/productos/categorias/';
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class CategoriasService {
   }
 
   getCategoriaById(id: number): Observable<Categoria> {
-    return this.http.get<Categoria>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.get<Categoria>(`${this.apiUrl}${id}/`).pipe(
       catchError(this.handleError)
     );
   }
@@ -31,7 +31,7 @@ export class CategoriasService {
   }
 
   actualizarCategoria(id: number, categoria: CategoriaPayload): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.apiUrl}/${id}`, categoria).pipe(
+    return this.http.put<Categoria>(`${this.apiUrl}${id}/`, categoria).pipe(
       catchError(this.handleError)
     );
   }

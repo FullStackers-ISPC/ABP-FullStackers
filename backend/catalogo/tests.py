@@ -28,7 +28,7 @@ class CategoriaApiTests(APITestCase):
         )
 
     def test_lista_categorias(self):
-        response = self.client.get('/api/v1/categorias/')
+        response = self.client.get('/api/v1/productos/categorias/')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data[0]['nombre'], 'Procesadores')
@@ -36,7 +36,7 @@ class CategoriaApiTests(APITestCase):
 
     def test_crea_categoria(self):
         response = self.client.post(
-            '/api/v1/categorias/',
+            '/api/v1/productos/categorias/',
             {'nombre': 'Almacenamiento', 'descripcion': 'SSD y HDD.'},
             format='json',
         )
@@ -46,7 +46,7 @@ class CategoriaApiTests(APITestCase):
 
     def test_rechaza_categoria_repetida_sin_distinguir_mayusculas(self):
         response = self.client.post(
-            '/api/v1/categorias/',
+            '/api/v1/productos/categorias/',
             {'nombre': 'procesadores'},
             format='json',
         )
@@ -56,7 +56,7 @@ class CategoriaApiTests(APITestCase):
 
     def test_actualiza_categoria(self):
         response = self.client.put(
-            f'/api/v1/categorias/{self.categoria.id_categoria}/',
+            f'/api/v1/productos/categorias/{self.categoria.id_categoria}/',
             {'nombre': 'Procesadores AMD', 'descripcion': 'CPUs AMD.'},
             format='json',
         )
@@ -66,13 +66,13 @@ class CategoriaApiTests(APITestCase):
 
     def test_elimina_categoria_sin_productos(self):
         response = self.client.delete(
-            f'/api/v1/categorias/{self.categoria.id_categoria}/'
+            f'/api/v1/productos/categorias/{self.categoria.id_categoria}/'
         )
 
         self.assertEqual(response.status_code, 204)
         self.assertFalse(Categoria.objects.filter(pk=self.categoria.pk).exists())
 
     def test_devuelve_404_si_la_categoria_no_existe(self):
-        response = self.client.get('/api/v1/categorias/9999/')
+        response = self.client.get('/api/v1/productos/categorias/9999/')
 
         self.assertEqual(response.status_code, 404)
