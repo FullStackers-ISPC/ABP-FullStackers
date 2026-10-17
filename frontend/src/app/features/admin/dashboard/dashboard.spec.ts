@@ -44,7 +44,7 @@ describe('Dashboard', () => {
       availableProducts: 2,
       movementsToday: 1,
       lowStockProducts: [
-        { id: 2, nombre: 'Stock bajo', categoria: 'Prueba', stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
+        { id: 2, codigo: 'PR-002', nombre: 'Stock bajo', categoria: 'Prueba', idCategoria: 1, stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
       ],
       movements: [{
         id: 1,
@@ -95,7 +95,7 @@ describe('Dashboard', () => {
       availableProducts: 2,
       movementsToday: 1,
       lowStockProducts: [
-        { id: 2, nombre: 'Stock bajo', categoria: 'Prueba', stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
+        { id: 2, codigo: 'PR-002', nombre: 'Stock bajo', categoria: 'Prueba', idCategoria: 1, stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
       ],
       movements: []
     });

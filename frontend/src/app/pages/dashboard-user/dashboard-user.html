@@ -1,100 +1,251 @@
-<!-- la capa visual se mantiene que el diseño original de la maqueta -->
-<button type="button" class="menu-overlay" [class.visible]="sidebarOpen" (click)="closeSidebar()" aria-label="Cerrar menú"></button>
 
+<!-- Dashboard de Usuario - EasyStock -->
+
+<!-- Overlay del menú lateral -->
+<button
+  type="button"
+  class="menu-overlay"
+  [class.visible]="sidebarOpen"
+  (click)="closeSidebar()"
+  aria-label="Cerrar menú">
+</button>
+
+<!-- Menú lateral -->
 <aside class="sidebar" [class.sidebar-open]="sidebarOpen">
-  <button type="button" class="sidebar-close" (click)="closeSidebar()" aria-label="Cerrar menú">
+
+  <button
+    type="button"
+    class="sidebar-close"
+    (click)="closeSidebar()"
+    aria-label="Cerrar menú">
     <i class="fa-solid fa-xmark"></i>
   </button>
+
   <header class="sidebar-header">
-    <img src="assets/Branding/logo-st.png" alt="EasyStock" class="logo-img">
+    <img
+      src="assets/Branding/logo-st.png"
+      alt="EasyStock"
+      class="logo-img">
   </header>
 
   <nav class="sidebar-nav" aria-label="Navegación del dashboard">
     <ul>
-      <li><a routerLink="/dashboard/user" class="nav-link active" (click)="closeSidebar()"><i class="fa-solid fa-house nav-icon"></i> Panel</a></li>
-      <!-- los enlaces con fragment ayudan a mantener la navegación sin alterar la estructura original -->
-      <li><a routerLink="/dashboard/user" fragment="categorias" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-table-cells nav-icon"></i> Categorías</a></li>
-      <li><a routerLink="/dashboard/user" fragment="productos" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-box nav-icon"></i> Productos</a></li>
-      <li><a routerLink="/dashboard/user" fragment="movimientos" class="nav-link" (click)="closeSidebar()"><i class="fa-solid fa-right-left nav-icon"></i> Movimientos</a></li>
+      <li>
+        <a
+          routerLink="/dashboard/user"
+          class="nav-link active"
+          (click)="closeSidebar()">
+          <i class="fa-solid fa-house nav-icon"></i>
+          Panel
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/dashboard/user"
+          fragment="categorias"
+          class="nav-link"
+          (click)="closeSidebar()">
+          <i class="fa-solid fa-table-cells nav-icon"></i>
+          Categorías
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/dashboard/user"
+          fragment="productos"
+          class="nav-link"
+          (click)="closeSidebar()">
+          <i class="fa-solid fa-box nav-icon"></i>
+          Productos
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/dashboard/user"
+          fragment="movimientos"
+          class="nav-link"
+          (click)="closeSidebar()">
+          <i class="fa-solid fa-right-left nav-icon"></i>
+          Movimientos
+        </a>
+      </li>
     </ul>
   </nav>
 
   <footer class="sidebar-footer">
     <p class="user-name">{{ nombreUsuario }}</p>
     <p class="user-email">{{ emailUsuario }}</p>
-    <button class="btn-logout" routerLink="/landing"> Cerrar Sesión</button>
+    <button
+      type="button"
+      class="btn-logout"
+      routerLink="/landing">
+      Cerrar Sesión
+    </button>
   </footer>
+
 </aside>
 
+<!-- Contenido principal -->
 <div class="main-wrapper">
+
   <header class="topbar">
+
     <p class="breadcrumb">
-      <button type="button" class="hamburger-btn" (click)="toggleSidebar()" aria-label="Abrir menú">
+      <button
+        type="button"
+        class="hamburger-btn"
+        (click)="toggleSidebar()"
+        aria-label="Abrir menú">
         <i class="fa-solid fa-bars"></i>
       </button>
+
       Dashboard / <span>Panel</span>
     </p>
+
     <div class="topbar-user">
       <p class="topbar-role">{{ rolUsuario }}</p>
       <p class="topbar-panel">Panel de Usuario</p>
     </div>
+
   </header>
 
   <main class="main-content">
-    <h1 class="visually-hidden">EasyStock - Dashboard de Usuario</h1>
 
+    <h1 class="visually-hidden">
+      EasyStock - Dashboard de Usuario
+    </h1>
+
+    <!-- RESUMEN DE ACTIVIDAD -->
     <section id="panel">
+
       <h2 class="section-title">Resumen de Actividad</h2>
-      <p class="section-subtitle">Tu actividad reciente en el inventario.</p>
+      <p class="section-subtitle">
+        Tu actividad reciente en el inventario.
+      </p>
+
       <div class="cards-row">
-        <!-- las métricas del resumen se actualizan con datos reales del backend en lugar de valores harcodeados -->
+
         <article class="card">
-          <h3 class="visually-hidden">Productos Disponibles</h3>
-          <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
-          <p class="card-value">{{ getAvailableProductsCount() }}</p>
+          <h3 class="visually-hidden">
+            Productos Disponibles
+          </h3>
+
+          <p class="card-label">
+            Productos Disponibles
+            <i class="fa-solid fa-box card-icon"></i>
+          </p>
+
+          <p class="card-value">
+            {{ getAvailableProductsCount() }}
+          </p>
         </article>
+
         <article class="card">
-          <h3 class="visually-hidden">Mis Movimientos del Día</h3>
-          <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
-          <p class="card-value">{{ getTodayMovementsCount() }}</p>
+          <h3 class="visually-hidden">
+            Movimientos del Día
+          </h3>
+
+          <p class="card-label">
+            Movimientos del Día
+            <i class="fa-solid fa-right-left card-icon"></i>
+          </p>
+
+          <p class="card-value">
+            {{ getTodayMovementsCount() }}
+          </p>
         </article>
+
         <article class="card">
-          <h3 class="visually-hidden">Productos con Bajo Stock</h3>
-          <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
-          <p class="card-value">{{ getLowStockCount() }}</p>
+          <h3 class="visually-hidden">
+            Productos con Bajo Stock
+          </h3>
+
+          <p class="card-label">
+            Productos con Bajo Stock
+            <i class="fa-solid fa-circle-exclamation card-icon"></i>
+          </p>
+
+          <p class="card-value">
+            {{ getLowStockCount() }}
+          </p>
         </article>
+
       </div>
     </section>
 
+    <!-- CATEGORÍAS -->
     <section id="categorias">
+
       <h2 class="section-title">Categorías</h2>
-      <p class="section-subtitle">Categorías de productos disponibles en el inventario.</p>
+
+      <p class="section-subtitle">
+        Categorías de productos disponibles en el inventario.
+      </p>
+
       <div class="table-wrapper">
         <table class="movements-table">
-          <thead><tr><th>Código</th><th>Categoría</th><th>Cantidad de Productos</th></tr></thead>
+
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Categoría</th>
+              <th>Cantidad de Productos</th>
+            </tr>
+          </thead>
+
           <tbody>
-            <!-- las categorías se buscan del catálogo real para evitar duplicar información harcodeada -->
             @if (isLoadingProducts) {
-              <tr><td colspan="3"><div class="alerta alerta-advertencia" role="status" aria-live="polite"><i class="fa-solid fa-spinner" aria-hidden="true"></i><span>Cargando categorías...</span></div></td></tr>
+              <tr>
+                <td colspan="3">
+                  <div class="alerta alerta-advertencia" role="status" aria-live="polite">
+                    <i class="fa-solid fa-spinner" aria-hidden="true"></i>
+                    <span>Cargando categorías...</span>
+                  </div>
+                </td>
+              </tr>
             } @else if (productsErrorMessage) {
-              <tr><td colspan="3"><div class="alerta alerta-error" role="alert">{{ productsErrorMessage }}</div></td></tr>
+              <tr>
+                <td colspan="3">
+                  <div class="alerta alerta-error" role="alert">{{ productsErrorMessage }}</div>
+                </td>
+              </tr>
             } @else if (categories.length === 0) {
               <tr>
-                <td colspan="3">No hay categorías disponibles.</td>
+                <td colspan="3">
+                  No hay categorías disponibles.
+                </td>
               </tr>
             } @else {
+
               @for (category of categories; track category.id) {
-                <tr><td>{{ category.id }}</td><td>{{ category.name }}</td><td>{{ category.productCount }}</td></tr>
+                <tr>
+                  <td>{{ category.id }}</td>
+                  <td>{{ category.name }}</td>
+                  <td>{{ category.productCount }}</td>
+                </tr>
               }
+
             }
+
           </tbody>
+
         </table>
       </div>
+
     </section>
 
+    <!-- PRODUCTOS -->
     <section id="productos">
+
       <h2 class="section-title">Productos</h2>
-      <p class="section-subtitle">Catálogo de productos disponibles en el inventario.</p>
+
+      <p class="section-subtitle">
+        Catálogo de productos disponibles en el inventario.
+      </p>
+
       @if (isLoadingProducts) {
         <div class="alerta alerta-advertencia" role="status" aria-live="polite">
           <i class="fa-solid fa-spinner" aria-hidden="true"></i>
@@ -108,8 +259,15 @@
       } @else if (products.length === 0) {
         <div class="estado-vacio">
           <i class="fa-solid fa-box-open estado-vacio-icon"></i>
-          <p class="estado-vacio-texto">No hay productos registrados en el sistema.</p>
-          <p class="estado-vacio-sub">Comunicate con el administrador para cargar productos al inventario.</p>
+
+          <p class="estado-vacio-texto">
+            No hay productos registrados en el sistema.
+          </p>
+
+          <p class="estado-vacio-sub">
+            Comunicate con el administrador para cargar
+            productos al inventario.
+          </p>
         </div>
       } @else {
         <div class="products-grid">
@@ -127,115 +285,335 @@
       }
     </section>
 
+    <!-- MOVIMIENTOS -->
     <section id="movimientos">
+
       <h2 class="section-title">Movimientos</h2>
-      <p class="section-subtitle">Registrá entradas, salidas y ajustes de stock, y consultá el historial.</p>
+
+      <p class="section-subtitle">
+        Registrá entradas, salidas y ajustes de stock,
+        y consultá el historial.
+      </p>
 
       <div class="form-movimiento-card">
-        <h3 class="form-movimiento-title"><i class="fa-solid fa-plus"></i> Registrar Movimiento</h3>
-        <!-- las alertas de errores y validacion se muestran solo cuando corresponde la logica del submit -->
+
+        <h3 class="form-movimiento-title">
+          <i class="fa-solid fa-plus"></i>
+          Registrar Movimiento
+        </h3>
+
+        <!-- Error de stock -->
         @if (stockIssue) {
           <div class="alerta alerta-error" role="alert">
             <i class="fa-solid fa-circle-xmark"></i>
-            <div><strong>Stock insuficiente.</strong> {{ stockIssueMessage }}</div>
+
+            <div>
+              <strong>Stock insuficiente.</strong>
+              {{ stockIssueMessage }}
+            </div>
           </div>
         }
+
+        <!-- Errores del backend -->
+        @if (mensajeError) {
+          <div class="alerta alerta-error" role="alert">
+            <i class="fa-solid fa-circle-xmark"></i>
+
+            <div>{{ mensajeError }}</div>
+          </div>
+        }
+
+        <!-- Validaciones del formulario -->
         @if (submitted && movementForm.invalid) {
           <div class="alerta alerta-advertencia" role="alert">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <div><strong>Datos inválidos.</strong> Corregí los campos marcados antes de continuar.</div>
+
+            <div>
+              <strong>Datos inválidos.</strong>
+              Corregí los campos marcados antes de continuar.
+            </div>
           </div>
         }
 
-        <form [formGroup]="movementForm" (ngSubmit)="onSubmit()" novalidate>
+        <!-- Formulario -->
+        <form
+          [formGroup]="movementForm"
+          (ngSubmit)="onSubmit()"
+          novalidate>
+
           <div class="row g-3">
+
+            <!-- Tipo de movimiento -->
             <div class="col-12 col-sm-6">
-              <label for="tipo-movimiento" class="form-label">Tipo de Movimiento <span class="campo-requerido">*</span></label>
-              <select id="tipo-movimiento" class="form-select" formControlName="type" [class.is-invalid]="isInvalid('type')">
-                <option value="">Seleccionar tipo...</option>
+
+              <label
+                for="tipo-movimiento"
+                class="form-label">
+                Tipo de Movimiento
+                <span class="campo-requerido">*</span>
+              </label>
+
+              <select
+                id="tipo-movimiento"
+                class="form-select"
+                formControlName="type"
+                [class.is-invalid]="isInvalid('type')">
+
+                <option value="">
+                  Seleccionar tipo...
+                </option>
+
                 <option value="entrada">Entrada</option>
                 <option value="salida">Salida</option>
                 <option value="ajuste">Ajuste de Stock</option>
+
               </select>
-              @if (isInvalid('type')) { <div class="invalid-feedback">Seleccioná un tipo de movimiento.</div> }
+
+              @if (isInvalid('type')) {
+                <div class="invalid-feedback">
+                  Seleccioná un tipo de movimiento.
+                </div>
+              }
+
             </div>
+
+            <!-- Categoría -->
             <div class="col-12 col-sm-6">
-              <label for="categoria-movimiento" class="form-label">Categoría <span class="campo-requerido">*</span></label>
-              <select id="categoria-movimiento" class="form-select" formControlName="category" [class.is-invalid]="isInvalid('category')">
-                <option value="">Seleccionar categoría...</option>
+
+              <label
+                for="categoria-movimiento"
+                class="form-label">
+                Categoría
+                <span class="campo-requerido">*</span>
+              </label>
+
+              <select
+                id="categoria-movimiento"
+                class="form-select"
+                formControlName="category"
+                [class.is-invalid]="isInvalid('category')">
+
+                <option value="">
+                  Seleccionar categoría...
+                </option>
+
                 @for (category of categories; track category.id) {
-                  <option [value]="category.name">{{ category.name }}</option>
+                  <option [value]="category.name">
+                    {{ category.name }}
+                  </option>
                 }
+
               </select>
-              @if (isInvalid('category')) { <div class="invalid-feedback">Seleccioná una categoría.</div> }
+
+              @if (isInvalid('category')) {
+                <div class="invalid-feedback">
+                  Seleccioná una categoría.
+                </div>
+              }
+
             </div>
+
+            <!-- Producto -->
             <div class="col-12 col-sm-6">
-              <label for="producto" class="form-label">Producto <span class="campo-requerido">*</span></label>
-              <select id="producto" class="form-select" formControlName="product" [class.is-invalid]="isInvalid('product')">
-                <option value="">Seleccionar producto...</option>
+
+              <label for="producto" class="form-label">
+                Producto
+                <span class="campo-requerido">*</span>
+              </label>
+
+              <select
+                id="producto"
+                class="form-select"
+                formControlName="product"
+                [class.is-invalid]="isInvalid('product')">
+
+                <option value="">
+                  Seleccionar producto...
+                </option>
+
                 @for (product of products; track product.id) {
-                  <option [value]="product.id">{{ product.nombre }}</option>
+                  <option [value]="product.id">
+                    {{ product.nombre }}
+                    (Stock: {{ product.stock }})
+                  </option>
                 }
+
               </select>
-              @if (isInvalid('product')) { <div class="invalid-feedback">Seleccioná un producto.</div> }
+
+              @if (isInvalid('product')) {
+                <div class="invalid-feedback">
+                  Seleccioná un producto.
+                </div>
+              }
+
             </div>
+
+            <!-- Cantidad -->
             <div class="col-12 col-sm-6">
-              <label for="cantidad" class="form-label">Cantidad <span class="campo-requerido">*</span></label>
-              <input type="number" id="cantidad" class="form-control" formControlName="quantity" min="1" placeholder="Ej: 5" [class.is-invalid]="isInvalid('quantity')">
-              @if (isInvalid('quantity')) { <div class="invalid-feedback">Ingresá una cantidad válida (mínimo 1).</div> }
+
+              <label for="cantidad" class="form-label">
+                Cantidad
+                <span class="campo-requerido">*</span>
+              </label>
+
+              <input
+                type="number"
+                id="cantidad"
+                class="form-control"
+                formControlName="quantity"
+                step="1"
+                [attr.min]="movementForm.get('type')?.value === 'ajuste' ? null : 1"
+                placeholder="Ej: 5"
+                [class.is-invalid]="isInvalid('quantity')">
+
+              @if (isInvalid('quantity')) {
+                <div class="invalid-feedback">
+                  Ingresá una cantidad válida.
+                </div>
+              }
+
+              @if (movementForm.get('type')?.value === 'ajuste') {
+                <small class="text-muted">
+                  Para aumentar stock ingresá un número positivo.
+                  Para disminuirlo, uno negativo.
+                  No se permite cero.
+                </small>
+              } @else {
+                <small class="text-muted">
+                  Ingresá una cantidad entera mayor a cero.
+                </small>
+              }
+
             </div>
-            <div class="col-12">
-              <label for="observacion" class="form-label">Observación</label>
-              <textarea id="observacion" class="form-control" formControlName="observation" rows="2" placeholder="Motivo o detalle del movimiento (opcional)"></textarea>
-            </div>
+
+            <!-- Botón registrar -->
             <div class="col-12 d-flex justify-content-end">
-              <button type="submit" class="btn-confirmar" [disabled]="isSubmitting">
-                <i class="fa-solid fa-check"></i> {{ isSubmitting ? 'Registrando...' : 'Registrar Movimiento' }}
+
+              <button
+                type="submit"
+                class="btn-confirmar"
+                [disabled]="isSubmitting">
+
+                <i class="fa-solid fa-check"></i>
+
+                {{ isSubmitting ? 'Registrando...' : 'Registrar Movimiento' }}
+
               </button>
+
             </div>
+
           </div>
+
         </form>
+
       </div>
 
+      <!-- Confirmación -->
       @if (movementRegistered) {
         <div class="alerta alerta-exito" role="status">
           <i class="fa-solid fa-circle-check"></i>
-          <div><strong>Movimiento registrado.</strong> La operación fue registrada exitosamente.</div>
+
+          <div>
+            <strong>Movimiento registrado.</strong>
+            La operación fue registrada exitosamente.
+          </div>
         </div>
       }
 
-      <h3 class="history-title">Historial de Movimientos</h3>
-      <p class="section-subtitle">Registro de entradas, salidas y ajustes realizados.</p>
+      <!-- HISTORIAL -->
+      <h3 class="history-title">
+        Historial de Movimientos
+      </h3>
+
+      <p class="section-subtitle">
+        Registro de entradas, salidas y ajustes realizados.
+      </p>
+
       <div class="table-wrapper">
+
         <table class="movements-table">
-          <thead><tr><th>Fecha</th><th>Producto</th><th>Categoría</th><th>Tipo</th><th>Cantidad</th><th>Usuario</th></tr></thead>
+
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Usuario</th>
+            </tr>
+          </thead>
+
           <tbody>
-            <!-- la tabla se llena con los movimientos reales del backend y se actualiza tras el POST -->
             @if (isLoadingMovements) {
-              <tr><td colspan="6"><div class="alerta alerta-advertencia" role="status" aria-live="polite"><i class="fa-solid fa-spinner" aria-hidden="true"></i><span>Cargando movimientos...</span></div></td></tr>
+              <tr>
+                <td colspan="6">
+                  <div class="alerta alerta-advertencia" role="status" aria-live="polite">
+                    <i class="fa-solid fa-spinner" aria-hidden="true"></i>
+                    <span>Cargando movimientos...</span>
+                  </div>
+                </td>
+              </tr>
             } @else if (movementsErrorMessage) {
-              <tr><td colspan="6"><div class="alerta alerta-error" role="alert">{{ movementsErrorMessage }}</div></td></tr>
+              <tr>
+                <td colspan="6">
+                  <div class="alerta alerta-error" role="alert">{{ movementsErrorMessage }}</div>
+                </td>
+              </tr>
             } @else if (movementHistory.length === 0) {
               <tr>
-                <td colspan="6">Todavía no hay movimientos registrados.</td>
+                <td colspan="6">
+                  Todavía no hay movimientos registrados.
+                </td>
               </tr>
+
             } @else {
+
               @for (movement of movementHistory; track movement.id) {
+
                 <tr>
-                  <td>{{ movement.fecha }}</td>
+
+                  <td>
+                    {{ movement.fecha | date:'dd/MM/yyyy HH:mm' }}
+                  </td>
+
                   <td>{{ movement.producto }}</td>
+
                   <td>{{ movement.categoria }}</td>
-                  <td><span class="tipo-badge" [ngClass]="getMovementTypeClass(movement.tipo)">{{ getMovementTypeLabel(movement.tipo) }}</span></td>
-                  <td>{{ getMovementAmount(movement) }}</td>
+
+                  <td>
+                    <span
+                      class="tipo-badge"
+                      [ngClass]="getMovementTypeClass(movement.tipo)">
+                      {{ getMovementTypeLabel(movement.tipo) }}
+                    </span>
+                  </td>
+
+                  <td>
+                    {{ getMovementAmount(movement) }}
+                  </td>
+
                   <td>{{ movement.usuario }}</td>
+
                 </tr>
+
               }
+
             }
+
           </tbody>
+
         </table>
+
       </div>
+
     </section>
+
   </main>
 
-  <footer class="main-footer"><p>© 2026 EasyStock - Gestión de Inventario</p></footer>
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2026 EasyStock - Gestión de Inventario</p>
+  </footer>
+
 </div>

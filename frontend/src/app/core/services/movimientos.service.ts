@@ -1,34 +1,77 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Movimiento } from '../models/movimiento.model';
-import { Producto } from '../models/producto.model';
+
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, forkJoin, map, catchError, throwError } from 'rxjs';
+
+import {
+  Movimiento,
+  MovimientoApi,
+  MovimientoPayload
+} from '../models/movimiento.model';
+
+import { ProductosService } from './productos.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovimientosService {
-  // el servicio centra el acceso HTTP a los recursos de movimientos y mantiene la separacion
-  // con el servicio de producto que es responsable de /productos
-  private movimientosUrl = 'http://localhost:3000/movimientos';
-  private productosUrl = 'http://localhost:3000/productos';
 
-  // el backend del proyecto usa HttpClient para consumir la API REST del archivo db.json
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  private productosService = inject(ProductosService);
 
-  // GET /movimientos devuelve el historial real del dashboard de usuario y del panel admin
+  private readonly apiUrl =
+    'http://localhost:8000/api/v1/movimientos/';
+
   getMovimientos(): Observable<Movimiento[]> {
-    return this.http.get<Movimiento[]>(this.movimientosUrl);
+
+    return forkJoin({
+      movimientos: this.http.get<MovimientoApi[]>(this.apiUrl),
+      productos: this.productosService.getProductos()
+    }).pipe(
+      map(({ movimientos, productos }) => {
+
+        return movimientos.map(m => {
+
+          const producto = productos.find(
+            p => p.id === m.producto
+          );
+
+          return {
+            id: m.id_movimiento,
+            fecha: m.fecha,
+            producto: producto?.nombre ?? `Producto ${m.producto}`,
+            categoria: producto?.categoria ?? 'Sin categoría',
+            tipo: m.tipo,
+            cantidad: m.cantidad,
+            usuario: String(m.usuario)
+          };
+
+        });
+
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  // este método queda como compatibilidad de nombres con el proyecto, pero no debe consultar el historial de movimientos
-  // el endpoint correcto para productos sigue estando en ProductosService
-  getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.productosUrl);
+  crearMovimiento(
+    movimiento: MovimientoPayload
+  ): Observable<MovimientoApi> {
+
+    return this.http.post<MovimientoApi>(
+      this.apiUrl,
+      movimiento
+    ).pipe(
+      catchError(this.handleError)
+    );
   }
 
-  // POST /movimientos registra un movimiento nuevo y devuelve la entidad creada por json-server
-  crearMovimiento(movimiento: Omit<Movimiento, 'id'>): Observable<Movimiento> {
-    return this.http.post<Movimiento>(this.movimientosUrl, movimiento);
+  private handleError(error: HttpErrorResponse) {
+    console.error(
+      'Error en la API de movimientos:',
+      error.status,
+      error.error
+    );
+
+    return throwError(() => error);
   }
 }

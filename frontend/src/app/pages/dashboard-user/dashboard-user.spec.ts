@@ -53,8 +53,8 @@ describe('Dashboard de Usuario', () => {
 
   function sampleProducts(): Producto[] {
     return [
-      { id: 1, nombre: 'Producto disponible', categoria: 'Periféricos', stock: 8, stockAlerta: 3, stockCritico: 1, precio: 10 },
-      { id: 2, nombre: 'Producto con poco stock', categoria: 'Periféricos', stock: 2, stockAlerta: 3, stockCritico: 1, precio: 5 }
+      { id: 1, codigo: 'PR-001', nombre: 'Producto disponible', categoria: 'Periféricos', idCategoria: 1, stock: 8, stockAlerta: 3, stockCritico: 1, precio: 10 },
+      { id: 2, codigo: 'PR-002', nombre: 'Producto con poco stock', categoria: 'Periféricos', idCategoria: 1, stock: 2, stockAlerta: 3, stockCritico: 1, precio: 5 }
     ];
   }
 
