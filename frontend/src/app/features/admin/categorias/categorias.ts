@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CategoriasService } from '../../../core/services/categorias.service';
 import { Categoria } from '../../../core/models/categoria.model';
-
 
 @Component({
   selector: 'app-categorias',
@@ -15,6 +14,7 @@ import { Categoria } from '../../../core/models/categoria.model';
 export class CategoriasComponent implements OnInit {
 
   private categoriasService = inject(CategoriasService);
+  private cdr = inject(ChangeDetectorRef);
 
   categorias: Categoria[] = [];
   cargando = true;
@@ -32,10 +32,12 @@ export class CategoriasComponent implements OnInit {
       next: (categorias) => {
         this.categorias = categorias;
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.cargando = false;
         this.mensajeError = this.obtenerMensajeError(err);
+        this.cdr.detectChanges();
       }
     });
   }
@@ -52,7 +54,10 @@ export class CategoriasComponent implements OnInit {
     this.mensajeError = '';
     this.categoriasService.eliminarCategoria(categoria.id_categoria).subscribe({
       next: () => this.cargarCategorias(),
-      error: (err) => this.mensajeError = this.obtenerMensajeError(err),
+      error: (err) => {
+        this.mensajeError = this.obtenerMensajeError(err);
+        this.cdr.detectChanges();
+      }
     });
   }
 
