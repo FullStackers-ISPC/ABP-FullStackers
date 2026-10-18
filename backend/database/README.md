@@ -16,9 +16,9 @@ Los datos de usuarios son académicos. Las contraseñas se guardan sin hash porq
 
 Desde MySQL Workbench, abrir y ejecutar primero `01_schema.sql` y luego `02_seed.sql`.
 
-Desde la terminal, ubicándose en la carpeta `Backend`:
+Desde la terminal, **Símbolo del sistema (CMD)**, ubicándose en la carpeta `Backend`:
 
-```powershell
+```cmd
 mysql -u root -p < database/01_schema.sql
 mysql -u root -p easystock < database/02_seed.sql
 ```
@@ -31,7 +31,7 @@ USE easystock;
 SHOW TABLES;
 SELECT COUNT(*) AS categorias FROM categorias;
 SELECT COUNT(*) AS productos FROM productos;
-SELECT COUNT(*) AS movimientos FROM movimientos;
+SELECT COUNT(*) AS movimientos FROM movimiento;
 ```
 
 El resultado esperado es 5 categorías, 22 productos y 8 movimientos.
