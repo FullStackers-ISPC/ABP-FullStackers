@@ -7,10 +7,19 @@
         <a routerLink="../crear-producto" class="btn-primary-es">
             <i class="fa-solid fa-plus"></i> Nuevo Producto
         </a>
-        @if (mensajeError) {
-            <div> class= "alerta alerta-error" role="alert">{{ mensajeError }}</div>
-        }
     </div>
+
+    @if (mensajeError) {
+        <div class="alerta alerta-error" role="alert">
+            <div class="alerta-contenido">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>{{ mensajeError }}</span>
+            </div>
+            <button type="button" class="btn-cerrar-alerta" (click)="mensajeError = ''" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    }
 
     <div class="filtros">
         <input type="search" class="form-control" placeholder="Buscar por nombre o código..."

@@ -136,3 +136,52 @@
 .filtros .form-select {
     flex: 1 1 180px;
 }
+
+.alerta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.alerta-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alerta-contenido {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alerta-contenido i {
+    font-size: 1.1rem;
+    color: #dc2626;
+}
+
+.btn-cerrar-alerta {
+    background: none;
+    border: none;
+    color: #991b1b;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1rem;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.btn-cerrar-alerta:hover {
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}

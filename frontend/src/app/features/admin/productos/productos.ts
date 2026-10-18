@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, NgZone, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductosService } from '../../../core/services/productos.service';
 import { Producto } from '../../../core/models/producto.model';
@@ -16,6 +16,7 @@ import { obtenerMensajeError } from '../../../core/utils/mensaje-error';
 export class ProductosComponent implements OnInit {
   private productosService = inject(ProductosService);
   private cdr = inject(ChangeDetectorRef);
+  private ngZone = inject(NgZone);
 
   productos: Producto[] = [];
   cargando = true;
@@ -77,10 +78,16 @@ export class ProductosComponent implements OnInit {
 
     this.mensajeError = '';
     this.productosService.eliminarProducto(producto.id).subscribe({
-      next: () => this.cargarProductos(),
+      next: () => {
+        this.ngZone.run(() => {
+          this.cargarProductos();
+        });
+      },
       error: (err) => {
-        this.mensajeError = obtenerMensajeError(err);
-        this.cdr.detectChanges();
+        this.ngZone.run(() => {
+          this.mensajeError = obtenerMensajeError(err);
+          this.cdr.detectChanges();
+        });
       }
     });
   }
