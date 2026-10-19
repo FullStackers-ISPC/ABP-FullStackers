@@ -9,7 +9,7 @@
             <div class="alerta alerta-error">
                 <i class="fa-solid fa-circle-xmark"></i>
                 <div>
-                    <strong>No se pudo guardar.</strong> Ocurrió un error al procesar la categoría. Intentá nuevamente.
+                    <strong>No se pudo guardar.</strong> {{ mensajeError }}
                 </div>
             </div>
         }
@@ -18,16 +18,16 @@
             <div class="row g-3">
 
                 <div class="col-12">
-                    <label class="form-label">Nombre de la categoría <span class="campo-requerido">*</span></label>
-                    <input type="text" formControlName="nombre" class="form-control" [class.is-invalid]="isInvalidField('nombre')" placeholder="Ej: Refrigeración">
+                    <label for="nombre" class="form-label">Nombre de la categoría <span class="campo-requerido">*</span></label>
+                    <input id="nombre" type="text" formControlName="nombre" class="form-control" [class.is-invalid]="isInvalidField('nombre')" maxlength="50" placeholder="Ej: Refrigeración">
                     @if (isInvalidField('nombre')) {
-                        <div class="invalid-feedback">El nombre de la categoría es obligatorio.</div>
+                        <div class="invalid-feedback">El nombre debe tener entre 3 y 50 caracteres.</div>
                     }
                 </div>
 
                 <div class="col-12">
-                    <label class="form-label">Descripción</label>
-                    <textarea formControlName="descripcion" class="form-control" rows="3" placeholder="Describe brevemente la categoría (opcional)..."></textarea>
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="3" maxlength="255" placeholder="Describe brevemente la categoría (opcional)..."></textarea>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">

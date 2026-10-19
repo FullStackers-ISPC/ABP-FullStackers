@@ -8,13 +8,13 @@
     font-weight: bold;
     color: var(--dark-gray);
 }
-.section-subtitle { font-size: 13px; color: #888; margin-bottom: 16px; }
+.section-subtitle { font-size: 13px; color: #666; margin-bottom: 16px; }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 
 /* ===== CARDS ROW (Resumen) ===== */
-.cards-row { display: flex; gap: 20px; }
+.cards-row { display: flex; flex-wrap: wrap; gap: 20px; }
 .card {
-    flex: 1;
+    flex: 1 1 200px;
     background-color: white;
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -28,11 +28,11 @@
 
 /* ===== BADGES ===== */
 .badge { font-size: 11px; font-weight: bold; padding: 3px 8px; border-radius: 4px; color: white; }
-.badge-alerta { background-color: #D28C00; }
+.badge-alerta { background-color: #805400; }
 .badge-critico, .tipo-salida { background-color: var(--primary-red); }
 .tipo-badge { font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px; color: white; }
-.tipo-entrada { background-color: #228B22; }
-.tipo-ajuste { background-color: #D28C00; }
+.tipo-entrada { background-color: #196b19; }
+.tipo-ajuste { background-color: #805400; }
 
 /* ===== FORMULARIO MOVIMIENTO ===== */
 .form-movimiento-card {
@@ -61,7 +61,7 @@
 
 /* ===== TABLA MOVIMIENTOS ===== */
 #movimientos { margin-top: 48px; }
-.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background-color: white; }
+.table-wrapper { border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto; background-color: white; }
 .movements-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .movements-table th { padding: 12px 16px; text-align: left; font-weight: bold; background-color: var(--white-color); border-bottom: 1px solid var(--border-color); }
 .movements-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
@@ -83,5 +83,6 @@
 
 @media (max-width: 600px) {
     .cards-row { flex-direction: column; }
+    .card { flex-basis: auto; }
     .form-movimiento-card { padding: 16px; }
 }

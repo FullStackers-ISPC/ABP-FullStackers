@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MovimientosService } from '../../../core/services/movimientos.service';
-import { ProductosService } from '../../../core/services/productos.service'; 
+import { DashboardService } from '../../../core/services/dashboard.service';
 import { Producto } from '../../../core/models/producto.model';
 import { Movimiento } from '../../../core/models/movimiento.model';
+import { obtenerMensajeError } from '../../../core/utils/mensaje-error';
 
 @Component({
   selector: 'app-admin-panel',
@@ -14,34 +14,43 @@ import { Movimiento } from '../../../core/models/movimiento.model';
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent implements OnInit {
-  private movimientosService = inject(MovimientosService);
-  private productosService = inject(ProductosService); 
+  private dashboardService = inject(DashboardService);
   private cdr = inject(ChangeDetectorRef);
-  
-  
+
+  isLoadingDashboard = true;
+  dashboardErrorMessage = '';
+  productosDisponibles = 0;
+  totalProductos = 0;
+  productosStockCritico = 0;
+  movimientosHoy = 0;
   movimientos: Movimiento[] = [];
-  productosStockBajo: Producto[] = []; 
+  productosStockBajo: Producto[] = [];
 
   ngOnInit(): void {
-    this.movimientosService.getMovimientos().subscribe({
+    this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
-        this.movimientos = data;
+        this.productosDisponibles = data.availableProducts;
+        this.totalProductos = data.totalProducts;
+        this.productosStockCritico = data.criticalStockProducts;
+        this.movimientosHoy = data.movementsToday;
+        this.movimientos = data.movements;
+        this.productosStockBajo = data.lowStockProducts;
+        this.isLoadingDashboard = false;
+        this.dashboardErrorMessage = '';
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error al cargar movimientos:', err);
+        console.error('Error al cargar los datos del dashboard:', err);
+        this.isLoadingDashboard = false;
+        this.dashboardErrorMessage = `No se pudieron cargar los datos del panel. ${obtenerMensajeError(err)}`;
+        this.cdr.detectChanges();
       }
     });
+  }
 
-    this.productosService.getProductosConBajoStock().subscribe({
-      next: (data) => {
-        this.productosStockBajo = data;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error al cargar productos con bajo stock:', err);
-      }
-    });
+  getCantidad(movimiento: Movimiento): string {
+    if (movimiento.tipo === 'salida') return `-${Math.abs(movimiento.cantidad)}`;
+    return movimiento.cantidad > 0 ? `+${movimiento.cantidad}` : String(movimiento.cantidad);
   }
 
   getEstado(prod: Producto): { texto: string, clase: string } {

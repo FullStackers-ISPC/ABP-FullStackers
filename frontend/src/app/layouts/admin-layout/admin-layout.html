@@ -7,10 +7,10 @@
     </label>
     
     <header class="sidebar-header">
-        <img src="assets/Branding/logo-st.png" alt="EasyStock" class="logo-img">
+        <img src="assets/Branding/logo-st.png" alt="EasyStock" class="logo-img" width="528" height="418">
     </header>
 
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" aria-label="Navegación administrativa">
         <ul>
             <li>
                 <a routerLink="./dashboard" routerLinkActive="active" class="nav-link">
@@ -36,9 +36,9 @@
     </nav>
 
     <footer class="sidebar-footer">
-        <p class="user-name">Administrador</p>
-        <p class="user-email">admin@easystock.com</p>
-       <button class="btn-logout" routerLink="/landing"> Cerrar Sesión</button>
+        <p class="user-name">{{ nombreUsuario }}</p>
+        <p class="user-email">{{ emailUsuario }}</p>
+       <button type="button" class="btn-logout" (click)="cerrarSesion()"> Cerrar Sesión</button>
     </footer>
 </aside>
 
@@ -60,7 +60,7 @@
         </p>
     
     <div class="topbar-user">
-        <p class="topbar-role">Administrador</p>
+        <p class="topbar-role">{{ rolUsuario }}</p>
         <p class="topbar-panel">Panel de Administración</p>
     </div>
 </header>

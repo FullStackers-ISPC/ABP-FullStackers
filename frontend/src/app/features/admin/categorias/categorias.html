@@ -9,6 +9,10 @@
         </a>
     </div>
 
+    @if (mensajeError) {
+        <div class="alerta alerta-error" role="alert">{{ mensajeError }}</div>
+    }
+
     <div class="es-table-wrapper">
         <table class="es-table">
             <thead>
@@ -20,19 +24,23 @@
                 </tr>
             </thead>
             <tbody>
-                
-                @for (cat of categorias; track cat.id) {
+                @if (cargando) {
                     <tr>
-                        <td>{{ cat.id }}</td>
+                        <td colspan="4" class="text-center" style="padding: 20px;">Cargando categorías...</td>
+                    </tr>
+                } @else {
+                @for (cat of categorias; track cat.id_categoria) {
+                    <tr>
+                        <td>{{ cat.id_categoria }}</td>
                         <td>{{ cat.nombre }}</td>
                         <td>
-                            <strong>{{ cat.cantidad }}</strong>
+                            <strong>{{ cat.cantidad_productos }}</strong>
                         </td>
                         <td>
-                            <a [routerLink]="['/admin/editar-categoria', cat.id]" class="btn-editar" title="Editar">
+                            <a [routerLink]="['/admin/editar-categoria', cat.id_categoria]" class="btn-editar" title="Editar categoría">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <button class="btn-eliminar" title="Eliminar">
+                            <button type="button" class="btn-eliminar" title="Eliminar categoría" (click)="eliminarCategoria(cat)">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </td>
@@ -43,6 +51,7 @@
                             No hay categorías registradas.
                         </td>
                     </tr>
+                }
                 }
 
             </tbody>

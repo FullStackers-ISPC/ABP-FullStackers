@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [
     RouterLink,
     ReactiveFormsModule
@@ -27,9 +28,9 @@ export class Login {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {
-
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -43,11 +44,9 @@ export class Login {
         Validators.required
       ]
     });
-
   }
 
   iniciarSesion(): void {
-
     this.mensajeError = '';
 
     if (this.loginForm.invalid) {
@@ -55,64 +54,41 @@ export class Login {
       return;
     }
 
-    const { email, password } =
-      this.loginForm.getRawValue();
+    const { email, password } = this.loginForm.getRawValue();
 
     this.cargando = true;
 
     this.authService
       .login(email, password)
       .subscribe({
-
-        next: (usuarios) => {
-
+        next: (usuario) => {
           this.cargando = false;
-
-          if (usuarios.length === 0) {
-            this.mensajeError =
-              'Usuario no registrado o contraseña incorrecta.';
-            return;
-          }
-
-          const usuario = usuarios[0];
 
           if (usuario.rol === 'admin') {
-
-            this.router.navigate([
-              '/admin/dashboard'
-            ]);
-
-          } else if (usuario.rol === 'user') {
-
-            this.router.navigate([
-              '/dashboard/user'
-            ]);
-
+            this.router.navigate(['/admin/dashboard']);
+          } else if (usuario.rol === 'usuario') {
+            this.router.navigate(['/dashboard/user']);
           } else {
-
-            this.mensajeError =
-              'El usuario no tiene un rol válido.';
-
+            this.router.navigate(['/']);
           }
 
+          this.cdr.detectChanges();
         },
-
         error: (error) => {
-
           this.cargando = false;
+          console.error('Error al iniciar sesión:', error);
 
-          console.error(
-            'Error al iniciar sesión:',
-            error
-          );
+          if (error.status === 401) {
+            this.mensajeError = 'Correo electrónico o contraseña incorrectos.';
+          } else if (error.status === 0) {
+            this.mensajeError = 'No se pudo conectar con el servidor.';
+          } else {
+            this.mensajeError = 'Ocurrió un error al iniciar sesión.';
+          }
 
-          this.mensajeError =
-            'No se pudo conectar con el servidor.';
-
+          this.cdr.detectChanges();
         }
-
       });
-
   }
 
 }

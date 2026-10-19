@@ -1,0 +1,1209 @@
+{
+  "info": {
+    "name": "EasyStock EV6 — Calidad API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Solo entorno local de pruebas. Ejecutar completa y en orden. Requiere roles 1/2 y cuentas demo. Genera categoría, producto QA y tres movimientos persistentes para auditar stock; no borra historial. No usar en producción. Base actual SQLite: repetir sobre MySQL antes de entrega."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api/v1"
+    },
+    {
+      "key": "nonce",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (pm.info.requestName === 'Usuarios — Login administrador') pm.collectionVariables.set('nonce', String(Date.now()));"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios — Login administrador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/login/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"admin@easystock.com\", \"password\": \"admin1234\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo rol', () => pm.expect(pm.response.json()['rol']).to.eql(\"admin\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Login usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/login/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"user@easystock.com\", \"password\": \"user1234\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "if (pm.response.code === 200) pm.collectionVariables.set('usuario_id', pm.response.json()['id_usuario']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Login inválido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/login/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"user@easystock.com\", \"password\": \"incorrecta\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 401', () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Login incompleto",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/login/",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Listado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/usuarios/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Registro QA",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/registro/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"Usuario\", \"apellido\": \"Calidad\", \"email\": \"qa.{{nonce}}@example.com\", \"password\": \"prueba1234\", \"id_rol\": 2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('usuario_qa_id', pm.response.json()['id_usuario']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Email repetido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/registro/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"Usuario\", \"apellido\": \"Calidad\", \"email\": \"qa.{{nonce}}@example.com\", \"password\": \"prueba1234\", \"id_rol\": 2}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Detalle QA",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/usuarios/{{usuario_qa_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Editar QA",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/usuarios/{{usuario_qa_id}}/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"Usuario\", \"apellido\": \"Actualizado\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo apellido', () => pm.expect(pm.response.json()['apellido']).to.eql(\"Actualizado\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Usuario inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/usuarios/2147483647/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios — Eliminar solo usuario QA",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/usuarios/{{usuario_qa_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Listado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/categorias/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Crear QA",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/categorias/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"QA {{nonce}}\", \"descripcion\": \"Categoría local de pruebas\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('categoria_id', pm.response.json()['id_categoria']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Nombre repetido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/categorias/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"QA {{nonce}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Detalle",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/categorias/{{categoria_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Editar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/categorias/{{categoria_id}}/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"QA {{nonce}}\", \"descripcion\": \"Actualizada\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/categorias/2147483647/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Listado",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Crear QA",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"codigo\": \"QA-{{nonce}}\", \"nombre\": \"Producto QA {{nonce}}\", \"categoria\": \"{{categoria_id}}\", \"stock_actual\": 10, \"stock_alerta\": 5, \"stock_critico\": 2, \"precio\": \"100.00\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('producto_id', pm.response.json()['id_producto']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Código repetido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"codigo\": \"QA-{{nonce}}\", \"nombre\": \"Producto QA {{nonce}}\", \"categoria\": \"{{categoria_id}}\", \"stock_actual\": 10, \"stock_alerta\": 5, \"stock_critico\": 2, \"precio\": \"100.00\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Detalle",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo stock_actual', () => pm.expect(pm.response.json()['stock_actual']).to.eql(10));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Editar",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/{{producto_id}}/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"codigo\": \"QA-{{nonce}}\", \"nombre\": \"Producto QA {{nonce}}\", \"categoria\": \"{{categoria_id}}\", \"stock_actual\": 10, \"stock_alerta\": 5, \"stock_critico\": 2, \"precio\": \"100.00\", \"descripcion\": \"Actualizado\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Precio inválido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"codigo\": \"BAD-{{nonce}}\", \"nombre\": \"Producto QA {{nonce}}\", \"categoria\": \"{{categoria_id}}\", \"stock_actual\": 10, \"stock_alerta\": 5, \"stock_critico\": 2, \"precio\": \"-1\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/2147483647/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Crear producto descartable",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"codigo\": \"DEL-{{nonce}}\", \"nombre\": \"Descartable {{nonce}}\", \"categoria\": \"{{categoria_id}}\", \"stock_actual\": 10, \"stock_alerta\": 5, \"stock_critico\": 2, \"precio\": \"100.00\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('descartable_id', pm.response.json()['id_producto']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Eliminar solo producto descartable",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/productos/{{descartable_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Eliminar con productos debe fallar",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/productos/categorias/{{categoria_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Registrar entrada",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tipo\": \"entrada\", \"cantidad\": 3, \"producto\": \"{{producto_id}}\", \"usuario\": \"{{usuario_id}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('movimiento_id', pm.response.json()['id_movimiento']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Stock después de entrada",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo stock_actual', () => pm.expect(pm.response.json()['stock_actual']).to.eql(13));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Registrar salida",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tipo\": \"salida\", \"cantidad\": 8, \"producto\": \"{{producto_id}}\", \"usuario\": \"{{usuario_id}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('movimiento_id', pm.response.json()['id_movimiento']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Stock después de salida",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo stock_actual', () => pm.expect(pm.response.json()['stock_actual']).to.eql(5));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Registrar ajuste",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tipo\": \"ajuste\", \"cantidad\": -3, \"producto\": \"{{producto_id}}\", \"usuario\": \"{{usuario_id}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('movimiento_id', pm.response.json()['id_movimiento']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Stock después de ajuste",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo stock_actual', () => pm.expect(pm.response.json()['stock_actual']).to.eql(2));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Stock insuficiente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tipo\": \"salida\", \"cantidad\": 99, \"producto\": \"{{producto_id}}\", \"usuario\": \"{{usuario_id}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Stock intacto después del rechazo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('Campo stock_actual', () => pm.expect(pm.response.json()['stock_actual']).to.eql(2));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Cantidad cero",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tipo\": \"entrada\", \"cantidad\": 0, \"producto\": \"{{producto_id}}\", \"usuario\": \"{{usuario_id}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Historial",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/movimientos/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Filtrar producto",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/movimientos/?producto={{producto_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Detalle",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/movimientos/{{movimiento_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/movimientos/2147483647/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Historial no editable",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/movimientos/{{movimiento_id}}/",
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 405', () => pm.response.to.have.status(405));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Movimientos — Historial no eliminable",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/movimientos/{{movimiento_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 405', () => pm.response.to.have.status(405));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Productos — Producto con movimientos protegido",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/productos/{{producto_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Crear categoría descartable",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/productos/categorias/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"DEL {{nonce}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('categoria_descartable_id', pm.response.json()['id_categoria']);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categorías — Eliminar solo categoría descartable",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/productos/categorias/{{categoria_descartable_id}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 204', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

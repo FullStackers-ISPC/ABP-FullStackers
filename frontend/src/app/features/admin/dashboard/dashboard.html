@@ -1,25 +1,39 @@
 <h1 class="visually-hidden">EasyStock - Dashboard de Administración</h1>
 
+@if (isLoadingDashboard) {
+    <div class="alert alert-info" role="status" aria-live="polite">
+        Cargando los datos del panel...
+    </div>
+} @else if (dashboardErrorMessage) {
+    <div class="alert alert-danger" role="alert">
+        {{ dashboardErrorMessage }}
+    </div>
+} @else {
 <!-- ===== SECCIÓN 1: Resumen de Actividad ===== -->
 <section id="panel">
     <h2 class="section-title">Resumen de Actividad</h2>
-    <p class="section-subtitle">Tu actividad reciente en el inventario.</p>
+    <p class="section-subtitle">Actividad general del inventario.</p>
 
     <div class="cards-row">
         <article class="card">
-            <h3 class="visually-hidden">Productos Disponibles</h3>
-            <p class="card-label">Productos Disponibles <i class="fa-solid fa-box card-icon"></i></p>
-            <p class="card-value">22</p>
+            <h3 class="visually-hidden">Total de Productos</h3>
+            <p class="card-label">Total de Productos <i class="fa-solid fa-box card-icon" aria-hidden="true"></i></p>
+            <p class="card-value">{{ totalProductos }}</p>
         </article>
         <article class="card">
-            <h3 class="visually-hidden">Mis Movimientos del Día</h3>
-            <p class="card-label">Mis Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
-            <p class="card-value">5</p>
+            <h3 class="visually-hidden">Movimientos del Día</h3>
+            <p class="card-label">Movimientos del Día <i class="fa-solid fa-right-left card-icon"></i></p>
+            <p class="card-value">{{ movimientosHoy }}</p>
         </article>
         <article class="card">
             <h3 class="visually-hidden">Productos con Bajo Stock</h3>
             <p class="card-label">Productos con Bajo Stock <i class="fa-solid fa-circle-exclamation card-icon"></i></p>
             <p class="card-value">{{ productosStockBajo.length }}</p>
+        </article>
+        <article class="card">
+            <h3 class="visually-hidden">Productos con Stock Crítico</h3>
+            <p class="card-label">Productos con Stock Crítico <i class="fa-solid fa-triangle-exclamation card-icon" aria-hidden="true"></i></p>
+            <p class="card-value">{{ productosStockCritico }}</p>
         </article>
     </div>
 </section>
@@ -53,7 +67,7 @@
                                 {{ mov.tipo | titlecase }}
                             </span>
                         </td>
-                        <td>{{ mov.cantidad > 0 ? '+' + mov.cantidad : mov.cantidad }}</td>
+                        <td>{{ getCantidad(mov) }}</td>
                         <td>{{ mov.usuario }}</td>
                     </tr>
                 } @empty {
@@ -98,7 +112,7 @@
                 <tbody>
                     @for (prod of productosStockBajo; track prod.id) {
                         <tr>
-                            <td class="col-codigo">{{ prod.id }}</td>
+                            <td class="col-codigo">{{ prod.codigo }}</td>
                             <td class="col-producto">{{ prod.nombre }}</td>
                             <td class="col-categoria">{{ prod.categoria }}</td>
                             <td><strong>{{ prod.stock }}</strong></td>
@@ -108,10 +122,9 @@
                                 </span>
                             </td>
                             <td>
-                                <a [routerLink]="['../editar-producto', prod.id]" class="btn-editar" title="Editar">
+                                <a [routerLink]="['../editar-producto', prod.id]" class="btn-editar" title="Editar" [attr.aria-label]="'Editar ' + prod.nombre">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <button class="btn-eliminar" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     } @empty {
@@ -126,3 +139,4 @@
         </div>
     </div>
 </section>
+}

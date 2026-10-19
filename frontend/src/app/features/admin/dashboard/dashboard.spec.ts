@@ -1,23 +1,126 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { Dashboard } from './dashboard';
+import { provideRouter } from '@angular/router';
+import { Subject } from 'rxjs';
+import { DashboardData, DashboardService } from '../../../core/services/dashboard.service';
+import { DashboardComponent } from './dashboard';
 
 describe('Dashboard', () => {
-  let component: Dashboard;
-  let fixture: ComponentFixture<Dashboard>;
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
+  let dashboardResponse: Subject<DashboardData>;
 
   beforeEach(async () => {
+    dashboardResponse = new Subject<DashboardData>();
+
     await TestBed.configureTestingModule({
-      imports: [Dashboard]
+      imports: [DashboardComponent],
+      providers: [
+        provideRouter([]),
+        {
+          provide: DashboardService,
+          useValue: { getDashboardData: () => dashboardResponse.asObservable() }
+        }
+      ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Dashboard);
+    fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it('debería crear el componente', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('debería mostrar el estado de carga mientras se obtienen los datos del dashboard', () => {
+    expect(component.isLoadingDashboard).toBe(true);
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Cargando los datos del panel');
+  });
+
+  it('debería mostrar las métricas y los listados tras una respuesta exitosa', () => {
+    dashboardResponse.next({
+      totalProducts: 3,
+      criticalStockProducts: 1,
+      availableProducts: 2,
+      movementsToday: 1,
+      lowStockProducts: [
+        { id: 2, codigo: 'PR-002', nombre: 'Stock bajo', categoria: 'Prueba', idCategoria: 1, stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
+      ],
+      movements: [{
+        id: 1,
+        fecha: new Date().toLocaleDateString('es-AR'),
+        producto: 'Producto de prueba',
+        categoria: 'Categoría de prueba',
+        tipo: 'entrada',
+        cantidad: 2,
+        usuario: 'admin'
+      }]
+    });
+    fixture.detectChanges();
+
+    expect(component.isLoadingDashboard).toBe(false);
+    expect(component.productosDisponibles).toBe(2);
+    expect(component.movimientosHoy).toBe(1);
+    expect(component.totalProductos).toBe(3);
+    expect(component.productosStockCritico).toBe(1);
+    const page = fixture.nativeElement as HTMLElement;
+    expect(page.textContent).toContain('PR-002');
+    expect(page.textContent).not.toContain('Mis Movimientos');
+    expect(page.querySelector('.btn-eliminar')).toBeNull();
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Producto de prueba');
+  });
+
+  it('debería mostrar un error en vez de estados vacíos si falla la carga', () => {
+    dashboardResponse.error(new Error('API no disponible'));
+    fixture.detectChanges();
+
+    expect(component.isLoadingDashboard).toBe(false);
+    expect((fixture.nativeElement as HTMLElement).querySelector('[role="alert"]')?.textContent)
+      .toContain('No se pudieron cargar los datos del panel');
+    expect((fixture.nativeElement as HTMLElement).textContent)
+      .not.toContain('Todavía no hay movimientos registrados');
+  });
+
+  it('debería conservar los estados vacios tras una respuesta exitosa sin registros', () => {
+    dashboardResponse.next({
+      totalProducts: 0,
+      criticalStockProducts: 0,
+      availableProducts: 0,
+      movementsToday: 0,
+      lowStockProducts: [],
+      movements: []
+    });
+    fixture.detectChanges();
+
+    const pageText = (fixture.nativeElement as HTMLElement).textContent ?? '';
+    expect(component.isLoadingDashboard).toBe(false);
+    expect(pageText).toContain('Todavía no hay movimientos registrados en el sistema.');
+    expect(pageText).toContain('No hay productos con stock bajo en este momento.');
+  });
+
+  it('debería calcular las métricas con los datos del servicio', () => {
+    dashboardResponse.next({
+      totalProducts: 3,
+      criticalStockProducts: 1,
+      availableProducts: 2,
+      movementsToday: 1,
+      lowStockProducts: [
+        { id: 2, codigo: 'PR-002', nombre: 'Stock bajo', categoria: 'Prueba', idCategoria: 1, stock: 1, stockAlerta: 2, stockCritico: 1, precio: 1 }
+      ],
+      movements: []
+    });
+
+    expect(component.productosDisponibles).toBe(2);
+    expect(component.movimientosHoy).toBe(1);
+    expect(component.productosStockBajo).toHaveLength(1);
+  });
+
+  it('debería mostrar el signo según el tipo de movimiento', () => {
+    const base = { id: 1, fecha: '', producto: '', categoria: '', usuario: '1' };
+    expect(component.getCantidad({ ...base, tipo: 'salida', cantidad: 3 })).toBe('-3');
+    expect(component.getCantidad({ ...base, tipo: 'entrada', cantidad: 3 })).toBe('+3');
+    expect(component.getCantidad({ ...base, tipo: 'ajuste', cantidad: -2 })).toBe('-2');
   });
 });

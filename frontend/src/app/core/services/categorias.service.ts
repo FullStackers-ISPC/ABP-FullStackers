@@ -1,14 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Categoria } from '../models/categoria.model';
+import { Categoria, CategoriaPayload } from '../models/categoria.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriasService {
 
-  private apiUrl = 'http://localhost:3000/categorias';
+  private readonly apiUrl = 'http://localhost:8000/api/v1/productos/categorias/';
 
   constructor(private http: HttpClient) {}
 
@@ -18,20 +18,26 @@ export class CategoriasService {
     );
   }
 
-  getCategoriaById(id: string | number): Observable<Categoria> {
-    return this.http.get<Categoria>(`${this.apiUrl}/${id}`).pipe(
+  getCategoriaById(id: number): Observable<Categoria> {
+    return this.http.get<Categoria>(`${this.apiUrl}${id}/`).pipe(
       catchError(this.handleError)
     );
   }
 
-  crearCategoria(categoria: Omit<Categoria, 'id'>): Observable<Categoria> {
+  crearCategoria(categoria: CategoriaPayload): Observable<Categoria> {
     return this.http.post<Categoria>(this.apiUrl, categoria).pipe(
       catchError(this.handleError)
     );
   }
 
-  actualizarCategoria(id: string | number, categoria: Omit<Categoria, 'id'>): Observable<Categoria> {
-    return this.http.put<Categoria>(`${this.apiUrl}/${id}`, categoria).pipe(
+  actualizarCategoria(id: number, categoria: CategoriaPayload): Observable<Categoria> {
+    return this.http.put<Categoria>(`${this.apiUrl}${id}/`, categoria).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  eliminarCategoria(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}${id}/`).pipe(
       catchError(this.handleError)
     );
   }
@@ -47,6 +53,6 @@ export class CategoriasService {
       );
     }
 
-    return throwError(() => new Error('No se pudo completar la operación con categorías. Intentá nuevamente.'));
+    return throwError(() => error);
   }
 }

@@ -23,12 +23,10 @@ import { Usuario } from '../../core/models/usuario.model';
 @Component({
   selector: 'app-account',
   standalone: true,
-
   imports: [
     RouterLink,
     ReactiveFormsModule
   ],
-
   templateUrl: './account.html',
   styleUrl: './account.css'
 })
@@ -52,333 +50,106 @@ export class Account {
     private cdr: ChangeDetectorRef
   ) {
 
-    const modoRuta =
-      this.route.snapshot.data['modo'];
-
+    const modoRuta = this.route.snapshot.data['modo'];
     if (modoRuta === 'recuperar') {
       this.modo = 'recuperar';
     }
 
     this.registroForm = this.fb.group({
-
-      nombre: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-
-      apellido: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-
-      usuario: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
-
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8)
-        ]
-      ],
-
-      confirmarPassword: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-
-      ciudad: [
-        ''
-      ],
-
-      provincia: [
-        ''
-      ],
-
-      terminos: [
-        false,
-        [
-          Validators.requiredTrue
-        ]
-      ]
-
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      confirmarPassword: ['', [Validators.required]],
+      ciudad: [''],
+      provincia: [''],
+      terminos: [false, [Validators.requiredTrue]]
     });
 
     this.recuperarForm = this.fb.group({
-
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ]
-
+      email: ['', [Validators.required, Validators.email]]
     });
-
   }
 
-
   enviar(): void {
-
     this.mensaje = '';
     this.error = '';
 
     if (this.modo === 'recuperar') {
-
       this.recuperarPassword();
-
       return;
     }
 
     this.registrarUsuario();
-
   }
 
-
   registrarUsuario(): void {
-
     this.error = '';
     this.mensaje = '';
 
     if (this.registroForm.invalid) {
-
       this.registroForm.markAllAsTouched();
-
-      this.error =
-        'Revisá los campos del formulario.';
-
+      this.error = 'Revisá los campos del formulario.';
       return;
     }
 
-    const datos =
-      this.registroForm.getRawValue();
+    const datos = this.registroForm.getRawValue();
 
-    if (
-      datos.password !==
-      datos.confirmarPassword
-    ) {
-
-      this.error =
-        'Las contraseñas no coinciden.';
-
+    if (datos.password !== datos.confirmarPassword) {
+      this.error = 'Las contraseñas no coinciden.';
       return;
     }
 
-    const emailNormalizado =
-      datos.email
-        .trim()
-        .toLowerCase();
+    const nuevoUsuario: Usuario = {
+      nombre: datos.nombre.trim(),
+      apellido: datos.apellido.trim(),
+      email: datos.email.trim().toLowerCase(),
+      password: datos.password,
+      ciudad: datos.ciudad ? datos.ciudad.trim() : '',
+      provincia: datos.provincia ? datos.provincia.trim() : '',
+      id_rol: 2 // 2 corresponde al rol usuario
+    };
 
     this.cargando = true;
 
-    this.authService
-      .buscarPorEmail(emailNormalizado)
-      .subscribe({
+    
+    this.authService.registrar(nuevoUsuario).subscribe({
+      next: (usuarioCreado) => {
+        this.cargando = false;
+        this.mensaje = 'Usuario registrado correctamente.';
+        this.registroForm.reset();
+        this.cdr.detectChanges();
 
-        next: (usuarios) => {
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1200);
+      },
+      error: (err) => {
+        this.cargando = false;
+        console.error('Error al registrar usuario:', err);
 
-          console.log(
-            'Resultado de buscarPorEmail:',
-            usuarios
-          );
-
-          if (usuarios.length > 0) {
-
-            this.cargando = false;
-
-            this.error =
-              'El email ya está registrado.';
-
-            this.cdr.detectChanges();
-
-            return;
-          }
-
-          const nuevoUsuario: Usuario = {
-
-            nombre:
-              datos.nombre.trim(),
-
-            apellido:
-              datos.apellido.trim(),
-
-            usuario:
-              datos.usuario.trim(),
-
-            email:
-              emailNormalizado,
-
-            password:
-              datos.password,
-
-            ciudad:
-              datos.ciudad?.trim(),
-
-            provincia:
-              datos.provincia,
-
-            rol:
-              'user'
-
-          };
-
-          this.authService
-            .registrar(nuevoUsuario)
-            .subscribe({
-
-              next: (usuarioCreado) => {
-
-                console.log(
-                  'Usuario creado:',
-                  usuarioCreado
-                );
-
-                this.cargando = false;
-
-                this.mensaje =
-                  'Usuario registrado correctamente.';
-
-                this.registroForm.reset();
-
-                this.cdr.detectChanges();
-
-                setTimeout(() => {
-
-                  this.router.navigate([
-                    '/login'
-                  ]);
-
-                }, 1200);
-
-              },
-
-              error: (error) => {
-
-                console.error(
-                  'Error al registrar usuario:',
-                  error
-                );
-
-                this.cargando = false;
-
-                this.error =
-                  'No se pudo registrar el usuario.';
-
-                this.cdr.detectChanges();
-
-              }
-
-            });
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Error al verificar email:',
-            error
-          );
-
-          this.cargando = false;
-
-          this.error =
-            'No se pudo verificar el email.';
-
-          this.cdr.detectChanges();
-
+        if (err.status === 400) {
+          this.error = 'El email ya se encuentra registrado o los datos son inválidos.';
+        } else if (err.status === 0) {
+          this.error = 'No se pudo conectar con el servidor.';
+        } else {
+          this.error = 'Ocurrió un error al registrar la cuenta.';
         }
 
-      });
-
+        this.cdr.detectChanges();
+      }
+    });
   }
 
-
   recuperarPassword(): void {
-
-    this.error = '';
-    this.mensaje = '';
-
     if (this.recuperarForm.invalid) {
-
       this.recuperarForm.markAllAsTouched();
-
-      this.error =
-        'Ingresá un correo electrónico válido.';
-
+      this.error = 'Ingresá un correo electrónico válido.';
       return;
     }
 
-    const email =
-      this.recuperarForm
-        .getRawValue()
-        .email
-        .trim()
-        .toLowerCase();
-
-    this.cargando = true;
-
-    this.authService
-      .buscarPorEmail(email)
-      .subscribe({
-
-        next: (usuarios) => {
-
-          this.cargando = false;
-
-          if (usuarios.length === 0) {
-
-            this.error =
-              'No existe una cuenta registrada con ese correo.';
-
-            this.cdr.detectChanges();
-
-            return;
-          }
-
-          this.mensaje =
-            'Cuenta encontrada. En una implementación real se enviaría un correo para restablecer la contraseña.';
-
-          this.cdr.detectChanges();
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Error al buscar usuario:',
-            error
-          );
-
-          this.cargando = false;
-
-          this.error =
-            'No se pudo conectar con el servidor.';
-
-          this.cdr.detectChanges();
-
-        }
-
-      });
-
+    this.mensaje = 'Esta función estará disponible próximamente.';
+    this.cdr.detectChanges();
   }
 
 }
