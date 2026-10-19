@@ -2,48 +2,70 @@
 
 ## Requisitos
 
-- MySQL 8.0.16 o superior, porque el esquema usa restricciones `CHECK`.
-- Un cliente MySQL, por ejemplo MySQL Workbench o la consola `mysql`.
+MySQL 8.4 o superior compatible con Django 6.1.2. Entorno verificado: 8.4.11.
 
-## Archivos
+Se necesita una conexión administrativa MySQL Workbench y el entorno Python descrito en [../README.md](../README.md).
 
-- `01_schema.sql`: crea la base `easystock`, el usuario de aplicación, las tablas, claves foráneas, restricciones e índices.
-- `02_seed.sql`: carga 2 roles, 2 usuarios de prueba, 5 categorías, 22 productos y 8 movimientos.
+## Inicialización recomendada para Django
 
-Los datos de usuarios son académicos. Las contraseñas se guardan sin hash porque ese mecanismo no forma parte del contenido trabajado por el equipo en esta evidencia.
+### 1. Crear solamente la base y el usuario
 
-## Carga manual del esquema y los datos
+Como administrador, ejecutar:
 
-Desde MySQL Workbench, abrir y ejecutar primero `01_schema.sql` y luego `02_seed.sql`.
+```sql
+CREATE DATABASE IF NOT EXISTS easystock
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_0900_ai_ci;
 
-Desde la terminal, **Símbolo del sistema (CMD)**, ubicándose en la carpeta `Backend`:
+CREATE USER IF NOT EXISTS 'easystock_app'@'localhost'
+    IDENTIFIED BY 'EasyStock2026!';
 
-```cmd
-mysql -u root -p < database/01_schema.sql
-mysql -u root -p easystock < database/02_seed.sql
+GRANT ALL PRIVILEGES ON easystock.* TO 'easystock_app'@'localhost';
 ```
 
-## Verificación
+### 2. Crear tablas mediante migraciones
+
+Desde `backend/`, en Windows:
+
+```cmd
+.venv\Scripts\python.exe manage.py check --database default
+.venv\Scripts\python.exe manage.py migrate
+```
+
+No ejecutar `01_schema.sql` antes: las migraciones crean las tablas y registran su historial.
+
+### 3. Cargar datos demo una sola vez
+
+En Workbench, abrir y ejecutar `02_seed.sql` después de las migraciones y con las tablas de negocio vacías. Incluye `USE easystock;`.
+
+Alternativa desde **CMD**, ubicado en `backend/` y con el cliente MySQL en PATH:
+
+```cmd
+mysql -u easystock_app -p easystock < database/02_seed.sql
+```
+
+Ejecutar este comando en Símbolo del sistema (CMD). El seed utiliza identificadores fijos: no repetirlo sobre datos existentes ni vaciar tablas para forzar su carga.
+
+### 4. Verificar
 
 ```sql
 USE easystock;
-
 SHOW TABLES;
+SELECT COUNT(*) AS roles FROM rol;
+SELECT COUNT(*) AS usuarios FROM usuario;
 SELECT COUNT(*) AS categorias FROM categorias;
 SELECT COUNT(*) AS productos FROM productos;
 SELECT COUNT(*) AS movimientos FROM movimiento;
 ```
 
-El resultado esperado es 5 categorías, 22 productos y 8 movimientos.
+Carga inicial esperada: 2 roles, 2 usuarios, 5 categorías, 22 productos y 8 movimientos. Las pruebas posteriores pueden cambiar las cantidades. Es una instantánea demo; importar los movimientos no vuelve a aplicarlos al stock.
 
-## Relación con las migraciones de Django
+Cuentas: `admin@easystock.com` / `admin1234` y `user@easystock.com` / `user1234`. Las contraseñas se almacenan sin hash en esta implementación académica.
 
-En desarrollo, Django debe crear la estructura mediante:
+## Script de esquema: alternativa, no paso adicional
 
-```powershell
-python manage.py migrate
-```
+`01_schema.sql` se entrega como script del modelo físico: crea base, usuario y tablas de negocio. No registra las migraciones ni crea todas las tablas internas de Django.
 
-No se debe ejecutar el script y luego ejecutar migraciones sobre la misma base vacía, porque ambos intentan crear las mismas tablas. El script se entrega como creación reproducible y referencia del modelo físico; las migraciones son el mecanismo diario de Django.
+No mezclarlo con `migrate` sobre las mismas tablas ni usar `--fake` sin revisar la compatibilidad. Para reproducir el entorno comprobado con la aplicación, seguir base/usuario → migraciones → `02_seed.sql`.
 
-El modelo `Categoria` de Django usa la tabla `categorias`. El modelo `Producto` debe usar una clave foránea llamada `categoria`, con `db_column='id_categoria'`, hacia esa tabla.
+
